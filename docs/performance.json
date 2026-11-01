@@ -1,0 +1,30 @@
+{
+  "measuredAt": "2026-11-01T18:23:20.688Z",
+  "conditions": "Single sample per route, local production server, Chromium 1440x1000, fresh browser context per route, no CPU/network throttling. Not a Lighthouse score or field Core Web Vitals. Authenticated measurements blocked by absent credentials.",
+  "results": [
+    {
+      "path": "/",
+      "ttfbMs": 134.80000000004657,
+      "domContentLoadedMs": 186.10000000009313,
+      "loadMs": 408.5,
+      "fcpMs": 348,
+      "lcpMs": 348
+    },
+    {
+      "path": "/login",
+      "ttfbMs": 85.19999999995343,
+      "domContentLoadedMs": 133.89999999990687,
+      "loadMs": 264.10000000009313,
+      "fcpMs": 236,
+      "lcpMs": 236
+    },
+    {
+      "path": "/pricing",
+      "ttfbMs": 9.700000000186265,
+      "domContentLoadedMs": 101.30000000004657,
+      "loadMs": 191.30000000004657,
+      "fcpMs": 120,
+      "lcpMs": 120
+    }
+  ]
+}

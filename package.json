@@ -1,0 +1,52 @@
+{
+  "name": "sakuga",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node --use-env-proxy node_modules/next/dist/bin/next dev --hostname 0.0.0.0",
+    "build": "next build --webpack",
+    "start": "node --use-env-proxy node_modules/next/dist/bin/next start --hostname 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run --exclude tests/integration/live.test.ts",
+    "test:integration": "vitest run tests/integration/database.test.ts",
+    "test:e2e": "playwright test",
+    "db:setup": "supabase db push",
+    "seed": "node --use-env-proxy --import tsx scripts/ingest.ts --pages=1",
+    "catalog:ingest": "node --use-env-proxy --import tsx scripts/ingest.ts",
+    "catalog:verify": "node --use-env-proxy --import tsx scripts/verify.ts",
+    "test:live": "vitest run tests/integration/live.test.ts",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/newsreader": "^5.3.0",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.80.0",
+    "lucide-react": "^0.468.0",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "server-only": "^0.0.1",
+    "stripe": "^19.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@electric-sql/pglite": "^0.5.14",
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.0.0",
+    "prettier": "^3.9.10",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "type": "module"
+}
