@@ -1,8 +1,8 @@
 # Production setup
 
-Vercel: existing `sakuga` project `prj_jigbpVE0uZadIAZoRyhYPViHW2gc`, team `team_zQJh0y9soqRrLxA9F2AChFKO`, canonical URL https://sakuga-pink.vercel.app . Next.js, Node 24.x, `npm ci`, `npm run build`.
+Vercel: existing `sakuga` project `prj_jigbpVE0uZadIAZoRyhYPViHW2gc`, team `team_zQJh0y9soqRrLxA9F2AChFKO`, canonical URL https://sakuga-anime.vercel.app (the existing pink alias redirects there) . Next.js, Node 24.x, `npm ci`, `npm run build`.
 
-Supabase: `Sakuga`, ref `odqnbkbffzpdphsyeryf`, Assirem's Org, US East (Ohio). Four committed migrations match applied production migration versions. All application tables have RLS; private billing and operator tables have no client write path. Modern publishable key and project URL are configured for all Vercel environments. Production SITE_URL is configured. The public health endpoint `/api/health` checks actual published title count and database connectivity.
+Supabase: `Sakuga`, ref `odqnbkbffzpdphsyeryf`, Assirem's Org, US East (Ohio). Four committed migrations match applied production migration versions. All application tables have RLS; private billing and operator tables have no client write path. Modern publishable key and project URL are configured for all Vercel environments. Production SITE_URL uses the canonical anime domain. AUTH_CALLBACK_ORIGIN preserves the owner-approved pink callback alias during the existing redirect. The public health endpoint `/api/health` checks actual published title count and database connectivity.
 
 ## Remaining owner configuration
 
@@ -22,3 +22,5 @@ Supabase Cron job `sakuga-catalog-refresh` runs once per minute via pg_net. A hi
 Run typecheck, lint, unit/database tests, production build, and public desktop/mobile browser tests. Confirm `/api/health` on the actual deployment returns ready and the expected real count. Confirm anonymous private-route redirect, real search, a representative detail, source attribution and cover image responses. Private library RLS was exercised by 23 hosted backend assertions in addition to local integration tests. The operator-only hosted check endpoint is disabled after the run; its source remains for explicit future deployment on a disposable project.
 
 Do not reset this production database to run tests. Do not expose service keys in NEXT_PUBLIC variables or client code. Default ad scripts remain off.
+
+Current deployment confirmed READY: `dpl_7wNzizLhFWgNDT9Zs178vZYkS7Hv`, commit `b84bea8`. The publicly fetched `/api/health` returned ready with 20,087 titles. A small follow-up release aligns canonical site links with the pre-existing sakuga-anime alias while preserving the approved pink email callback.

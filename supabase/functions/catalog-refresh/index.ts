@@ -14,11 +14,14 @@ Deno.serve(async(req:Request)=>{
  if(hash!==JOB_KEY_SHA256)return new Response("Unauthorized",{status:401});
  const {data:locked,error:lockError}=await client.rpc("claim_catalog_refresh");
  if(lockError||!locked)return Response.json({status:"busy"},{status:202});
+ const body=await req.json().catch(()=>({}));
+ const priority=Array.isArray(body.priority_ids)&&body.priority_ids.length>0&&body.priority_ids.length<=40&&body.priority_ids.every((id:unknown)=>typeof id==="number"&&Number.isSafeInteger(id)&&id>0)?body.priority_ids as number[]:null;
  let cursor=0;
  try{
  const {data:job,error}=await client.from("ingestion_jobs").select("page").eq("provider","catalog-enrichment").single();if(error)throw error;cursor=job.page;
- const {data:batch,error:readError}=await client.from("anime").select("id,moderation").gt("id",cursor).order("id").limit(40);if(readError)throw readError;
- if(!batch?.length){check(await client.from("ingestion_jobs").update({page:0,status:"complete",last_error:null,updated_at:new Date().toISOString()}).eq("provider","catalog-enrichment"));return Response.json({status:"complete"});}
+ const selection=client.from("anime").select("id,moderation");
+ const {data:batch,error:readError}=await (priority?selection.in("id",priority):selection.gt("id",cursor)).order("id").limit(40);if(readError)throw readError;
+ if(!batch?.length){if(priority)return Response.json({processed:0,cursor});check(await client.from("ingestion_jobs").update({page:0,status:"complete",last_error:null,updated_at:new Date().toISOString()}).eq("provider","catalog-enrichment"));return Response.json({status:"complete"});}
  const query=`query($ids:[Int]){Page(perPage:50){media(id_in:$ids,type:ANIME){id idMal title{english romaji native} description(asHtml:false) bannerImage coverImage{large} averageScore popularity isAdult genres episodes duration season seasonYear status studios(isMain:true){nodes{name}}}}}`;
  const body=await provider("https://graphql.anilist.co",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,variables:{ids:batch.map(a=>a.id)}})});
  if(body.errors||!Array.isArray(body.data?.Page?.media))throw new Error("AniList response unavailable");
@@ -40,7 +43,7 @@ Deno.serve(async(req:Request)=>{
   const kid=kitsu.get(a.id);if(!kid)return;
   try{const result=await provider(`https://kitsu.io/api/edge/anime/${encodeURIComponent(kid)}`);const v=result.data?.attributes;if(!v)throw Error('Kitsu response unavailable');const score=v.averageRating==null?null:Number(v.averageRating);if(score!==null&&(!Number.isFinite(score)||score<0||score>100))throw Error('Invalid Kitsu score');check(await client.from("ratings").upsert({anime_id:a.id,provider:"kitsu",score,scale:100,votes:null,refreshed_at:now},{onConflict:"anime_id,provider"}));kitsuUpdated++;}catch{failures.push(String(a.id));}
  }));}
- cursor=batch[batch.length-1].id;
+ if(!priority)cursor=batch[batch.length-1].id;
  check(await client.from("ingestion_jobs").update({page:cursor,status:"running",last_error:failures.length?`Kitsu refresh failed for ${failures.length} titles; retried next cycle`:null,updated_at:now}).eq("provider","catalog-enrichment"));
  return Response.json({processed:items.length,kitsuUpdated,cursor,partialFailures:failures.length});
  }catch(e){const message=e instanceof Error?e.message:'Refresh failed';await client.from("ingestion_jobs").update({status:"failed",last_error:message.slice(0,200),updated_at:new Date().toISOString()}).eq("provider","catalog-enrichment");return Response.json({error:message},{status:502});}

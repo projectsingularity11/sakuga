@@ -28,7 +28,8 @@ export async function authenticate(form: FormData) {
   const client = await db();
   const email = z.email().parse(form.get("email"));
   const password = String(form.get("password") || "");
-  const origin = process.env.NEXT_PUBLIC_SITE_URL;
+  const origin =
+    process.env.AUTH_CALLBACK_ORIGIN || process.env.NEXT_PUBLIC_SITE_URL;
   if (!origin) redirect("/login?notice=setup");
   let error;
   if (mode === "reset") {
