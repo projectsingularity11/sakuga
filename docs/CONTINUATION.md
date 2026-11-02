@@ -19,3 +19,11 @@ Auth URL configuration was saved by the owner and verified remotely: Supabase re
 Local production performance sample: homepage LCP 616 ms / TTFB 339 ms; fresh desktop Chromium, no throttling, single local sample. This is not a production/field performance claim.
 
 Homepage spotlight refresh also completed successfully for all 10 selected real works, with AniList metadata and Kitsu updates. The checkpoint for the full sweep was preserved.
+
+## Final release verification
+
+Vercel production deployment `dpl_EbRVWd1q7z5yFbc4aaSuTPWjzpy6` (commit `dda51fc`) is READY at https://sakuga-anime.vercel.app. Public HTTP checks, without Vercel authorization/bypass tokens, returned: health 200/ready (20,096 published at check time), Frieren search 200 with matching title and no catalog error, Frieren detail 200 with refreshed metadata, private library 307 to login preserving the destination. Classification counts change as the live source refresh runs.
+
+Vercel's connected web-fetch helper could not resolve these aliases; the public checks above ran through the Supabase-hosted operator smoke helper instead. No authenticated production browser audit is claimed.
+
+Vercel skips frontend rebuilds for commits limited to docs, review artifacts and separately deployed Supabase Edge Functions. Frontend/config/dependency changes still build normally. The operator helper now also supports public production smoke and approved Auth redirect checks with the same restricted invocation authentication.

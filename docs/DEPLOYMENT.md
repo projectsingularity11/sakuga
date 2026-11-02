@@ -24,3 +24,5 @@ Run typecheck, lint, unit/database tests, production build, and public desktop/m
 Do not reset this production database to run tests. Do not expose service keys in NEXT_PUBLIC variables or client code. Default ad scripts remain off.
 
 Current deployment confirmed READY: `dpl_7wNzizLhFWgNDT9Zs178vZYkS7Hv`, commit `b84bea8`. The publicly fetched `/api/health` returned ready with 20,087 titles. A small follow-up release aligns canonical site links with the pre-existing sakuga-anime alias while preserving the approved pink email callback.
+
+Final production release: `dpl_EbRVWd1q7z5yFbc4aaSuTPWjzpy6`, commit `dda51fc`, READY. Health/search/detail/anonymous private-route checks passed against the public canonical alias. Documentation and Edge Function-only commits skip Vercel rebuilds; Edge Functions are deployed separately via Supabase.

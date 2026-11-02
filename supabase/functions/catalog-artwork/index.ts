@@ -4,10 +4,19 @@ Deno.serve(async(req:Request)=>{
  const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(req.headers.get('x-sakuga-job-key')||'')))).map(b=>b.toString(16).padStart(2,'0')).join('');
  if(req.method!=='POST'||hash!==JOB_KEY_SHA256)return new Response('Unauthorized',{status:401});
  const body=await req.json();
+ if(body.check==='production-smoke') {
+  const outcomes=[];
+  for(const path of ['/api/health','/discover?q=Frieren','/anime/154587','/app/library']) {
+   const response=await fetch('https://sakuga-anime.vercel.app'+path,{redirect:'manual',signal:AbortSignal.timeout(20000)});
+   const text=await response.text();
+   outcomes.push({path,status:response.status,location:response.headers.get('location'),hasFrieren:text.includes('Frieren'),catalogUnavailable:text.includes('The catalog is taking a moment'),health:path==='/api/health'?text:undefined});
+  }
+  return Response.json({outcomes});
+ }
  if(body.check==='auth-redirects') {
   const base=Deno.env.get('SUPABASE_URL')!+'/auth/v1/verify?token=invalid-sakuga-config-check&type=signup';
   const outcomes=[];
-  for(const target of ['', '&redirect_to='+encodeURIComponent('https://sakuga-pink.vercel.app/auth/callback')]) {
+  for(const target of ['', '&redirect_to='+encodeURIComponent('https://sakuga-pink.vercel.app/auth/callback'), '&redirect_to='+encodeURIComponent('https://sakuga-pink.vercel.app/auth/callback?next=/reset-password')]) {
    const response=await fetch(base+target,{redirect:'manual',signal:AbortSignal.timeout(10000)});
    outcomes.push({status:response.status,location:response.headers.get('location')});
   }
