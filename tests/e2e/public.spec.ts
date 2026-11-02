@@ -117,3 +117,18 @@ test("database and trailer searches are explicit and every card has visual artwo
   await expect(images).toHaveCount(1);
   await expect(images.first()).toBeVisible();
 });
+test("light appearance keeps shared glass and source controls readable", async ({
+  page,
+}) => {
+  const { default: AxeBuilder } = await import("@axe-core/playwright");
+  for (const route of ["/", "/discover"]) {
+    await page.goto(route);
+    await page.evaluate(() => {
+      document.documentElement.dataset.appearance = "light";
+    });
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag22aa"])
+      .analyze();
+    expect(result.violations).toEqual([]);
+  }
+});

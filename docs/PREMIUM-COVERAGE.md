@@ -15,3 +15,5 @@ Checks: 36 deterministic tests passed, including link validation/search encoding
 No user accounts, libraries or collections were reset. No account-deletion capability or payment configuration was enabled by this update.
 
 The verified link importer also backfills missing English names from the matched Wikidata entity’s English label, with source provenance. It never overwrites an existing English title or IMDb match. The additional integration test verifies client execution is denied and service-role enrichment is idempotent.
+
+Final appearance verification also covers light-mode glass/source-control contrast. Bulk title enrichment is followed by fresh catalog statistics; the table auto-analyze threshold is reduced so metadata refreshes do not leave search plans stale. Exact provenance checks imported 5,227 IMDb mappings across the whole catalog; publication filtering makes the public count lower. A subsequent AniList/MAL/Wikidata English-label pass filled more missing source-backed names without replacing existing names.

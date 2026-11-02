@@ -3361,3 +3361,18 @@ footer > a:first-child {
     height: 185px;
   }
 }
+:root[data-appearance="light"] {
+  --accent-ink: #8f381e;
+}
+.cinema-home {
+  --glass-surface: rgba(30, 33, 39, 0.78);
+  --glass-edge: rgba(255, 255, 255, 0.12);
+  --accent-ink: #ffc3a8;
+}
+.public-nav nav a[aria-current="page"],
+.public-nav nav a:hover,
+.card-list-action,
+.card-sources > a:hover,
+.media-links a:hover {
+  color: var(--accent-ink);
+}
