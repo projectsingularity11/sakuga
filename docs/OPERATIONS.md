@@ -1,3 +1,5 @@
+Production now uses Supabase Cron + catalog-refresh with AniList/Kitsu; see DEPLOYMENT.md and PROVIDERS.md for current configuration. Older standalone AniList/MAL operator commands below remain optional.
+
 # Operations runbook
 
 ## Development environment

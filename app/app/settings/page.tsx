@@ -48,18 +48,25 @@ export default async function Page() {
             your account ID for reconciliation; Stripe retains records under its
             own policy.
           </p>
-          <form action={deleteAccount} className="stack">
-            <label>
-              Type DELETE to confirm
-              <input
-                name="confirm"
-                required
-                pattern="DELETE"
-                autoComplete="off"
-              />
-            </label>
-            <button className="danger">Permanently delete account</button>
-          </form>
+          {process.env.ACCOUNT_DELETION_ENABLED === "true" ? (
+            <form action={deleteAccount} className="stack">
+              <label>
+                Type DELETE to confirm
+                <input
+                  name="confirm"
+                  required
+                  pattern="DELETE"
+                  autoComplete="off"
+                />
+              </label>
+              <button className="danger">Permanently delete account</button>
+            </form>
+          ) : (
+            <p role="status">
+              Account deletion is awaiting activation. Your account data stays
+              private; you can export your library above.
+            </p>
+          )}
         </details>
       </section>
     </>

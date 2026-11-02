@@ -38,7 +38,7 @@ try {
   const report = {
     measuredAt: new Date().toISOString(),
     conditions:
-      "Single sample per route, local production server, Chromium 1440x1000, fresh browser context per route, no CPU/network throttling. Not a Lighthouse score or field Core Web Vitals. Authenticated measurements blocked by absent credentials.",
+      "Single sample per route, local production server, Chromium 1440x1000, fresh browser context per route, no CPU/network throttling. Not a Lighthouse score or field Core Web Vitals. Authenticated browser measurements were not collected; hosted backend auth tests ran separately.",
     results,
   };
   await writeFile(

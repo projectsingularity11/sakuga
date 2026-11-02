@@ -10,7 +10,7 @@ beforeAll(async () => {
     `create role anon;create role authenticated;create role service_role bypassrls;create schema auth;create table auth.users(id uuid primary key);create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;grant usage on schema auth to authenticated;grant execute on function auth.uid() to authenticated;`,
   );
   await db.exec(
-    readFileSync("supabase/migrations/202611010001_core.sql", "utf8"),
+    readFileSync("supabase/migrations/20261102011112_sakuga_core.sql", "utf8"),
   );
   await db.exec(
     `grant usage on schema public to anon,authenticated;grant select on all tables in schema public to anon;grant select,insert,update,delete on all tables in schema public to authenticated;grant usage on all sequences in schema public to authenticated;insert into auth.users(id) values('${alice}'),('${bob}');insert into public.anime(id,title,episodes,moderation,moderation_reason) values(1,'Eligible work',12,'published','Test fixture'),(2,'Quarantined work',null,'quarantine','Ambiguous'),(3,'Excluded work',null,'excluded','Explicit');`,

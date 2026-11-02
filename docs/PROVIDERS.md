@@ -1,29 +1,34 @@
-# Data sources, attribution and approval gate
+# Catalog sources and content policy
 
-## Verification status
+## Production sources
 
-Provider documentation requests were attempted on 2026-11-01. The environment proxy returned HTTP 403 for `docs.anilist.co`, `myanimelist.net` and `kitsu.docs.apiary.io`. Current terms, rate limits and image/commercial redistribution rights therefore **have not been verified**. Imports default to disabled (`PROVIDER_TERMS_APPROVED=false`). No provider data has been imported or represented as approved for commercial launch.
+The initial catalog imports the **2026-27 anime-offline-database release (2026-07-04)** by manami-project, licensed under ODbL 1.0 + DbCL 1.0. Original source: https://github.com/manami-project/anime-offline-database . License: https://github.com/manami-project/anime-offline-database/blob/2026-27/LICENSE . The original download is public at https://github.com/manami-project/anime-offline-database/releases/download/2026-27/anime-offline-database-minified.json . Preserve attribution and the license when redistributing the database. Provide the corresponding derivative database under the applicable ODbL terms; the original snapshot and committed deterministic importer reproduce the baseline. Private user libraries, notes and accounts are separate tables and are never included in public database exports.
 
-Before enabling, the owner must review and retain the current authoritative terms, permitted commercial usage, caching/refresh intervals, attribution, redistribution, image rights and authentication scopes. AniList may require commercial approval depending on use; do not assume its public endpoint permits building a competing commercial database. A boolean is an operational acknowledgement, not a legal license.
+The baseline supplies actual works, synonyms, release format/year/season, known episodes/runtime, studios, genres and explicit cross-provider IDs. Only records with canonical AniList IDs are imported. The source's aggregate scores are deliberately **not** stored as individual provider ratings. The source does not supply synopses or native/English title variants; those fields are populated by the live refresh rather than fabricated.
 
-## Implemented adapters, awaiting live verification
+- **AniList:** official GraphQL https://graphql.anilist.co . Original score /100, titles, synopsis, artwork, genres, episode metadata, classification, and membership popularity. Popularity is not a rating vote count. Documentation: https://docs.anilist.co .
+- **Kitsu:** official JSON API https://kitsu.io/api/edge/anime/{id} using the dataset's explicit Kitsu mapping. Original averageRating /100. userCount is a membership count and is NOT displayed as scoring votes. Documentation: https://kitsu.docs.apiary.io .
+- **MyAnimeList:** baseline explicit source links and cover URLs. The optional official API adapter remains available with MAL_CLIENT_ID; live MAL scores are not claimed without that credential.
+- **Anime-Planet:** no scraping or scores.
 
-- **AniList:** official `https://graphql.anilist.co` GraphQL endpoint. Public anime query; original scores /100. Popularity is AniList membership/popularity, not number of ratings. We do not display that count as votes. Sort by `POPULARITY_DESC, ID`, page size 50. More pages replace excluded candidates. Official docs: https://docs.anilist.co/guide/api-requests and https://docs.anilist.co/terms-of-use . Review current limits before running. Default pacing exceeds 2 seconds between pages; Retry-After and bounded exponential jitter handle retryable HTTP failures.
-- **MyAnimeList:** official `https://api.myanimelist.net/v2/anime/{id}` API, requires owner-supplied `MAL_CLIENT_ID`. Uses `mean` /10, `num_scoring_users` (actual scoring count) and `rating` classification. Uses AniList's explicit `idMal`, with manual override support. Default per-entry pacing is 1.2 seconds, configurable in code only after policy review. Official reference: https://myanimelist.net/apiconfig/references/api/v2 . No user-list scraping.
-- **Kitsu:** investigated as a candidate; no adapter shipped because policy verification and a trustworthy cross-provider mapping were unavailable. No Kitsu ratings are claimed.
-- **Anime-Planet:** not integrated. No scraping or bypass attempted.
+The production catalog-refresh Edge Function has returned real successful AniList and Kitsu updates. Its scheduled refresh processes 40 IDs per invocation with four concurrent Kitsu requests. Errors are checkpointed, requests time out, overlapping runs are excluded by a database lease, and failed secondary ratings remain missing. A full sweep cycles back to the first ID. Report actual field coverage from SQL, not the number of imported rows.
 
-## Required network destinations (owner settings)
+## Screening
 
-Documentation: `docs.anilist.co`, `myanimelist.net`, `kitsu.docs.apiary.io`.
-Runtime: `graphql.anilist.co`, `api.myanimelist.net`, your exact `<project-ref>.supabase.co`, `api.stripe.com`.
-Browser images (only if rights cleared): `s4.anilist.co`, `cdn.myanimelist.net`; Kitsu hosts are reserved in URL validation but not used by an active adapter.
-Preserve existing package-manager rules when adding destinations. Do not replace an unknown allowlist. Runtime tests have not verified access to these destinations.
+Pornography/hentai and explicit sexual classification tags are excluded. Borderline porn, erotica, adult-audience-only classifications and untagged records are quarantined. Gore, adult casts, mature stories, ecchi and violence alone do not exclude a work. Public RLS restricts canonical records, mappings and ratings to published works. AniList refresh reapplies its adult/content classifications; operator overrides always take precedence. Source labels are imperfect, so reporting and manual review remain necessary. This is automated screening, not certification that every record has had a human review.
 
-## Catalog and moderation methodology
+## Rights and operating limits
 
-Distinct works are one AniList ID; TV, movie, OVA, ONA, special and other source works may qualify. Individual episode rows and aliases do not increase the count. Manual mapping review handles identified mistakes; no fuzzy title merges. Potential duplicate `(title,year,format)` groups are reported for review. Popularity is one provider's ordering, never “the world's top 10,000.” Equal values use ID order; null popularity appears after known values in the app. The date in `updated_at` and ingestion job timestamps identifies the actual snapshot; no snapshot exists yet.
+ODbL licenses the metadata database; it does not transfer copyright in anime artwork or guarantee every upstream API's commercial terms. Covers retain their original source attribution. The original homepage scene is generated for Sakuga. Authoritative provider terms/reference pages were inaccessible from this workspace's network, so current commercial API permission and image redistribution terms still require owner review before a commercial launch. Do not treat this document as legal approval.
 
-Hentai/pornography genres and explicit MAL Rx classifications are excluded. AniList adult flags quarantine ambiguous works. Ecchi, violence and other mature themes alone do not exclude a title. Review ambiguity manually before publication. The override table records decision, reason, actor and time. Restricted artwork URLs are cleared, public RLS prevents metadata/score/mapping reads, and only published records are queried across surfaces. Automated labels are imperfect; reports and operator review are necessary.
+## Reproduce the baseline
 
-Ratings are original source values. Missing values remain null. No synthetic consensus exists. A filter on a /10 threshold divides AniList /100 by ten; original displayed scores stay unchanged. Provider audiences are not independent or interchangeable. Detail pages show source links and refresh dates; mappings must be verified to be visible. Image rights and branding/attribution wording require owner approval before launch.
+Download the named release above, then run:
+
+```sh
+npm run catalog:import-offline -- --file=/path/to/anime-offline-database-minified.json --dry-run
+npm run catalog:import-offline -- --file=/path/to/anime-offline-database-minified.json
+npm run catalog:verify
+```
+
+Normal import requires server database credentials. `--sql-dir=/tmp/sakuga-import` generates transaction batches for a trusted SQL operator instead, without credentials. Existing titles and reviewed mappings are preserved. Use the same release for identical counts; `latest` can change.

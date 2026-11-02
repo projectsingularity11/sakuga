@@ -1,23 +1,14 @@
-# Validation evidence
+# Verification
 
-Validated on 2026-11-01 in the cloud development workspace, with no external project credentials.
+Run date: November 1, 2026 (America/Chicago).
 
-| Check                                          | Outcome                                                                                                            |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| Production build (`npm run build`)             | Passed with Next.js 16.4.3 / Node 24.19.0                                                                          |
-| TypeScript / ESLint                            | Passed                                                                                                             |
-| Unit + embedded Postgres integration           | 28 passed: 17 domain, 3 provider adapter, 8 database tests                                                         |
-| Desktop/mobile Playwright                      | 6 passed; homepage/auth/pricing, anonymous protection, keyboard entry, axe scans                                   |
-| Production dependency audit                    | 0 vulnerabilities reported                                                                                         |
-| Homepage visual review                         | Sole mobile overlap resolved; scoped ship verdict; private UI not certified                                        |
-| Ingestion CLI                                  | Correctly refuses without provider terms approval                                                                  |
-| Catalog verification CLI                       | Correctly refuses without Supabase server configuration                                                            |
-| Hosted Supabase integration                    | Not run: credentials/test project unavailable                                                                      |
-| Authenticated end-to-end journey               | Implemented opt-in, not run: credentials/test catalog unavailable                                                  |
-| Stripe test checkout/webhook delivery          | Not run: Stripe credentials unavailable; database event idempotency/refund/deleted-account behavior tested locally |
-| Production catalog count / two-source coverage | Unverified; no production database or import                                                                       |
-| Vercel deployment                              | Not performed; no authorized project or live URL                                                                   |
+- Production Next.js build passed, TypeScript passed, lint passed.
+- 28 unit/provider/embedded Postgres integration assertions passed. These include ownership, library uniqueness/progress/history, collection ownership, payment idempotency/refund logic, atomic imports and mapping/moderation behavior.
+- Six desktop/mobile Playwright checks passed (1440×1000 and 390×844). Public/auth navigation, anonymous private boundary, responsive overflow, homepage artwork, keyboard skip link, and axe WCAG-tagged scans for homepage/login/pricing. This is not certification or an authenticated-page visual audit.
+- 23 **hosted** backend assertions passed using two isolated, confirmed test accounts: account creation/password login, profile trigger, library create/uniqueness/progress persistence, cross-user read/write denial, client entitlement denial, theme save/reload, collections/membership/ownership, private statistics, restricted catalog hiding, real title search, session restoration, logout. Test accounts were signed out and banned after the checks, not deleted. The hosted check endpoint was disabled afterward.
+- Real Edge Function responses showed successful AniList and Kitsu updates with no partial failures on the sampled runs. Original ratings remain attributed and retain /100 scales; membership counts are not scoring vote counts.
+- Supabase security advisor: SQL function search paths and extension schema warnings were fixed. Remaining operator-table no-policy notices are intentional deny-all RLS. Leaked-password protection remains an Auth configuration warning requiring owner settings.
 
-The embedded database uses real Postgres via PGlite and executes the full migration, with a small `auth` harness standing in for Supabase-managed identity. It verifies SQL constraints and RLS, not Supabase email delivery, hosted JWT infrastructure, or Stripe signature/event delivery. The actual webhook signature code uses Stripe's official SDK and still requires provider-level testing.
+Production count, complete import status, metadata coverage and deployment evidence are recorded in CONTINUATION.md. The 10,000-title target is an actual database query, never a marketing constant. Every-field completeness is not claimed; background enrichment and missing upstream values are explicit.
 
-Local public performance: see [performance.json](performance.json). Single unthrottled desktop Chromium sample per route, fresh browser context, local production server. Homepage TTFB ~135ms / LCP 348ms; login TTFB ~85ms / LCP 236ms; pricing TTFB ~10ms / LCP 120ms. These are development-machine measurements, not production/field Core Web Vitals. Authenticated routes and large libraries were not measured.
+Email delivery/production callback and recovery, authenticated browser screenshots, large-library timings, Stripe test-mode checkout/webhooks and account deletion are not marked passed. See DEPLOYMENT.md for the precise remaining configuration/approval boundaries.

@@ -1,0 +1,11 @@
+grant usage on schema public to anon, authenticated, service_role;
+grant select on public.anime,public.source_mappings,public.ratings to anon,authenticated;
+grant select,update on public.profiles to authenticated;
+grant select,insert,update,delete on public.library,public.collections,public.collection_members to authenticated;
+grant select on public.viewing_events,public.entitlements,public.purchases to authenticated;
+grant select,insert on public.content_reports to authenticated;
+grant all on all tables in schema public to service_role;
+grant usage,select on all sequences in schema public to service_role;
+revoke execute on function public.new_profile() from public,anon,authenticated;
+revoke execute on function public.log_progress() from public,anon,authenticated;
+revoke execute on function public.enforce_override() from public,anon,authenticated;

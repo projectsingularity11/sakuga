@@ -1,24 +1,24 @@
-# Deployment to Vercel (not performed)
+# Production setup
 
-1. Identify your intended Supabase and Vercel projects. No resources have been created or changed remotely by this task. Never use a production reset for testing.
-2. Install Supabase CLI using official instructions. Authenticate through your normal secure workflow, link the intended project (`supabase link --project-ref YOUR_REF`), review the migration, then `npm run db:setup`. The committed SQL enables all required RLS and service-only billing/health functions. Back up an existing database first; this initial migration is meant for an empty dedicated project.
-3. In Supabase Auth enable email sign-in, email confirmation and production SMTP. Set Site URL to the production origin. Add exact callback URLs for localhost, production and each approved preview deployment; callback `/auth/callback`, password recovery `/auth/callback?next=/reset-password`. Do not use unrestricted redirect wildcards. Exercise signup, confirmation, login, session refresh, recovery, logout and deletion against the actual project.
-4. Configure `.env.example` names in Vercel. `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are intentionally public, protected by RLS. `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and `MAL_CLIENT_ID` are server-only. Use the production canonical `NEXT_PUBLIC_SITE_URL` and correct per-preview origin. Keys must never be committed.
-5. Use Stripe **test mode first**. Configure `/api/webhook` for `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `charge.refunded`, `charge.dispute.created`, `charge.dispute.closed`. Hosted checkout creates the fixed $5 price server-side. Verify Stripe signature failures, retries, repeated delivery, delayed payments and refund/dispute revocation before live mode. No payment has been initiated. A won dispute may still require operator reconciliation if Stripe retains the disputed charge marker; do not manually grant by browser state.
-6. Review provider commercial/redistribution/image permissions and network access per PROVIDERS.md. Run development seed against a nonproduction database, then the long-running importer on a suitable worker/operator machine. Resume interruptions, verify >10,000 distinct eligible works and at least two real ratings sources. Do not run the entire import inside a Vercel HTTP handler.
-7. In Vercel select the existing intended account/project, Node 24, Next.js framework, build `npm run build`, install `npm ci`, default Next.js output. This repository needs no custom cron. Do not deploy without identifying and authorizing the target project. Build success is not deployment success.
-8. Run the smoke checklist below; only then authorize a production launch. Source image hosts are explicitly configured; CSP restricts scripts/connect/frame/image destinations. Add a custom Supabase domain to CSP before using one.
+Vercel: existing `sakuga` project `prj_jigbpVE0uZadIAZoRyhYPViHW2gc`, team `team_zQJh0y9soqRrLxA9F2AChFKO`, canonical URL https://sakuga-pink.vercel.app . Next.js, Node 24.x, `npm ci`, `npm run build`.
 
-## Production acceptance / smoke checklist
+Supabase: `Sakuga`, ref `odqnbkbffzpdphsyeryf`, Assirem's Org, US East (Ohio). Four committed migrations match applied production migration versions. All application tables have RLS; private billing and operator tables have no client write path. Modern publishable key and project URL are configured for all Vercel environments. Production SITE_URL is configured. The public health endpoint `/api/health` checks actual published title count and database connectivity.
 
-- Public marketing accessible without login; anonymous `/app/*` redirects, private responses no-store.
-- Two disposable users cannot read/write each other's notes, progress, collections or purchases.
-- All auth flows including recovery and refresh verified with production redirect/SMTP configuration.
-- Import real catalog, inspect reports/quarantine, run `catalog:verify`, review duplicate groups and two-source coverage.
-- Search English/romaji/native/synonyms, combine filters, view source scores, add/update/remove progress, collect and smart-filter, save/reload themes, export/import.
-- Stripe test success does not grant access until signed webhook; retries idempotent, refunds revoke.
-- Confirm no ads or ad scripts by default, or before consent/for entitled accounts when a network is later integrated.
-- Validate desktop/mobile/keyboard and measure representative authenticated pages, including a large library.
-- Supply privacy contact/business identity/refund/jurisdiction policies and obtain legal review. Configure operational alerting and database backups.
+## Remaining owner configuration
 
-No live URL exists from this task. Publication of a cloud development environment is separate from Vercel application deployment.
+1. **Auth URLs:** https://supabase.com/dashboard/project/odqnbkbffzpdphsyeryf/auth/url-configuration . Site URL `https://sakuga-pink.vercel.app`. Add exact redirect URLs `https://sakuga-pink.vercel.app/auth/callback` and `https://sakuga-pink.vercel.app/auth/callback?next=/reset-password`. Add localhost only for deliberate development. The available connected tools cannot change Auth configuration; the owner saved these settings and remote verification confirmed both the production root and exact callback redirect destinations. Password login/session restoration were verified against actual confirmed disposable accounts. Signup email delivery and recovery still require a real inbox check. Configure production SMTP for public signup scale and enable leaked-password protection if the plan supports it.
+2. **Billing:** the installed Vercel integration supplies `Sakuga_STRIPE_SECRET_KEY`; the app now recognizes that name. Checkout stays disabled until STRIPE_WEBHOOK_SECRET and SUPABASE_SERVICE_ROLE_KEY are securely configured. Register `/api/webhook` in Stripe test mode for `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `charge.refunded`, `charge.dispute.created`, `charge.dispute.closed`. Test signed webhook delivery/idempotency/refunds before live purchases. No payment was initiated and no paid entitlement was invented.
+3. **Account deletion:** the implementation is in `supabase/functions/account-delete/index.ts`. Automatic approval review rejected deployment because permanent deletion requires specific owner authorization. The endpoint remains undeployed; ACCOUNT_DELETION_ENABLED defaults false and settings accurately show the unavailable state. After approval, deploy the function, verify with a disposable account, then set ACCOUNT_DELETION_ENABLED=true in Vercel and redeploy. Never enable the flag before deployment.
+4. **Commercial launch:** confirm upstream API and artwork permissions; supply business/privacy contacts and reviewed policies. This is separate from verified technical deployment.
+
+## Catalog operation
+
+The ODbL baseline is imported using the committed deterministic script. It stores canonical AniList IDs and preserves reviewed mappings. The scheduled Supabase catalog-refresh function then fills source metadata and individual AniList/Kitsu scores. A real catalog row count does not imply every synopsis or score is available. See PROVIDERS.md and VALIDATION.md for actual coverage.
+
+Supabase Cron job `sakuga-catalog-refresh` runs once per minute via pg_net. A high-entropy scoped invocation key lives in Supabase Vault as `sakuga_catalog_job_key`; only its SHA-256 verification digest is committed. The endpoint additionally requires a valid project JWT. Database leases prevent overlapping refreshes. Catalog work never runs inside a Vercel request. Inspect `ingestion_jobs`, `cron.job_run_details`, `net._http_response`, and `catalog_health()` through an authorized operator. The net response table is server-only and may hold operator test results; never grant it to clients.
+
+## Release verification
+
+Run typecheck, lint, unit/database tests, production build, and public desktop/mobile browser tests. Confirm `/api/health` on the actual deployment returns ready and the expected real count. Confirm anonymous private-route redirect, real search, a representative detail, source attribution and cover image responses. Private library RLS was exercised by 23 hosted backend assertions in addition to local integration tests. The operator-only hosted check endpoint is disabled after the run; its source remains for explicit future deployment on a disposable project.
+
+Do not reset this production database to run tests. Do not expose service keys in NEXT_PUBLIC variables or client code. Default ad scripts remain off.

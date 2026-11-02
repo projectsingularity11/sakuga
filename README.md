@@ -1,10 +1,12 @@
 # Sakuga
 
-A personal anime sanctuary built with Next.js App Router, strict TypeScript, Supabase Postgres/Auth and Stripe Checkout. **Not launched:** real provider ingestion, hosted auth and Stripe end-to-end tests require external setup. No mock catalog or invented ratings are used.
+A personal anime sanctuary built with Next.js App Router, strict TypeScript, Supabase Postgres/Auth and Stripe Checkout. The existing Vercel project is connected to the production Supabase project; the real licensed catalog, scheduled provider enrichment, public discovery and private library backend are implemented. Email URL/SMTP setup, payment credentials and account-deletion approval remain explicit launch boundaries. No mock catalog or invented ratings are used. See docs/CONTINUATION.md for live deployment and catalog evidence.
 
 ## Local development
 
 Requires Node 24 (tested: 24.19.0), npm 11. Run `npm ci`, copy `.env.example` to `.env.local` and configure it securely, then `npm run dev`. Without keys the public site and auth-unavailable states run; private routes redirect to login. Do not put server keys in `NEXT_PUBLIC_*` variables.
+
+The modern `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is preferred; the legacy anon-key name remains supported. Public browsing does not require login.
 
 ## Commands
 

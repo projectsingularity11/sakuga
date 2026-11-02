@@ -4,12 +4,16 @@ export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
   if (
     !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    !(
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    )
   )
     return response;
   const client = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)!,
     {
       cookies: {
         getAll: () => request.cookies.getAll(),
@@ -23,7 +27,21 @@ export async function proxy(request: NextRequest) {
       },
     },
   );
-  await client.auth.getUser();
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+  if (!user && request.nextUrl.pathname.startsWith("/app")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.search = "";
+    url.searchParams.set(
+      "next",
+      request.nextUrl.pathname + request.nextUrl.search,
+    );
+    const login = NextResponse.redirect(url);
+    response.cookies.getAll().forEach((cookie) => login.cookies.set(cookie));
+    return login;
+  }
   return response;
 }
 export const config = {

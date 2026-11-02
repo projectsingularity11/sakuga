@@ -1,5 +1,5 @@
 import { account } from "@/app/actions";
-import { stripe } from "@/lib/billing";
+import { stripe, purchasesConfigured } from "@/lib/billing";
 export async function POST(request: Request) {
   const { client, user } = await account();
   const origin = process.env.NEXT_PUBLIC_SITE_URL;
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     request.headers.get("origin") !== new URL(origin).origin
   )
     return Response.json({ error: "Invalid request origin" }, { status: 403 });
-  if (!process.env.STRIPE_SECRET_KEY)
+  if (!purchasesConfigured())
     return Response.json(
       { error: "Purchases are not available yet." },
       { status: 503 },

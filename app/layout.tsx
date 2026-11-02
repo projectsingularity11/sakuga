@@ -3,12 +3,13 @@ import "@fontsource/newsreader/400.css";
 import "@fontsource/newsreader/400-italic.css";
 import "@fontsource/dm-sans/400.css";
 import "@fontsource/dm-sans/500.css";
+import "@fontsource/dm-sans/700.css";
 import "./globals.css";
 import { db, configured } from "@/lib/supabase";
 import { themeSchema } from "@/lib/domain";
 export const metadata: Metadata = {
   title: {
-    default: "Sakuga — Your anime life, beautifully organized",
+    default: "Sakuga — Keep the stories close",
     template: "%s · Sakuga",
   },
   description:
@@ -47,7 +48,7 @@ export default async function RootLayout({
           ? "dark"
           : theme?.mode === "system"
             ? "system"
-            : "light"
+            : "dark"
       }
       style={style as React.CSSProperties}
     >

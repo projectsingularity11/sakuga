@@ -6,10 +6,12 @@ export function AnimeCard({
   anime,
   hideMature = false,
   language = "english",
+  publicPage = false,
 }: {
   anime: Anime;
   hideMature?: boolean;
   language?: string;
+  publicPage?: boolean;
 }) {
   const image =
     hideMature && anime.mature ? null : trustedImage(anime.cover_url);
@@ -20,7 +22,10 @@ export function AnimeCard({
         ? anime.title_romaji
         : null) || anime.title;
   return (
-    <Link href={`/app/anime/${anime.id}`} className="anime-card">
+    <Link
+      href={`${publicPage ? "/anime" : "/app/anime"}/${anime.id}`}
+      className="anime-card"
+    >
       <div className="cover">
         {image ? (
           <Image

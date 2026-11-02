@@ -1,3 +1,4 @@
+import { purchasesConfigured } from "@/lib/billing";
 import { account } from "@/app/actions";
 export default async function Page() {
   const { client, user } = await account();
@@ -30,7 +31,7 @@ export default async function Page() {
           <div className="notice">
             Your account is ad-free. Purchase verified server-side.
           </div>
-        ) : process.env.STRIPE_SECRET_KEY ? (
+        ) : purchasesConfigured() ? (
           <form method="post" action="/api/checkout">
             <button className="button">Become a supporter ↗</button>
           </form>

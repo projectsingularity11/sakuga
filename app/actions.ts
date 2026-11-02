@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db, configured } from "@/lib/supabase";
-import { admin } from "@/lib/admin";
 import {
   entrySchema,
   ruleSchema,
@@ -190,9 +189,13 @@ export async function importLibrary(text: string, merge: "skip" | "replace") {
   };
 }
 export async function deleteAccount(form: FormData) {
-  const { user } = await account();
+  if (process.env.ACCOUNT_DELETION_ENABLED !== "true")
+    fail("Account deletion is awaiting operator activation.");
+  const { client } = await account();
   if (form.get("confirm") !== "DELETE") fail("Type DELETE to confirm.");
-  const { error } = await admin().auth.admin.deleteUser(user.id);
+  const { error } = await client.functions.invoke("account-delete", {
+    body: { confirm: "DELETE" },
+  });
   if (error) fail("Account deletion failed. Contact the operator.");
   redirect("/login?notice=deleted");
 }

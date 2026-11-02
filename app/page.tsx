@@ -1,199 +1,276 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowUpRight,
   ArrowRight,
+  Search,
   Bookmark,
-  PanelsTopLeft,
-  Palette,
-  Library,
-  Check,
+  Layers,
+  Sparkles,
+  MoveUpRight,
 } from "lucide-react";
-import { Brand } from "@/components/brand";
+import { Brand, SketchMark } from "@/components/brand";
+import { PublicNav } from "@/components/public-nav";
+import spotlight from "@/data/spotlight.json";
+const names: Record<string, string> = {
+  "Sousou no Frieren": "Frieren: Beyond Journey’s End",
+  "Kimetsu no Yaiba": "Demon Slayer",
+  "Kimi no Na wa.": "Your Name.",
+};
 export default function Home() {
   return (
-    <>
-      <header className="public-nav">
-        <Brand />
-        <nav aria-label="Main">
-          <a href="#your-space">Your space</a>
-          <a href="#made-for-you">The details</a>
-          <Link href="/pricing">Support Sakuga</Link>
-        </nav>
-        <div>
-          <Link className="text-link" href="/login">
-            Log in
-          </Link>
-          <Link className="button small" href="/signup">
-            Make yourself at home <ArrowUpRight size={15} />
-          </Link>
-        </div>
-      </header>
+    <div className="cinema-home">
+      <PublicNav />
       <main id="main">
-        <section className="hero">
-          <div className="hero-copy">
+        <section className="cinema-hero">
+          <Image
+            className="hero-scene"
+            src="/art/sakuga-city.png"
+            alt="An original anime city at dusk, seen from a rooftop"
+            fill
+            priority
+            sizes="100vw"
+          />
+          <div className="hero-shade" />
+          <div className="hero-frame" aria-hidden="true">
+            <span>作画</span>
+            <span>KEEP THE FEELING.</span>
+          </div>
+          <div className="cinema-copy">
             <h1>
-              Your anime life.
+              Some stories
               <br />
-              <em>Beautifully</em>
-              <br />
-              organized.
+              stay with <em>you.</em>
             </h1>
             <p>
-              For the stories that stay with you.
-              <br />A thoughtful home to discover your next favorite, collect
-              the ones you love, and watch at your own pace.
-            </p>
-            <Link href="/signup" className="button">
-              Start your collection <ArrowUpRight size={18} />
-            </Link>
-            <span className="quiet-note">Free to make your own. Always.</span>
-          </div>
-          <div
-            className="shelf-art"
-            aria-label="Illustration of a personal anime library, with no fabricated anime or ratings"
-          >
-            <div className="shelf-top">
-              <span>
-                <Library size={16} /> A space for your stories
-              </span>
-              <span>私の居場所</span>
-            </div>
-            <div className="artwork">
-              <div className="sun" />
-              <div className="mountain back" />
-              <div className="mountain front" />
-              <div className="art-title">
-                Some stories
-                <br />
-                feel like home.
-              </div>
-              <span className="art-caption">SAKUGA • A PERSONAL SANCTUARY</span>
-            </div>
-            <div className="shelf-bottom">
-              <div>
-                <Bookmark size={18} />
-                <span>
-                  Your next chapter
-                  <br />
-                  <small>Find it. Save it. Make it yours.</small>
-                </span>
-              </div>
-              <ArrowUpRight size={22} />
-            </div>
-            <div className="shelf-tab">
-              A little less searching.
+              Find the next one. Keep every favorite.
               <br />
-              <em>A little more watching.</em>
-            </div>
-          </div>
-        </section>
-        <div className="values-line">
-          <span>ONE LIBRARY. YOUR WAY.</span>
-          <span>No invented ratings</span>
-          <span>Private by default</span>
-          <span>Your data, yours to take</span>
-        </div>
-        <section id="your-space" className="feature-section">
-          <div>
-            <h2>
-              A collection,
-              <br />
-              <em>not a spreadsheet.</em>
-            </h2>
-            <p>
-              Keep every watchlist, late-night discovery, and comfort rewatch
-              together. One title. One history. As many collections as you like.
+              Your anime life, all in one place.
             </p>
-            <Link className="text-link" href="/signup">
-              Build your little corner <ArrowRight size={17} />
-            </Link>
-          </div>
-          <div className="library-preview">
-            <div className="preview-heading">
-              <span>My library</span>
-              <Library size={20} />
-            </div>
-            <div className="preview-tabs">
-              <span className="active">All stories</span>
-              <span>Watching</span>
-              <span>Someday</span>
-            </div>
-            <div className="empty-shelf">
-              <Bookmark size={34} />
-              <h3>Your first favorite belongs here.</h3>
-              <p>
-                Find a story. Give it a place.
-                <br />
-                Let your collection grow with you.
-              </p>
-              <Link href="/signup" className="button small">
-                Create your library <ArrowUpRight size={15} />
+            <div className="hero-actions">
+              <Link href="/discover" className="button">
+                Find your next story
+                <ArrowUpRight size={19} />
+              </Link>
+              <Link href="/signup" className="hero-secondary">
+                Start your collection
+                <ArrowRight size={17} />
               </Link>
             </div>
-            <span className="preview-caption">
-              A new library starts empty. The stories are up to you.
+          </div>
+          <div className="hero-bottom">
+            <span>
+              <i /> A home for the anime-obsessed.
             </span>
+            <span>Discover. Collect. Repeat.</span>
+            <a href="#stories" aria-label="Explore the stories below">
+              <ArrowRight size={20} />
+            </a>
           </div>
         </section>
-        <section id="made-for-you" className="details-section">
-          <h2>
-            The little things.
-            <br />
-            <em>Thought all the way through.</em>
-          </h2>
-          <div className="detail-columns">
-            <article>
-              <PanelsTopLeft />
-              <h3>One library. Many perspectives.</h3>
+        <div className="discovery-dock">
+          <span className="dock-label">
+            <Sparkles size={19} />
+            Follow your curiosity
+          </span>
+          <form action="/discover" className="home-search">
+            <Search size={19} />
+            <input
+              name="q"
+              aria-label="Search anime"
+              placeholder="A title, a feeling, a new obsession…"
+              maxLength={100}
+            />
+            <button aria-label="Search catalog">
+              <ArrowUpRight size={20} />
+            </button>
+          </form>
+          <Link href="/discover?short=true">
+            One weekend to spare?
+            <ArrowUpRight size={15} />
+          </Link>
+        </div>
+        <section id="stories" className="home-shelf">
+          <div className="shelf-heading">
+            <div>
+              <h2>Worth falling into.</h2>
               <p>
-                A shelf, a compact list, or a status board. Organize by genre,
-                create a collection, or let a smart rule do the sorting.
+                A few stories to get you started. Your next favorite is out
+                there.
               </p>
-            </article>
-            <article>
-              <Check />
-              <h3>Ratings with their sources.</h3>
-              <p>
-                See where a score comes from, its original scale, and when it
-                was refreshed. Missing data stays missing.
-              </p>
-            </article>
-            <article>
-              <Palette />
-              <h3>Set the atmosphere.</h3>
-              <p>
-                Quiet ink. Warm porcelain. A little matcha. Choose your palette,
-                then make the space feel like you.
-              </p>
-            </article>
+            </div>
+            <Link href="/discover">
+              Explore the catalog
+              <ArrowUpRight size={17} />
+            </Link>
           </div>
+          <div className="spotlight-grid">
+            {spotlight.slice(0, 6).map((a, i) => (
+              <Link
+                className="spotlight-card"
+                href={`/anime/${a.id}`}
+                key={a.id}
+              >
+                <div className="spotlight-cover">
+                  <Image
+                    src={a.cover}
+                    alt={`${names[a.title] || a.title} cover artwork`}
+                    fill
+                    sizes="(max-width:700px) 43vw, (max-width:1000px) 28vw, 15vw"
+                  />
+                  <span className="cover-format">
+                    {a.format === "MOVIE" ? "FILM" : `${a.episodes} EPISODES`}
+                  </span>
+                  <span className="cover-open">
+                    <MoveUpRight size={20} />
+                  </span>
+                </div>
+                <div className="spotlight-meta">
+                  <span>
+                    {a.year} / {a.format}
+                  </span>
+                  <Bookmark size={14} />
+                </div>
+                <h3>{names[a.title] || a.title}</h3>
+                <span className="shelf-index">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </Link>
+            ))}
+          </div>
+          <p className="art-attribution">
+            Cover artwork via MyAnimeList · Metadata from
+            anime-offline-database, ODbL.{" "}
+            <Link href="/content-policy">
+              Sources & content policy
+              <ArrowUpRight size={12} />
+            </Link>
+          </p>
         </section>
-        <section className="support-strip">
-          <div>
+        <section className="collection-feature" id="your-space">
+          <div className="collection-composition">
+            <div className="collection-caption">
+              <SketchMark />
+              <span>A collection that feels like you.</span>
+            </div>
+            <div className="collection-posters">
+              {[spotlight[6], spotlight[7], spotlight[1]].map((a) => (
+                <Link href={`/anime/${a.id}`} key={a.id}>
+                  <Image
+                    src={a.cover}
+                    alt={names[a.title] || a.title}
+                    fill
+                    sizes="(max-width:700px) 30vw, 16vw"
+                  />
+                </Link>
+              ))}
+            </div>
+            <div className="composition-note">
+              <Bookmark size={16} />
+              <span>The ones you always come back to.</span>
+            </div>
+          </div>
+          <div className="collection-copy">
             <h2>
-              A small thank-you.
-              <br />A quieter forever.
+              Your taste.
+              <br />
+              Your little
+              <br />
+              <em>universe.</em>
             </h2>
             <p>
-              $5 once. No subscription. Ads aren’t currently shown. Support
-              Sakuga now and keep Sakuga-served ads out of your account for the
-              lifetime of the service.
+              The midnight discoveries. The comfort rewatches. The series your
+              friend won’t stop talking about. Give them all a place.
             </p>
+            <Link href="/signup" className="button">
+              Start your collection
+              <ArrowUpRight size={18} />
+            </Link>
+            <div className="feature-facts">
+              <span>
+                <Bookmark size={17} />
+                Keep your place
+              </span>
+              <span>
+                <Layers size={17} />
+                Build your own collections
+              </span>
+            </div>
           </div>
-          <Link href="/pricing" className="button outline">
-            Meet Sakuga Supporter <ArrowUpRight size={18} />
+        </section>
+        <section className="mood-section">
+          <div className="shelf-heading">
+            <div>
+              <h2>What’s your mood?</h2>
+              <p>There’s a whole world on the other side of a genre.</p>
+            </div>
+          </div>
+          <div className="mood-grid">
+            {[
+              {
+                genre: "Action",
+                word: "Feel the rush.",
+                sub: "Big stakes. Bigger moments.",
+                image: spotlight[2],
+              },
+              {
+                genre: "Fantasy",
+                word: "Go somewhere else.",
+                sub: "Worlds worth getting lost in.",
+                image: spotlight[0],
+              },
+              {
+                genre: "Drama",
+                word: "Feel everything.",
+                sub: "For the beautifully human stories.",
+                image: spotlight[6],
+              },
+            ].map((m) => (
+              <Link
+                href={`/discover?genre=${m.genre}`}
+                className="mood-card"
+                key={m.genre}
+              >
+                <Image
+                  src={m.image.cover}
+                  alt=""
+                  fill
+                  sizes="(max-width:700px) 90vw, 30vw"
+                />
+                <div />
+                <span className="mood-name">
+                  {m.genre}
+                  <ArrowUpRight size={19} />
+                </span>
+                <h3>{m.word}</h3>
+                <p>{m.sub}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+        <section className="home-invitation">
+          <SketchMark />
+          <h2>
+            Good stories.
+            <br />
+            <em>Better kept.</em>
+          </h2>
+          <Link href="/signup" className="button">
+            Make yourself at home
+            <ArrowUpRight size={18} />
           </Link>
+          <p>Free to start. Made for your kind of obsession.</p>
         </section>
       </main>
       <footer>
         <Brand />
         <span>Keep the stories close.</span>
-        <nav>
+        <nav aria-label="Footer">
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
           <Link href="/content-policy">Content policy</Link>
         </nav>
       </footer>
-    </>
+    </div>
   );
 }
