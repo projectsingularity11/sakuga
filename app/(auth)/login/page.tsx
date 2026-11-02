@@ -10,8 +10,8 @@ export default async function Page({
   const enabled = configured();
   return (
     <>
-      <h2>Welcome home.</h2>
-      <p>Your collection is right where you left it.</p>
+      <h1>Log in</h1>
+
       {!enabled && (
         <div className="notice" role="status">
           Accounts are not available yet. The operator must connect Supabase

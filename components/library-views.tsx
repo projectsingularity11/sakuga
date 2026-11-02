@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { resolveTitle } from "@/lib/metadata";
 import { useState } from "react";
+import { groupEntries, animeHref } from "@/lib/series";
 import { AnimeCard } from "./anime-card";
 import { labels, statuses, type Entry } from "@/lib/domain";
 import { saveEntry } from "@/app/actions";
@@ -14,6 +15,38 @@ export function LibraryViews({
   hideMature: boolean;
   language: string;
 }) {
+  const [seasons, setSeasons] = useState<Record<number, number>>({});
+  const groups = groupEntries(entries);
+  const visibleEntries = groups.map(
+    (g) =>
+      g.find((e) => e.anime_id === seasons[e.anime?.series_id || e.anime_id]) ||
+      g[0],
+  );
+  function seasonSelect(entry: Entry) {
+    const group = groups.find((g) =>
+      g.some((e) => e.anime_id === entry.anime_id),
+    )!;
+    if (group.length < 2) return null;
+    const key = entry.anime?.series_id || entry.anime_id;
+    return (
+      <label className="library-season">
+        Season / part
+        <select
+          value={entry.anime_id}
+          onChange={(event) =>
+            setSeasons({ ...seasons, [key]: Number(event.target.value) })
+          }
+        >
+          {group.map((e) => (
+            <option key={e.anime_id} value={e.anime_id}>
+              {e.anime ? resolveTitle(e.anime, language) : e.anime_id} ·{" "}
+              {labels[e.status]} · {e.progress}/{e.anime?.episodes ?? "?"}
+            </option>
+          ))}
+        </select>
+      </label>
+    );
+  }
   const [view, setView] = useState("shelf");
   const [message, setMessage] = useState("");
   const [selected, setSelected] = useState<number[]>([]);
@@ -47,7 +80,9 @@ export function LibraryViews({
             </button>
           ))}
         </div>
-        <span>{entries.length} shown</span>
+        <span>
+          {groups.length} shows · {entries.length} saved seasons / films
+        </span>
       </div>
       {selected.length > 0 && (
         <div className="bulk">
@@ -77,7 +112,7 @@ export function LibraryViews({
       <p role="status">{message}</p>
       {view === "shelf" ? (
         <div className="anime-grid">
-          {entries.map((e) => (
+          {visibleEntries.map((e) => (
             <div key={e.anime_id}>
               {e.anime ? (
                 <AnimeCard
@@ -88,6 +123,7 @@ export function LibraryViews({
               ) : (
                 <p>Unavailable title · {e.anime_id}</p>
               )}
+              {seasonSelect(e)}
               <label className="check-label">
                 <input
                   type="checkbox"
@@ -117,14 +153,21 @@ export function LibraryViews({
               </tr>
             </thead>
             <tbody>
-              {entries.map((e) => (
+              {visibleEntries.map((e) => (
                 <tr key={e.anime_id}>
                   <td>
-                    <Link href={`/app/anime/${e.anime_id}`}>
+                    <Link
+                      href={
+                        e.anime
+                          ? animeHref(e.anime, true)
+                          : `/app/anime/${e.anime_id}`
+                      }
+                    >
                       {e.anime
                         ? resolveTitle(e.anime, language)
                         : "Unavailable title"}
                     </Link>
+                    {seasonSelect(e)}
                   </td>
                   <td>{labels[e.status]}</td>
                   <td>
@@ -144,27 +187,34 @@ export function LibraryViews({
           ).map((group) => (
             <section key={group}>
               <h2>{labels[group] || group}</h2>
-              {entries
+              {visibleEntries
                 .filter((e) =>
                   view === "board"
                     ? e.status === group
                     : e.anime?.genres.includes(group),
                 )
                 .map((e) => (
-                  <Link
-                    className="board-entry"
-                    href={`/app/anime/${e.anime_id}`}
-                    key={e.anime_id}
-                  >
-                    <strong>
-                      {e.anime
-                        ? resolveTitle(e.anime, language)
-                        : "Unavailable title"}
-                    </strong>
-                    <span>
-                      {e.progress} episodes · {labels[e.status]}
-                    </span>
-                  </Link>
+                  <div key={e.anime_id}>
+                    <Link
+                      className="board-entry"
+                      href={
+                        e.anime
+                          ? animeHref(e.anime, true)
+                          : `/app/anime/${e.anime_id}`
+                      }
+                      key={e.anime_id}
+                    >
+                      <strong>
+                        {e.anime
+                          ? resolveTitle(e.anime, language)
+                          : "Unavailable title"}
+                      </strong>
+                      <span>
+                        {e.progress} episodes · {labels[e.status]}
+                      </span>
+                    </Link>
+                    {seasonSelect(e)}
+                  </div>
                 ))}
             </section>
           ))}

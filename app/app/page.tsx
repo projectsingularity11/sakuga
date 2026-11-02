@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, Bookmark } from "lucide-react";
 import { account, tonightsPick } from "@/app/actions";
 import { AnimeCard } from "@/components/anime-card";
+import { groupEntries } from "@/lib/series";
 import type { Entry } from "@/lib/domain";
 export default async function Page({
   searchParams,
@@ -25,20 +26,21 @@ export default async function Page({
       .limit(8),
   ]);
   if (error) throw Error("Could not load your library. Please retry.");
-  const entries = (data || []) as Entry[];
+  const entries = groupEntries((data || []) as Entry[]).map(
+    (group) => group[0],
+  );
   return (
     <>
       <div className="page-heading">
         <div>
           <h1>
             {profile?.display_name
-              ? `Welcome home, ${profile.display_name}.`
-              : "Make yourself at home."}
+              ? `${profile.display_name}’s library`
+              : "My library"}
           </h1>
-          <p>No rush. Your next story is waiting.</p>
         </div>
         <Link className="button" href="/app/discover">
-          Discover something <ArrowUpRight size={16} />
+          Discover anime <ArrowUpRight size={16} />
         </Link>
       </div>
       {params.notice === "empty-backlog" && (
@@ -49,7 +51,7 @@ export default async function Page({
       <form action={tonightsPick}>
         <button className="button outline">Tonight’s pick · Surprise me</button>
       </form>
-      <h2>Continue your story</h2>
+      <h2>Continue watching</h2>
       {entries.length ? (
         <div className="anime-grid">
           {entries

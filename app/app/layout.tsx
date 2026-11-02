@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WorkspaceShell } from "@/components/workspace-shell";
 import { ThemeApply } from "@/components/preferences";
 import {
   Home,
@@ -23,11 +24,11 @@ export default async function AppLayout({
     .eq("id", user.id)
     .single();
   return (
-    <div className="app-shell">
+    <WorkspaceShell>
       <ThemeApply theme={profile?.preferences?.theme} />
-      <aside className="sidebar">
+      <aside className="sidebar" id="workspace-sidebar">
         <Brand />
-        <span className="sidebar-label">YOUR LITTLE CORNER</span>
+
         <nav aria-label="Workspace">
           {[
             [Home, "/app", "Home"],
@@ -41,7 +42,7 @@ export default async function AppLayout({
             return (
               <Link key={String(href)} href={String(href)}>
                 <I size={19} />
-                {String(label)}
+                <span>{String(label)}</span>
               </Link>
             );
           })}
@@ -58,15 +59,17 @@ export default async function AppLayout({
       </aside>
       <div className="workspace">
         <header className="workspace-header">
-          <span>A space for your stories.</span>
+          <Link href="/">
+            Sakuga <ArrowUpRight size={15} />
+          </Link>
           <Link href="/app/discover">
-            Find your next favorite <ArrowUpRight size={15} />
+            Discover anime <ArrowUpRight size={15} />
           </Link>
         </header>
         <main id="main" className="workspace-main">
           {children}
         </main>
       </div>
-    </div>
+    </WorkspaceShell>
   );
 }

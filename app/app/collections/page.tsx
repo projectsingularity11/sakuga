@@ -13,8 +13,7 @@ export default async function Page() {
     <>
       <div className="page-heading">
         <div>
-          <h1>Collect a feeling.</h1>
-          <p>Friday night movies. Beautiful animation. Comfort rewatches.</p>
+          <h1>Collections</h1>
         </div>
       </div>
       <div className="collection-list">
@@ -28,7 +27,7 @@ export default async function Page() {
         ))}
       </div>
       <section className="editor">
-        <h2>Make a new collection.</h2>
+        <h2>New collection</h2>
         <form className="stack" action={createCollection}>
           <label>
             Name
@@ -36,7 +35,7 @@ export default async function Page() {
               name="name"
               required
               maxLength={100}
-              placeholder="A name that feels like you"
+              placeholder="Collection name"
             />
           </label>
           <label>

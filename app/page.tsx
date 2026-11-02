@@ -31,10 +31,6 @@ export default async function Home() {
       ? results[0].value.titles.find((a) => a.synopsis)
       : null;
   const art = featured ? trustedImage(featured.banner_url) : null;
-  const picks =
-    results[0].status === "fulfilled"
-      ? results[0].value.titles.filter((a) => a.id !== featured?.id).slice(0, 2)
-      : [];
   const preview = featured ? mediaLinks(featured) : null;
   return (
     <div className="cinema-home">
@@ -53,9 +49,7 @@ export default async function Home() {
           }
           <div className="featured-content">
             <h1>
-              {featured
-                ? resolveTitle(featured, language)
-                : "Your next favorite starts here."}
+              {featured ? resolveTitle(featured, language) : "Explore anime"}
             </h1>
             {featured && (
               <p className="featured-meta">
@@ -95,27 +89,8 @@ export default async function Home() {
                 </a>
               )}
             </div>
-            <div className="spotlight-note">
-              <span>Keep the stories close.</span>
-              <span>
-                {art ? "Provider artwork" : "Original Sakuga artwork"}
-              </span>
-            </div>
           </div>
           <div className="hero-gallery" aria-label="Featured anime artwork">
-            {picks[0] && (
-              <Link
-                className="gallery-side gallery-back"
-                href={`/anime/${picks[0].id}`}
-                aria-label={resolveTitle(picks[0], language)}
-              >
-                <CoverImage
-                  src={trustedImage(picks[0].cover_url)}
-                  title={resolveTitle(picks[0], language)}
-                  priority
-                />
-              </Link>
-            )}
             {featured && (
               <Link
                 className="gallery-main"
@@ -127,28 +102,18 @@ export default async function Home() {
                   title={resolveTitle(featured, language)}
                   priority
                 />
+                <span className="poster-open">
+                  <ArrowUpRight size={24} />
+                  <span>View anime</span>
+                </span>
               </Link>
             )}
-            {picks[1] && (
-              <Link
-                className="gallery-side gallery-front"
-                href={`/anime/${picks[1].id}`}
-                aria-label={resolveTitle(picks[1], language)}
-              >
-                <CoverImage
-                  src={trustedImage(picks[1].cover_url)}
-                  title={resolveTitle(picks[1], language)}
-                  priority
-                />
-              </Link>
-            )}
-            <span className="gallery-caption">
-              A new story is a whole new world.
-            </span>
           </div>
         </section>
         <div className="browse-shortcuts">
-          <span>Find your kind of story</span>
+          <Link className="shortcut-all" href="/discover">
+            All anime <ArrowUpRight size={17} />
+          </Link>
           {["Action", "Fantasy", "Romance", "Sci-Fi", "Slice of Life"].map(
             (g) => (
               <Link key={g} href={"/discover?genre=" + encodeURIComponent(g)}>
@@ -157,17 +122,6 @@ export default async function Home() {
             ),
           )}
         </div>
-        <aside className="editorial-strip">
-          <span>For your after-hours.</span>
-          <p>
-            The midnight discoveries.
-            <br />
-            The comfort rewatches. <em>All yours.</em>
-          </p>
-          <Link href="/app/collections">
-            Make a collection <ArrowUpRight size={18} />
-          </Link>
-        </aside>
         {feeds.map((feed, i) => {
           const r = results[i];
           return (
@@ -201,7 +155,7 @@ export default async function Home() {
       </main>
       <footer>
         <Link href="/">sakuga.</Link>
-        <span>Your anime. Your pace.</span>
+
         <nav aria-label="Footer">
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>

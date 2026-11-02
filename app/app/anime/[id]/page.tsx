@@ -2,30 +2,31 @@ import { MediaLinks } from "@/components/media-links";
 import { englishSynopsis, releaseDescription } from "@/lib/media";
 import { CoverImage } from "@/components/cover-image";
 import { resolveTitle, alternateTitles, qualifiedCover } from "@/lib/metadata";
-import { notFound } from "next/navigation";
+import { loadShow } from "@/lib/show";
+import { SeasonPicker } from "@/components/season-picker";
+import { notFound, redirect } from "next/navigation";
 import { account, membership, reportContent } from "@/app/actions";
 import { LibraryEditor } from "@/components/library-editor";
-import {
-  trustedImage,
-  trustedSource,
-  type Anime,
-  type Entry,
-} from "@/lib/domain";
+import { trustedImage, trustedSource, type Entry } from "@/lib/domain";
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ season?: string }>;
 }) {
-  const { id } = await params;
+  const { id: routeId } = await params;
+  let id = routeId;
   if (!/^\d+$/.test(id)) notFound();
   const { client, user } = await account();
-  const [{ data }, { data: entry }, { data: collections }, { data: profile }] =
+  const loaded = await loadShow(client, id, (await searchParams).season);
+  if (!loaded) notFound();
+  const { anime, show, members } = loaded;
+  if (Number(routeId) !== show.id)
+    redirect(`/app/anime/${show.id}?season=${anime.id}`);
+  id = String(anime.id);
+  const [{ data: entry }, { data: collections }, { data: profile }] =
     await Promise.all([
-      client
-        .from("anime")
-        .select("*,ratings(*),source_mappings(*)")
-        .eq("id", id)
-        .single(),
       client
         .from("library")
         .select("*")
@@ -39,8 +40,6 @@ export default async function Page({
         .is("rules", null),
       client.from("profiles").select("preferences").eq("id", user.id).single(),
     ]);
-  if (!data) notFound();
-  const anime = data as Anime;
   const image =
     profile?.preferences?.hide_mature && anime.mature
       ? null
@@ -60,7 +59,14 @@ export default async function Page({
             {anime.format || "Anime"} · {anime.year || "Release unknown"} ·{" "}
             {anime.episodes ?? "Unknown"} episodes
           </p>
-          <h1>{resolveTitle(anime, profile?.preferences?.language)}</h1>
+          <h1>{resolveTitle(show, profile?.preferences?.language)}</h1>
+          <SeasonPicker
+            members={members}
+            showId={show.id}
+            selected={anime.id}
+            workspace
+            language={profile?.preferences?.language}
+          />
           <p className="alternate">
             {alternateTitles(anime, profile?.preferences?.language).join(" / ")}
           </p>
@@ -85,7 +91,7 @@ export default async function Page({
             {anime.studios.join(" · ")}{" "}
             {anime.duration && ` · ${anime.duration} minutes per episode`}
           </p>
-          <h2>Different audiences. Different perspectives.</h2>
+          <h2>Source ratings</h2>
           <div className="ratings">
             {anime.ratings.length ? (
               anime.ratings.map((r) => {
@@ -134,6 +140,7 @@ export default async function Page({
       </div>
       <div className="detail-lower">
         <LibraryEditor
+          key={anime.id}
           id={anime.id}
           total={anime.episodes}
           entry={entry as Entry | undefined}
@@ -141,7 +148,7 @@ export default async function Page({
         <div>
           {entry && (
             <section className="editor">
-              <h2>Give it a collection.</h2>
+              <h2>Add to collection</h2>
               {collections?.length ? (
                 <form action={membership} className="stack">
                   <input type="hidden" name="anime_id" value={id} />

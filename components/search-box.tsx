@@ -6,6 +6,7 @@ import type { Anime } from "@/lib/domain";
 import { resolveTitle, formatLabel, qualifiedCover } from "@/lib/metadata";
 import { CoverImage } from "./cover-image";
 import { trustedImage } from "@/lib/domain";
+import { animeHref } from "@/lib/series";
 import { normalizeSearch } from "@/lib/search";
 const cache = new Map<string, { expires: number; items: Anime[] }>();
 export function SearchBox({
@@ -119,7 +120,7 @@ export function SearchBox({
             }
             if (e.key === "Enter" && open && active >= 0 && items[active]) {
               e.preventDefault();
-              navigate("/anime/" + items[active].id);
+              navigate(animeHref(items[active]));
             }
           }}
         />
@@ -163,7 +164,7 @@ export function SearchBox({
                 aria-selected={active === i}
                 key={a.id}
                 onPointerDown={(e) => e.preventDefault()}
-                onClick={() => navigate("/anime/" + a.id)}
+                onClick={() => navigate(animeHref(a))}
               >
                 <span className="suggestion-cover">
                   <CoverImage

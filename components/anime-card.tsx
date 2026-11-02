@@ -1,5 +1,7 @@
+import { Plus } from "lucide-react";
 import { MediaLinks } from "./media-links";
 import Link from "next/link";
+import { animeHref } from "@/lib/series";
 import type { Anime } from "@/lib/domain";
 import { trustedImage } from "@/lib/domain";
 import {
@@ -21,7 +23,7 @@ export function AnimeCard({
   publicPage?: boolean;
 }) {
   const title = resolveTitle(anime, language),
-    href = `${publicPage ? "/anime" : "/app/anime"}/${anime.id}`;
+    href = animeHref(anime, !publicPage);
   const scores = anime.ratings?.filter((r) => r.score !== null) || [];
   return (
     <article className="anime-card">
@@ -55,9 +57,12 @@ export function AnimeCard({
           ))}
         </div>
       )}
-      <Link className="card-list-action" href={`/app/anime/${anime.id}`}>
-        ＋ Manage list
+      <Link className="card-list-action" href={animeHref(anime, true)}>
+        <Plus size={13} /> Manage list
       </Link>
+      {(anime.series_count || 1) > 1 && (
+        <p className="series-count">{anime.series_count} seasons / parts</p>
+      )}
       <MediaLinks anime={anime} compact />
     </article>
   );

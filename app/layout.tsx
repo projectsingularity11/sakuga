@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import "@fontsource/newsreader/400.css";
 import "@fontsource/newsreader/400-italic.css";
-import "@fontsource/dm-sans/400.css";
-import "@fontsource/dm-sans/500.css";
-import "@fontsource/dm-sans/700.css";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/500.css";
+import "@fontsource/manrope/700.css";
+import "@fontsource/space-grotesk/500.css";
+import "@fontsource/space-grotesk/700.css";
 import "./globals.css";
-import { db, configured } from "@/lib/supabase";
+import "./identity.css";
+import { Experience } from "@/components/experience";
+import { viewer } from "@/lib/viewer";
 import { themeSchema } from "@/lib/domain";
 export const metadata: Metadata = {
   title: {
-    default: "Sakuga — Keep the stories close",
+    default: "Sakuga — Anime discovery & library",
     template: "%s · Sakuga",
   },
   description:
@@ -20,35 +24,25 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  let theme;
-  if (configured()) {
-    const client = await db();
-    const {
-      data: { user },
-    } = await client.auth.getUser();
-    if (user) {
-      const { data } = await client
-        .from("profiles")
-        .select("preferences")
-        .eq("id", user.id)
-        .maybeSingle();
-      const parsed = themeSchema.safeParse(data?.preferences?.theme);
-      if (parsed.success) theme = parsed.data;
-    }
-  }
+  const profile = await viewer();
+  const parsed = themeSchema.safeParse(profile?.preferences?.theme);
+  const theme = parsed.success ? parsed.data : undefined;
   const style = theme
     ? { "--accent": theme.accent, "--ambient": `${theme.intensity}%` }
     : undefined;
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       data-appearance={
         theme?.mode === "dark"
           ? "dark"
           : theme?.mode === "system"
             ? "system"
-            : "dark"
+            : theme?.mode === "light"
+              ? "light"
+              : "dark"
       }
       style={style as React.CSSProperties}
     >
@@ -56,6 +50,7 @@ export default async function RootLayout({
         <a className="skip" href="#main">
           Skip to content
         </a>
+        <Experience />
         {children}
       </body>
     </html>

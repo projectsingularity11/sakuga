@@ -132,3 +132,125 @@ test("light appearance keeps shared glass and source controls readable", async (
     expect(result.violations).toEqual([]);
   }
 });
+test("home refreshes an expired session and preserves access after returning home", async ({
+  page,
+  context,
+}) => {
+  const expired = [
+    Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString(
+      "base64url",
+    ),
+    Buffer.from(
+      JSON.stringify({
+        sub: "00000000-0000-4000-8000-000000000001",
+        role: "authenticated",
+        aud: "authenticated",
+        exp: Math.floor(Date.now() / 1000) - 100,
+        iat: Math.floor(Date.now() / 1000) - 3700,
+      }),
+    ).toString("base64url"),
+    "fixture-signature",
+  ].join(".");
+  const value =
+    "base64-" +
+    Buffer.from(
+      JSON.stringify({
+        access_token: expired,
+        refresh_token: "fixture-refresh",
+        expires_at: Math.floor(Date.now() / 1000) - 100,
+        token_type: "bearer",
+        user: { id: "00000000-0000-4000-8000-000000000001" },
+      }),
+    ).toString("base64url");
+  await context.addCookies([
+    { name: "sb-127-auth-token", value, domain: "127.0.0.1", path: "/" },
+  ]);
+  await page.goto("/");
+  await expect(
+    page.getByRole("link", { name: "My account", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Log in", exact: true }),
+  ).toHaveCount(0);
+  expect(
+    (await context.cookies()).find((c) => c.name === "sb-127-auth-token")
+      ?.value,
+  ).not.toBe(value);
+  await page.goto("/app/library");
+  await expect(page).toHaveURL(/\/app\/library$/);
+  await expect(
+    page.getByRole("heading", { name: "My library", exact: true }),
+  ).toBeVisible();
+  await page.goto("/");
+  await expect(
+    page.getByRole("link", { name: "My account", exact: true }),
+  ).toBeVisible();
+  await page.goto("/app/library");
+  await expect(page).toHaveURL(/\/app\/library$/);
+  await expect(page.locator(".anime-grid .anime-card")).toHaveCount(1);
+  await expect(page.getByLabel("Season / part")).toHaveValue("16498");
+  await page.getByLabel("Season / part").selectOption("20958");
+  await expect(
+    page.getByText("Watching · 7/12", { exact: true }),
+  ).toBeVisible();
+  await page.goto("/app/anime/16498");
+  await expect(page.locator(".dossier-cover img")).toBeVisible();
+  expect(
+    (await page.locator(".dossier-cover").boundingBox())!.height,
+  ).toBeGreaterThan(100);
+  const progress = page.getByRole("spinbutton", {
+    name: "Episodes watched / 12",
+  });
+  await expect(progress).toHaveValue("3");
+  await progress.fill("5");
+  await page.getByLabel("Season / part").selectOption("20958");
+  await expect(progress).toHaveValue("7");
+  await page.getByLabel("Season / part").selectOption("16498");
+  await expect(progress).toHaveValue("3");
+  const toggle = page.getByRole("button", { name: /sidebar/ });
+  await toggle.click();
+  await expect(toggle).toHaveAttribute(
+    "aria-expanded",
+    page.viewportSize()!.width <= 600 ? "true" : "false",
+  );
+  await toggle.click();
+});
+test("seasons share one index and selector follows legacy links", async ({
+  page,
+}) => {
+  await page.goto("/discover?q=Attack");
+  await expect(page.locator(".anime-card")).toHaveCount(1);
+  await page.goto("/anime/20958");
+  await expect(page).toHaveURL(/\/anime\/16498\?season=20958/);
+  await expect(page.getByLabel("Season / part")).toHaveValue("20958");
+  await page.getByLabel("Season / part").selectOption("16498");
+  await expect(page).toHaveURL(/season=16498/);
+  await expect(page.getByLabel("Season / part")).toHaveValue("16498");
+});
+test("sound is opt in, independent and remembered", async ({ page }) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Sound settings", exact: true })
+    .click();
+  const effects = page.getByRole("button", { name: "Click sounds Off" }),
+    music = page.getByRole("button", { name: "Lo-fi Off" });
+  await expect(effects).toHaveAttribute("aria-pressed", "false");
+  await expect(music).toHaveAttribute("aria-pressed", "false");
+  await effects.click();
+  await music.click();
+  await page.reload();
+  await page
+    .getByRole("button", { name: "Sound settings", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Click sounds On" }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Lo-fi On" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await page.getByRole("button", { name: "Lo-fi On" }).click();
+  await expect(
+    page.getByRole("button", { name: "Click sounds On" }),
+  ).toHaveAttribute("aria-pressed", "true");
+});

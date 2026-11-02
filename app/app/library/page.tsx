@@ -9,31 +9,17 @@ export default async function Page({
 }) {
   const p = await searchParams;
   const { client, user } = await account();
-  let q = client
-    .from("library")
-    .select("*,anime:anime!inner(*,ratings(*),source_mappings(*))", {
-      count: "exact",
-    })
-    .eq("user_id", user.id);
-  if (statuses.includes(p.status as Entry["status"]))
-    q = q.eq("status", p.status);
-  if (p.q) {
-    const search = p.q
-      .trim()
-      .slice(0, 100)
-      .replace(/[%_,().]/g, "");
-    q = q.ilike("anime.search_text", `%${search}%`);
-  }
-  if (p.favorite === "true") q = q.eq("favorite", true);
-  const page = Math.max(1, Number(p.page) || 1);
-  const { data, count, error } = await q
-    .order(p.sort === "score" ? "score" : "updated_at", {
-      ascending: false,
-      nullsFirst: false,
-    })
-    .order("anime_id")
-    .range((page - 1) * 100, page * 100 - 1);
+  const page = Math.max(1, Math.min(10000, Math.floor(Number(p.page) || 1)));
+  const { data: result, error } = await client.rpc("library_show_page", {
+    filters: {
+      ...p,
+      status: statuses.includes(p.status as Entry["status"]) ? p.status : "",
+    },
+    page_number: page,
+  });
   if (error) throw Error("Library could not be loaded");
+  const data = result?.entries || [],
+    count = Number(result?.count || 0);
   const { data: profile } = await client
     .from("profiles")
     .select("preferences")
@@ -44,11 +30,11 @@ export default async function Page({
     <>
       <div className="page-heading">
         <div>
-          <h1>Your stories, together.</h1>
-          <p>{count || 0} titles. Every one has a place.</p>
+          <h1>My library</h1>
+          <p>{count || 0} shows & films</p>
         </div>
         <Link href="/app/discover" className="button">
-          Find a story ↗
+          Discover anime ↗
         </Link>
       </div>
       <form className="filter-bar">
@@ -98,8 +84,8 @@ export default async function Page({
         />
       ) : (
         <div className="empty-state">
-          <h2>A little room for something wonderful.</h2>
-          <p>Your library is empty here. Add a story from Discover.</p>
+          <h2>No saved anime</h2>
+          <p>Add anime from Discover, or change your filters.</p>
         </div>
       )}
       <nav className="pagination" aria-label="Library pages">

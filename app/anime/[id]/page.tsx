@@ -4,7 +4,10 @@ import { CoverImage } from "@/components/cover-image";
 import { viewerLanguage } from "@/lib/viewer";
 import { resolveTitle, alternateTitles, qualifiedCover } from "@/lib/metadata";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { catalog } from "@/lib/catalog";
+import { loadShow } from "@/lib/show";
+import { SeasonPicker } from "@/components/season-picker";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Bookmark } from "lucide-react";
 import { PublicNav } from "@/components/public-nav";
 import { AnimeCard } from "@/components/anime-card";
@@ -12,32 +15,26 @@ import { db, configured } from "@/lib/supabase";
 import { trustedImage, trustedSource, type Anime } from "@/lib/domain";
 export default async function AnimeDetail({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ season?: string }>;
 }) {
   const language = await viewerLanguage();
   const { id } = await params;
   if (!/^\d{1,10}$/.test(id) || !configured()) notFound();
   const client = await db();
-  const { data, error } = await client
-    .from("anime")
-    .select("*,ratings(*),source_mappings(*)")
-    .eq("id", id)
-    .eq("moderation", "published")
-    .maybeSingle();
-  if (error) throw Error("Could not load this title. Please retry.");
-  if (!data) notFound();
-  const a = data as Anime;
+  const season = (await searchParams).season;
+  const loaded = await loadShow(client, id, season);
+  if (!loaded) notFound();
+  const { anime: a, show, members } = loaded;
+  if (Number(id) !== show.id) redirect(`/anime/${show.id}?season=${a.id}`);
   const image = trustedImage(qualifiedCover(a));
-  const { data: related } = await client
-    .from("anime")
-    .select("*,ratings(*),source_mappings(*)")
-    .eq("moderation", "published")
-    .overlaps("genres", a.genres.slice(0, 2))
-    .neq("id", a.id)
-    .order("popularity", { ascending: false, nullsFirst: false })
-    .order("id")
-    .limit(4);
+  const related = await catalog({ genre: a.genres[0] || "" })
+    .then((result) =>
+      result.titles.filter((row) => row.id !== show.id).slice(0, 4),
+    )
+    .catch(() => []);
   return (
     <>
       <PublicNav />
@@ -55,7 +52,13 @@ export default async function AnimeDetail({
               {a.format || "Anime"} · {a.year || "Year unknown"} ·{" "}
               {a.episodes ?? "Unknown"} episodes
             </p>
-            <h1>{resolveTitle(a, language)}</h1>
+            <h1>{resolveTitle(show, language)}</h1>
+            <SeasonPicker
+              members={members}
+              showId={show.id}
+              selected={a.id}
+              language={language}
+            />
             <p className="alternate">
               {alternateTitles(a, language).join(" / ")}
             </p>

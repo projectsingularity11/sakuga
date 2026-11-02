@@ -1,5 +1,9 @@
 import { PublicNavContent } from "./public-nav-content";
-import { viewerLanguage } from "@/lib/viewer";
+import { viewerLanguage, viewerSignedIn } from "@/lib/viewer";
 export async function PublicNav() {
-  return <PublicNavContent language={await viewerLanguage()} />;
+  const [language, signedIn] = await Promise.all([
+    viewerLanguage(),
+    viewerSignedIn(),
+  ]);
+  return <PublicNavContent language={language} signedIn={signedIn} />;
 }

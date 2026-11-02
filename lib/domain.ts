@@ -37,6 +37,9 @@ export const ruleSchema = z
   .strict();
 export type Rule = z.infer<typeof ruleSchema>;
 export type Anime = {
+  series_id?: number | null;
+  series_count?: number;
+  matched_id?: number;
   id: number;
   title: string;
   imdb_id?: string | null;

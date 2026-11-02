@@ -57,7 +57,7 @@ export function Preferences({
                 language,
                 hide_mature,
               });
-              setMessage("Your atmosphere is saved.");
+              setMessage("Preferences saved.");
             } catch {
               setMessage("Could not save preferences. Please retry.");
             }

@@ -10,7 +10,7 @@ export default async function Page({
   const enabled = configured();
   return (
     <>
-      <h2>Let’s get you back in.</h2>
+      <h1>Reset password</h1>
       <p>We’ll email you a secure password reset link.</p>
       {!enabled && (
         <div className="notice" role="status">

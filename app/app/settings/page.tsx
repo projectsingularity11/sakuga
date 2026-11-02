@@ -11,11 +11,11 @@ export default async function Page() {
   if (error) throw Error("Settings could not be loaded");
   return (
     <>
-      <h1>A space that feels like you.</h1>
-      <p>Fine-tune the atmosphere. Keep your stories yours.</p>
+      <h1>Settings</h1>
+
       <Preferences name={data.display_name} preferences={data.preferences} />
       <section className="editor">
-        <h2>Your data, yours to take.</h2>
+        <h2>Export library</h2>
         <p>
           Export library progress, scores, tags, dates and private notes.
           Collection definitions and viewing history are not included in this

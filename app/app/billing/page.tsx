@@ -11,14 +11,10 @@ export default async function Page() {
     throw Error("Purchase status could not be verified. Please retry.");
   return (
     <>
-      <h1>A quieter forever.</h1>
+      <h1>Sakuga Supporter</h1>
       <section className="billing-panel">
         <span className="wordmark-small">SAKUGA SUPPORTER</span>
-        <h2>
-          {data?.ad_free
-            ? "Thank you for keeping us going."
-            : "No ads. No subscription."}
-        </h2>
+        <h2>{data?.ad_free ? "Supporter active" : "One-time support"}</h2>
         <p className="price">
           $5 <small>USD, once</small>
         </p>

@@ -38,112 +38,117 @@ export default async function Discover({
       <main id="main" className="public-catalog">
         <div className="catalog-top">
           <div>
-            <h1>Find your next obsession.</h1>
-            <p>Big adventures. Quiet moments. Something that feels like you.</p>
+            <h1>Discover anime</h1>
           </div>
           {result && (
-            <span>{result.count.toLocaleString()} matching titles</span>
+            <span>{result.count.toLocaleString()} matching shows & films</span>
           )}
         </div>
-        <form className="filter-bar">
-          <label className="search-field">
-            Search anime
-            <input
-              name="q"
-              defaultValue={p.q}
-              placeholder="English, romaji, or native title…"
-              maxLength={100}
-            />
-          </label>
-          <label>
-            Format
-            <select name="format" defaultValue={p.format || ""}>
-              <option value="">All formats</option>
-              {[
-                "TV",
-                "MOVIE",
-                "OVA",
-                "ONA",
-                "SPECIAL",
-                "TV_SHORT",
-                "MUSIC",
-              ].map((f) => (
-                <option key={f}>{f}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Genre
-            <select name="genre" defaultValue={p.genre || ""}>
-              <option value="">All genres</option>
-              {[
-                "Action",
-                "Adventure",
-                "Comedy",
-                "Drama",
-                "Fantasy",
-                "Horror",
-                "Mystery",
-                "Romance",
-                "Sci-Fi",
-                "Slice of Life",
-                "Sports",
-                "Thriller",
-              ].map((g) => (
-                <option key={g}>{g}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Release status
-            <select name="airing" defaultValue={p.airing || ""}>
-              <option value="">All releases</option>
-              <option value="RELEASING">Airing</option>
-              <option value="NOT_YET_RELEASED">Upcoming</option>
-              <option value="FINISHED">Finished</option>
-            </select>
-          </label>
-          <label>
-            Season
-            <select name="season" defaultValue={p.season || ""}>
-              <option value="">All seasons</option>
-              {["WINTER", "SPRING", "SUMMER", "FALL"].map((s) => (
-                <option key={s}>{s}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Year
-            <input
-              type="number"
-              name="year"
-              min="1900"
-              max="2100"
-              defaultValue={p.year}
-            />
-          </label>
-          <label className="check-label">
-            <input
-              type="checkbox"
-              name="short"
-              value="true"
-              defaultChecked={p.short === "true"}
-            />
-            13 episodes or fewer
-          </label>
-          <label>
-            Sort
-            <select name="sort" defaultValue={p.sort || "popular"}>
-              <option value="popular">Popular</option>
-              <option value="newest">Newest</option>
-              <option value="rating">Source rating</option>
-            </select>
-          </label>
-          <button className="button">Search</button>
-          <Link href="/discover" className="text-link">
-            Reset
-          </Link>
-        </form>
+        <details
+          className="catalog-filters"
+          open={Object.keys(p).some((k) => k !== "page")}
+        >
+          <summary>Filters & sorting</summary>
+          <form className="filter-bar">
+            <label className="search-field">
+              Search anime
+              <input
+                name="q"
+                defaultValue={p.q}
+                placeholder="English, romaji, or native title…"
+                maxLength={100}
+              />
+            </label>
+            <label>
+              Format
+              <select name="format" defaultValue={p.format || ""}>
+                <option value="">All formats</option>
+                {[
+                  "TV",
+                  "MOVIE",
+                  "OVA",
+                  "ONA",
+                  "SPECIAL",
+                  "TV_SHORT",
+                  "MUSIC",
+                ].map((f) => (
+                  <option key={f}>{f}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Genre
+              <select name="genre" defaultValue={p.genre || ""}>
+                <option value="">All genres</option>
+                {[
+                  "Action",
+                  "Adventure",
+                  "Comedy",
+                  "Drama",
+                  "Fantasy",
+                  "Horror",
+                  "Mystery",
+                  "Romance",
+                  "Sci-Fi",
+                  "Slice of Life",
+                  "Sports",
+                  "Thriller",
+                ].map((g) => (
+                  <option key={g}>{g}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Release status
+              <select name="airing" defaultValue={p.airing || ""}>
+                <option value="">All releases</option>
+                <option value="RELEASING">Airing</option>
+                <option value="NOT_YET_RELEASED">Upcoming</option>
+                <option value="FINISHED">Finished</option>
+              </select>
+            </label>
+            <label>
+              Season
+              <select name="season" defaultValue={p.season || ""}>
+                <option value="">All seasons</option>
+                {["WINTER", "SPRING", "SUMMER", "FALL"].map((s) => (
+                  <option key={s}>{s}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Year
+              <input
+                type="number"
+                name="year"
+                min="1900"
+                max="2100"
+                defaultValue={p.year}
+              />
+            </label>
+            <label className="check-label">
+              <input
+                type="checkbox"
+                name="short"
+                value="true"
+                defaultChecked={p.short === "true"}
+              />
+              13 episodes or fewer
+            </label>
+            <label>
+              Sort
+              <select name="sort" defaultValue={p.sort || "popular"}>
+                <option value="popular">Popular</option>
+                <option value="newest">Newest</option>
+                <option value="rating">Source rating</option>
+              </select>
+            </label>
+            <button className="button">Search</button>
+            <Link href="/discover" className="text-link">
+              Reset
+            </Link>
+          </form>
+        </details>
         {result?.titles.length ? (
           <>
             <div className="anime-grid">

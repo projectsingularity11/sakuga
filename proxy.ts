@@ -42,14 +42,11 @@ export async function proxy(request: NextRequest) {
     response.cookies.getAll().forEach((cookie) => login.cookies.set(cookie));
     return login;
   }
+  if (user) response.headers.set("Cache-Control", "private, no-store");
   return response;
 }
 export const config = {
   matcher: [
-    "/app/:path*",
-    "/auth/:path*",
-    "/login",
-    "/signup",
-    "/reset-password",
+    "/((?!_next/static|_next/image|favicon.ico|icon.svg|art/|.*\\.(?:png|jpg|jpeg|webp|svg|woff2)$).*)",
   ],
 };

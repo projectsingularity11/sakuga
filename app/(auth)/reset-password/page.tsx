@@ -3,7 +3,7 @@ export default async function Page() {
   await account();
   return (
     <>
-      <h2>A fresh start.</h2>
+      <h1>New password</h1>
       <form action={resetPassword} className="stack">
         <label>
           New password

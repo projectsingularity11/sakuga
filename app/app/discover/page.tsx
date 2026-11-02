@@ -24,7 +24,7 @@ export default async function Page({
     .eq("user_id", user.id)
     .in(
       "anime_id",
-      titles.map((t) => t.id),
+      titles.map((t) => t.matched_id || t.id),
     );
   const savedIds = new Set((savedEntries || []).map((e) => e.anime_id));
   function href(n: number) {
@@ -41,10 +41,9 @@ export default async function Page({
     <>
       <div className="page-heading">
         <div>
-          <h1>A new story awaits.</h1>
-          <p>Explore the catalog. Follow your curiosity.</p>
+          <h1>Discover anime</h1>
         </div>
-        <span>{count.toLocaleString()} published titles</span>
+        <span>{count.toLocaleString()} shows & films</span>
       </div>
       <form className="filter-bar">
         <label className="search-field">
@@ -142,7 +141,10 @@ export default async function Page({
                 hideMature={profile?.preferences?.hide_mature}
                 language={profile?.preferences?.language}
               />
-              <QuickAdd id={anime.id} initialAdded={savedIds.has(anime.id)} />
+              <QuickAdd
+                id={anime.matched_id || anime.id}
+                initialAdded={savedIds.has(anime.matched_id || anime.id)}
+              />
             </div>
           ))}
         </div>
@@ -150,7 +152,7 @@ export default async function Page({
         <div className="empty-state">
           <h2>
             {count === 0 && !p.q
-              ? "No published titles yet."
+              ? "No shows & films yet."
               : "No stories found."}
           </h2>
           <p>

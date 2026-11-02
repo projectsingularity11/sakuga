@@ -15,11 +15,8 @@ export default async function Page() {
   const s = data as Stats;
   return (
     <>
-      <h1>A little perspective.</h1>
-      <p>
-        Your watch history, at your own pace. Computed across your entire
-        library.
-      </p>
+      <h1>Statistics</h1>
+      <p>Watch history across your entire library.</p>
       <section className="editor">
         <h2>Your library</h2>
         {Object.entries(labels).map(([status, label]) => (
@@ -37,7 +34,7 @@ export default async function Page() {
       </section>
       {[
         ["Your scores", s.scores],
-        ["The genres you return to", s.genres],
+        ["Genres", s.genres],
         ["Formats", s.formats],
       ].map(([title, values]) => (
         <section className="editor" key={String(title)}>

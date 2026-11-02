@@ -42,7 +42,7 @@ export function LibraryEditor({
   }
   return (
     <section className="editor">
-      <h2>{exists ? "Your place in the story" : "Make room for this story"}</h2>
+      <h2>{exists ? "Your list entry" : "Add to library"}</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
