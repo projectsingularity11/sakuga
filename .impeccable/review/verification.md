@@ -1,9 +1,9 @@
 # Prism cinema verification
 
-This review covers the electric-blue/orange theme, vertical optical-glass background, local motion rendering, streamed homepage shelves and cached feature artwork. Five widths were reviewed together: 375, 390, 768, 1280 and 1440 pixels. One collected fix batch corrected shader-test cleanup ordering, image selection dimensions and film-strip boundary states; the confirmation round passed.
+This review covers the electric-blue/orange theme, vertical optical-glass background, local motion rendering, streamed homepage shelves and cached feature artwork. Five widths were reviewed together: 375, 390, 768, 1280 and 1440 pixels. One collected fix batch corrected shader-test cleanup ordering, image selection dimensions and film-strip boundary states; the confirmation round passed. A subsequent production-data check found only three qualifying tall banners in the popular feed; the selection threshold was corrected to prefer any set of at least two, with a regression test matching that feed shape.
 
 - TypeScript and ESLint passed.
-- 44 unit/database integration tests passed.
+- 45 unit/database integration tests passed.
 - 66 browser tests passed. Four duplicate shader tests were deliberately skipped; the actual WebGL shader was compiled and rendered once on desktop.
 - Browser coverage includes light/dark contrast, keyboard navigation, reduced motion, native film-strip navigation, overflow, artwork failure labels, search races, expired-session refresh when returning home, season switching and sound-preference migration.
 - Screenshots use a local Supabase protocol fixture. Fixture titles, release dates and synopsis strings are test data, not production catalog assertions.

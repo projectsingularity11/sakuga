@@ -65,3 +65,14 @@ it("projects only the fields needed by the interactive feature", async () => {
   );
   expect(feature.art?.banner?.width).toBeGreaterThanOrEqual(1500);
 });
+
+it("prefers a small set of genuine wide banners over shallow popular artwork", () => {
+  const titles = [16498, 21519, 21507, 101922, 113415, 21, 1535].map((id) => ({
+    id,
+    cover_url: "https://s4.anilist.co/example.jpg",
+  })) as Anime[];
+  const selection = featuredSelection(titles, () => 0.5);
+  expect(selection.map((a) => a.id).sort((a, b) => a - b)).toEqual([
+    16498, 21507, 21519,
+  ]);
+});
