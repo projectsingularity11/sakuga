@@ -33,7 +33,7 @@ export function CoverImage({
         sizes="(max-width:600px) 44vw,16vw"
       />
       <div />
-      <span>sakuga.</span>
+      <span>sakuga</span>
       <small>Cover artwork unavailable</small>
     </div>
   );

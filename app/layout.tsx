@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import "@fontsource/newsreader/400.css";
-import "@fontsource/newsreader/400-italic.css";
-import "@fontsource/manrope/400.css";
-import "@fontsource/manrope/500.css";
-import "@fontsource/manrope/700.css";
-import "@fontsource/space-grotesk/500.css";
-import "@fontsource/space-grotesk/700.css";
+import "@fontsource/syne/400.css";
+import "@fontsource/syne/500.css";
+import "@fontsource/syne/700.css";
+import "@fontsource/syne/800.css";
+import "@fontsource/unbounded/500.css";
+import "@fontsource/unbounded/600.css";
+import "@fontsource/space-mono/400.css";
 import "./globals.css";
 import "./identity.css";
 import { Experience } from "@/components/experience";
 import { viewer } from "@/lib/viewer";
+import { polishTheme } from "@/lib/appearance";
 import { themeSchema } from "@/lib/domain";
 export const metadata: Metadata = {
   title: {
@@ -26,9 +27,12 @@ export default async function RootLayout({
 }) {
   const profile = await viewer();
   const parsed = themeSchema.safeParse(profile?.preferences?.theme);
-  const theme = parsed.success ? parsed.data : undefined;
+  const theme = parsed.success ? polishTheme(parsed.data) : undefined;
   const style = theme
-    ? { "--accent": theme.accent, "--ambient": `${theme.intensity}%` }
+    ? {
+        "--accent": theme.preset === "Iris" ? undefined : theme.accent,
+        "--ambient": `${theme.intensity}%`,
+      }
     : undefined;
   return (
     <html

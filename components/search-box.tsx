@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, X } from "lucide-react";
+import { Search, X, ArrowUpRight } from "lucide-react";
 import type { Anime } from "@/lib/domain";
 import { resolveTitle, formatLabel, qualifiedCover } from "@/lib/metadata";
 import { CoverImage } from "./cover-image";
@@ -21,9 +21,28 @@ export function SearchBox({
     [state, setState] = useState("idle"),
     [open, setOpen] = useState(false),
     [active, setActive] = useState(-1);
+  const field = useRef<HTMLInputElement>(null);
   const generation = useRef(0),
     router = useRouter(),
     id = useId();
+  useEffect(() => {
+    const shortcut = (event: KeyboardEvent) => {
+      const editing =
+        event.target instanceof HTMLElement &&
+        (event.target.isContentEditable ||
+          /INPUT|TEXTAREA|SELECT/.test(event.target.tagName));
+      if (
+        (event.key === "/" && !editing) ||
+        ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k")
+      ) {
+        event.preventDefault();
+        field.current?.focus();
+      }
+    };
+    if (field.current) field.current.dataset.shortcutReady = "true";
+    window.addEventListener("keydown", shortcut);
+    return () => window.removeEventListener("keydown", shortcut);
+  }, []);
   useEffect(() => {
     const current = ++generation.current;
     const controller = new AbortController();
@@ -84,6 +103,7 @@ export function SearchBox({
       >
         <Search size={18} />
         <input
+          ref={field}
           name="q"
           role="combobox"
           aria-label="Search anime"
@@ -91,7 +111,7 @@ export function SearchBox({
           aria-controls={id}
           aria-autocomplete="list"
           aria-activedescendant={active >= 0 ? `${id}-${active}` : undefined}
-          placeholder="Search anime, English or Japanese…"
+          placeholder="Search anime…"
           autoComplete="off"
           maxLength={100}
           value={value}
@@ -141,8 +161,13 @@ export function SearchBox({
           </button>
         )}
         <button type="submit" aria-label="Submit search">
-          <Search size={16} />
+          <ArrowUpRight size={17} />
         </button>
+        {!value && (
+          <kbd className="search-shortcut" aria-hidden="true">
+            /
+          </kbd>
+        )}
       </form>
       {open && value.trim() && (
         <div className="search-menu">

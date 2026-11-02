@@ -1,18 +1,21 @@
 "use client";
 import { useState, useTransition, useEffect } from "react";
 import { savePreferences, importLibrary, previewImport } from "@/app/actions";
+import { polishTheme } from "@/lib/appearance";
 import { presets, themeSchema, parseImport } from "@/lib/domain";
 export function ThemeApply({ theme }: { theme: unknown }) {
   useEffect(() => {
     const p = themeSchema.safeParse(theme);
     if (!p.success) return;
-    const t = p.data;
+    const t = polishTheme(p.data);
     const dark =
       t.mode === "dark" ||
       (t.mode === "system" &&
         matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.dataset.appearance = dark ? "dark" : "light";
-    document.documentElement.style.setProperty("--accent", t.accent);
+    if (t.preset === "Iris")
+      document.documentElement.style.removeProperty("--accent");
+    else document.documentElement.style.setProperty("--accent", t.accent);
     document.documentElement.style.setProperty("--ambient", `${t.intensity}%`);
   }, [theme]);
   return null;
@@ -27,12 +30,12 @@ export function Preferences({
   const initial = themeSchema.safeParse(preferences.theme);
   const [theme, setTheme] = useState(
     initial.success
-      ? initial.data
+      ? polishTheme(initial.data)
       : {
-          preset: "Porcelain" as const,
-          mode: "light" as "light" | "dark" | "system",
+          preset: "Iris" as const,
+          mode: "dark" as "light" | "dark" | "system",
           intensity: 8,
-          accent: presets.Porcelain,
+          accent: presets.Iris,
         },
   );
   const [display_name, setName] = useState(name);
@@ -92,7 +95,7 @@ export function Preferences({
           />
           Hide artwork on mature titles
         </label>
-        <h2>Set the atmosphere.</h2>
+        <h2>Appearance</h2>
         <div className="swatches">
           {Object.entries(presets).map(([name, color]) => (
             <button

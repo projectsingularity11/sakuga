@@ -29,7 +29,7 @@ body {
   margin: 0;
   background: var(--wash);
   color: var(--ink);
-  font-family: "Space Grotesk", Arial, sans-serif;
+  font-family:var(--display);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -92,12 +92,12 @@ h2 {
   text-wrap: balance;
 }
 h1 {
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-size: clamp(2.8rem, 5.6vw, 5.7rem);
   letter-spacing: -0.035em;
 }
 h2 {
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-size: clamp(1.8rem, 3vw, 3.1rem);
   letter-spacing: -0.025em;
 }
@@ -166,7 +166,7 @@ small {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -288,7 +288,7 @@ small {
   position: absolute;
   top: 30px;
   left: 30px;
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-style: italic;
   font-size: 2.4rem;
   line-height: 1.12;
@@ -326,7 +326,7 @@ small {
   box-shadow: 0 10px 25px -15px #203d3240;
 }
 .shelf-tab em {
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-size: 1rem;
 }
 .values-line {
@@ -373,7 +373,7 @@ small {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-size: 1.7rem;
 }
 .preview-tabs {
@@ -396,7 +396,7 @@ small {
   margin-bottom: 15px;
 }
 .empty-shelf h3 {
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-weight: 400;
   font-size: 1.5rem;
 }
@@ -723,7 +723,7 @@ textarea {
   text-align: center;
 }
 .cover-placeholder > span:first-child {
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-size: 2rem;
 }
 .cover-placeholder > span:last-child {
@@ -1051,12 +1051,12 @@ progress::-webkit-progress-value {
   letter-spacing: 0.15em;
 }
 .price {
-  font-family: "Newsreader", Georgia, serif;
+  font-family:var(--display);
   font-size: 4rem;
   color: var(--ink) !important;
 }
 .price small {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-size: 1rem;
 }
 .legal {
@@ -1414,7 +1414,7 @@ body {
   background: var(--paper);
 }
 .brand {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-weight: 700;
   font-size: 1.9rem;
   letter-spacing: -0.04em;
@@ -1538,7 +1538,7 @@ body {
   max-width: 820px;
 }
 .cinema-copy h1 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-size: clamp(3.6rem, 6.7vw, 6rem);
   font-weight: 500;
   letter-spacing: -0.04em;
@@ -1546,7 +1546,7 @@ body {
   margin-bottom: 25px;
 }
 .cinema-copy h1 em {
-  font-family: "Newsreader", serif;
+  font-family:var(--display);
   font-weight: 400;
   color: #f0b18f;
 }
@@ -1671,7 +1671,7 @@ body {
   margin-bottom: 27px;
 }
 .shelf-heading h2 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-size: 30px;
   font-weight: 500;
   letter-spacing: -0.035em;
@@ -1843,7 +1843,7 @@ body {
   margin-top: 20px;
 }
 .collection-copy h2 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-size: clamp(2.8rem, 4.5vw, 4.6rem);
   font-weight: 500;
   letter-spacing: -0.04em;
@@ -1851,7 +1851,7 @@ body {
   margin-bottom: 22px;
 }
 .collection-copy h2 em {
-  font-family: "Newsreader", serif;
+  font-family:var(--display);
   color: #e5a584;
 }
 .collection-copy > p {
@@ -1915,7 +1915,7 @@ body {
   color: #fff;
 }
 .mood-card h3 {
-  font-family: "Newsreader", serif;
+  font-family:var(--display);
   font-size: 29px;
   font-weight: 400;
   margin: 120px 0 4px;
@@ -1959,12 +1959,12 @@ footer {
   background: #263b30;
 }
 .auth-layout > aside h1 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   letter-spacing: -0.04em;
   font-weight: 500;
 }
 .auth-layout > aside h1 em {
-  font-family: "Newsreader", serif;
+  font-family:var(--display);
   color: #efb28f;
 }
 .sidebar {
@@ -1978,13 +1978,13 @@ footer {
   background: var(--surface);
 }
 .workspace-main h1 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-weight: 500;
   letter-spacing: -0.04em;
   font-size: clamp(2rem, 3vw, 3rem);
 }
 .workspace-main h2 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-weight: 500;
   font-size: 1.65rem;
 }
@@ -2005,7 +2005,7 @@ footer {
   padding: 45px 4% 80px;
 }
 .public-catalog h1 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-size: clamp(2.4rem, 4vw, 4rem);
   font-weight: 500;
 }
@@ -2437,7 +2437,7 @@ footer {
   color: var(--accent);
 }
 .featured-content h1 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-size: clamp(30px, 3.9vw, 54px);
   font-weight: 700;
   line-height: 1.12;
@@ -2479,7 +2479,7 @@ footer {
   padding: 36px 4%;
 }
 .catalog-section h2 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-weight: 500;
   font-size: 24px;
   margin: 0;
@@ -2540,7 +2540,7 @@ footer {
   white-space: pre-line;
 }
 .public-dossier h1 {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:var(--display);
   font-size: clamp(28px, 4vw, 48px);
   font-weight: 700;
 }
@@ -2945,7 +2945,7 @@ footer {
   margin: 0;
 }
 .editorial-strip em {
-  font-family: "Newsreader", serif;
+  font-family:var(--display);
   color: #f1b499;
   font-size: 1.1em;
 }
@@ -3058,7 +3058,7 @@ footer {
   z-index: 1;
 }
 .cover-fallback > span {
-  font-family: "Newsreader", serif;
+  font-family:var(--display);
   font-size: 28px;
   font-style: italic;
 }

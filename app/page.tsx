@@ -1,14 +1,11 @@
-import { CoverImage } from "@/components/cover-image";
-import { englishSynopsis, releaseDescription, mediaLinks } from "@/lib/media";
-import { Play, ArrowUpRight } from "lucide-react";
+import { FeaturedCarousel } from "@/components/featured-carousel";
+import { featuredSelection } from "@/lib/feature-selection";
+import { ArrowUpRight } from "lucide-react";
 import { viewerLanguage } from "@/lib/viewer";
 import Link from "next/link";
-import Image from "next/image";
 import { PublicNav } from "@/components/public-nav";
 import { AnimeCard } from "@/components/anime-card";
 import { catalog } from "@/lib/catalog";
-import { resolveTitle, formatLabel } from "@/lib/metadata";
-import { trustedImage } from "@/lib/domain";
 export default async function Home() {
   const language = await viewerLanguage();
   const year = new Date().getUTCFullYear();
@@ -26,90 +23,22 @@ export default async function Home() {
     },
   ];
   const results = await Promise.allSettled(feeds.map((f) => catalog(f.params)));
-  const featured =
+  const features = featuredSelection(
     results[0].status === "fulfilled"
-      ? results[0].value.titles.find((a) => a.synopsis)
-      : null;
-  const art = featured ? trustedImage(featured.banner_url) : null;
-  const preview = featured ? mediaLinks(featured) : null;
+      ? results[0].value.titles
+      : results.flatMap((result) =>
+          result.status === "fulfilled" ? result.value.titles : [],
+        ),
+  );
   return (
     <div className="cinema-home">
       <PublicNav />
       <main id="main">
-        <section className="discovery-feature">
-          {
-            <Image
-              className="featured-backdrop"
-              src={art || "/art/sakuga-city.png"}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-            />
-          }
-          <div className="featured-content">
-            <h1>
-              {featured ? resolveTitle(featured, language) : "Explore anime"}
-            </h1>
-            {featured && (
-              <p className="featured-meta">
-                {formatLabel(featured.format)} ·{" "}
-                {featured.year || "Year unknown"} ·{" "}
-                {featured.episodes
-                  ? `${featured.episodes} episodes`
-                  : "Episodes unannounced"}
-              </p>
-            )}
-            <p className="featured-synopsis">
-              {(featured
-                ? englishSynopsis(featured) || releaseDescription(featured)
-                : null) ||
-                "Discover anime, compare source ratings, and keep track of every story in your own list."}
-            </p>
-            <div className="hero-actions">
-              <Link
-                className="button"
-                href={featured ? `/anime/${featured.id}` : "/discover"}
-              >
-                {featured ? "Explore this anime" : "Explore anime"}
-              </Link>
-              <Link className="button outline" href="/app/library">
-                Open my list
-              </Link>
-              {preview && (
-                <a
-                  className="hero-preview"
-                  href={preview.trailer || preview.trailerSearch}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Play size={15} />
-                  {preview.trailer ? "Watch trailer" : "Find trailer"}
-                  <ArrowUpRight size={14} />
-                </a>
-              )}
-            </div>
-          </div>
-          <div className="hero-gallery" aria-label="Featured anime artwork">
-            {featured && (
-              <Link
-                className="gallery-main"
-                href={`/anime/${featured.id}`}
-                aria-label={resolveTitle(featured, language)}
-              >
-                <CoverImage
-                  src={trustedImage(featured.cover_url)}
-                  title={resolveTitle(featured, language)}
-                  priority
-                />
-                <span className="poster-open">
-                  <ArrowUpRight size={24} />
-                  <span>View anime</span>
-                </span>
-              </Link>
-            )}
-          </div>
-        </section>
+        <FeaturedCarousel
+          key={features.map((a) => a.id).join("-")}
+          titles={features}
+          language={language}
+        />
         <div className="browse-shortcuts">
           <Link className="shortcut-all" href="/discover">
             All anime <ArrowUpRight size={17} />
@@ -154,7 +83,7 @@ export default async function Home() {
         })}
       </main>
       <footer>
-        <Link href="/">sakuga.</Link>
+        <Link href="/">sakuga</Link>
 
         <nav aria-label="Footer">
           <Link href="/privacy">Privacy</Link>
