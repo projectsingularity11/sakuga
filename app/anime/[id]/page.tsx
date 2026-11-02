@@ -1,3 +1,5 @@
+import { viewerLanguage } from "@/lib/viewer";
+import { resolveTitle, alternateTitles, qualifiedCover } from "@/lib/metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -11,6 +13,7 @@ export default async function AnimeDetail({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const language = await viewerLanguage();
   const { id } = await params;
   if (!/^\d{1,10}$/.test(id) || !configured()) notFound();
   const client = await db();
@@ -23,7 +26,7 @@ export default async function AnimeDetail({
   if (error) throw Error("Could not load this title. Please retry.");
   if (!data) notFound();
   const a = data as Anime;
-  const image = trustedImage(a.cover_url);
+  const image = trustedImage(qualifiedCover(a));
   const { data: related } = await client
     .from("anime")
     .select("*,ratings(*),source_mappings(*)")
@@ -46,7 +49,7 @@ export default async function AnimeDetail({
             {image ? (
               <Image
                 src={image}
-                alt={`${a.title} cover`}
+                alt={`${resolveTitle(a, language)} cover`}
                 width={300}
                 height={440}
                 priority
@@ -60,11 +63,9 @@ export default async function AnimeDetail({
               {a.format || "Anime"} · {a.year || "Year unknown"} ·{" "}
               {a.episodes ?? "Unknown"} episodes
             </p>
-            <h1>{a.title}</h1>
+            <h1>{resolveTitle(a, language)}</h1>
             <p className="alternate">
-              {[a.title_romaji, a.title_native]
-                .filter((t) => t && t !== a.title)
-                .join(" / ")}
+              {alternateTitles(a, language).join(" / ")}
             </p>
             <div className="tags">
               {a.genres.map((g) => (
@@ -143,7 +144,12 @@ export default async function AnimeDetail({
             <h2>Keep exploring</h2>
             <div className="anime-grid">
               {related!.map((r) => (
-                <AnimeCard key={r.id} anime={r as Anime} publicPage />
+                <AnimeCard
+                  key={r.id}
+                  anime={r as Anime}
+                  language={language}
+                  publicPage
+                />
               ))}
             </div>
           </section>

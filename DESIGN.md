@@ -13,3 +13,9 @@ Workspace: Operate mode. Retain working forms, ownership, library views, collect
 Logo: original SVG linework, an imperfect hand-inked eye enclosing a play shape, with animation action lines. This is a geometric identity mark, not an illustrated scene. Maintain legibility at navigation scale.
 
 Validate desktop and mobile together. Any deployment or catalog completeness claim requires remote evidence.
+
+## Discovery upgrade
+
+Homepage is now Operate mode: a compact real featured anime with safe synopsis, direct detail/list actions, and independent popular, release-year and upcoming feeds. The original marketing scene and promotional collection mockups are no longer the page structure. Navigation exposes Discover, My list and shared live search. Neutral charcoal surfaces replace the green canvas; a single persimmon accent marks actions and selected navigation. Cards have stable 2:3 covers, two-line titles, release metadata and separate keyboard-accessible list links.
+
+The HD requirement is enforced on original dimensions: minimum 720×1080, target 1080×1620. Lower-quality/unverified images use an explicit fallback; no artificial enlargement or invented HD labels. This can leave many posters unavailable until qualifying source images exist. Current sources do not guarantee the required resolution for every work.

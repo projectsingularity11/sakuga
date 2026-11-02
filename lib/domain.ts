@@ -39,6 +39,11 @@ export type Rule = z.infer<typeof ruleSchema>;
 export type Anime = {
   id: number;
   title: string;
+  title_english?: string | null;
+  cover_width?: number | null;
+  cover_height?: number | null;
+  airing_status?: string | null;
+  synonyms?: string[];
   title_romaji: string | null;
   title_native: string | null;
   synopsis: string | null;

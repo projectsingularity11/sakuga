@@ -1,4 +1,6 @@
+import { viewerLanguage } from "@/lib/viewer";
 import Link from "next/link";
+import { scalarParams } from "@/lib/search";
 import { PublicNav } from "@/components/public-nav";
 import { AnimeCard } from "@/components/anime-card";
 import { catalog } from "@/lib/catalog";
@@ -9,7 +11,8 @@ export default async function Discover({
 }: {
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
-  const p = await searchParams;
+  const language = await viewerLanguage();
+  const p = scalarParams(await searchParams);
   let result: Awaited<ReturnType<typeof catalog>> | null = null;
   let unavailable = false;
   if (configured()) {
@@ -92,6 +95,24 @@ export default async function Discover({
             </select>
           </label>
           <label>
+            Release status
+            <select name="airing" defaultValue={p.airing || ""}>
+              <option value="">All releases</option>
+              <option value="RELEASING">Airing</option>
+              <option value="NOT_YET_RELEASED">Upcoming</option>
+              <option value="FINISHED">Finished</option>
+            </select>
+          </label>
+          <label>
+            Season
+            <select name="season" defaultValue={p.season || ""}>
+              <option value="">All seasons</option>
+              {["WINTER", "SPRING", "SUMMER", "FALL"].map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+          </label>
+          <label>
             Year
             <input
               type="number"
@@ -110,6 +131,14 @@ export default async function Discover({
             />
             13 episodes or fewer
           </label>
+          <label>
+            Sort
+            <select name="sort" defaultValue={p.sort || "popular"}>
+              <option value="popular">Popular</option>
+              <option value="newest">Newest</option>
+              <option value="rating">Source rating</option>
+            </select>
+          </label>
           <button className="button">Search</button>
           <Link href="/discover" className="text-link">
             Reset
@@ -119,7 +148,12 @@ export default async function Discover({
           <>
             <div className="anime-grid">
               {result.titles.map((a) => (
-                <AnimeCard key={a.id} anime={a} publicPage />
+                <AnimeCard
+                  key={a.id}
+                  anime={a}
+                  language={language}
+                  publicPage
+                />
               ))}
             </div>
             <nav className="pagination" aria-label="Pagination">

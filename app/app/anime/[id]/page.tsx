@@ -1,3 +1,4 @@
+import { resolveTitle, alternateTitles, qualifiedCover } from "@/lib/metadata";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { account, membership, reportContent } from "@/app/actions";
@@ -41,7 +42,7 @@ export default async function Page({
   const image =
     profile?.preferences?.hide_mature && anime.mature
       ? null
-      : trustedImage(anime.cover_url);
+      : trustedImage(qualifiedCover(anime));
   return (
     <>
       <div className="dossier">
@@ -49,7 +50,7 @@ export default async function Page({
           {image ? (
             <Image
               src={image}
-              alt={`${anime.title} cover`}
+              alt={`${resolveTitle(anime, profile?.preferences?.language)} cover`}
               width={300}
               height={440}
             />
@@ -62,11 +63,9 @@ export default async function Page({
             {anime.format || "Anime"} · {anime.year || "Release unknown"} ·{" "}
             {anime.episodes ?? "Unknown"} episodes
           </p>
-          <h1>{anime.title}</h1>
+          <h1>{resolveTitle(anime, profile?.preferences?.language)}</h1>
           <p className="alternate">
-            {[anime.title_romaji, anime.title_native]
-              .filter((t) => t && t !== anime.title)
-              .join(" / ")}
+            {alternateTitles(anime, profile?.preferences?.language).join(" / ")}
           </p>
           <div className="tags">
             {anime.genres.map((g) => (

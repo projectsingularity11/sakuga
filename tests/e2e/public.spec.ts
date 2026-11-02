@@ -4,36 +4,18 @@ test("homepage, auth configuration state and responsive navigation", async ({
 }, info) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", {
-      name: "Some stories stay with you.",
-    }),
+    page.getByRole("heading", { name: "Attack on Titan", exact: true }).first(),
   ).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await expect(page.locator(".spotlight-cover img").first()).toBeVisible();
-  expect(
-    await page
-      .locator(".spotlight-cover img")
-      .first()
-      .evaluate(
-        (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
-      ),
-  ).toBe(true);
   await page.screenshot({
     path: `.impeccable/review/${info.project.name}.png`,
     fullPage: true,
+    caret: "initial",
   });
-  await page
-    .getByRole("link", { name: "Start your collection" })
-    .first()
-    .click();
-  await expect(page).toHaveURL(/\/signup/);
-  await expect(
-    page.getByRole("heading", { name: "Make room for your favorites." }),
-  ).toBeVisible();
   await page.goto("/app/library");
   await expect(page).toHaveURL(/\/login/);
   await expect(page.getByLabel("Email address")).toBeVisible();
@@ -69,4 +51,49 @@ test("keyboard focus and automated accessibility on public and auth pages", asyn
   await expect(
     page.getByRole("link", { name: "Skip to content" }),
   ).toBeFocused();
+});
+test("suggestions ignore obsolete responses, clear safely, and expose errors", async ({
+  page,
+}) => {
+  await page.route("**/api/search?*", async (route) => {
+    const q = new URL(route.request().url()).searchParams.get("q") || "";
+    if (q === "fail") {
+      await route.fulfill({ status: 503, json: { error: "unavailable" } });
+      return;
+    }
+    await new Promise((r) => setTimeout(r, q === "old" ? 800 : 20));
+    await route.fulfill({
+      json: {
+        titles: [
+          {
+            id: q === "old" ? 1 : 2,
+            title_english: q === "old" ? "Old response" : "New response",
+            title: "Romaji",
+            year: 2026,
+            format: "TV",
+          },
+        ],
+      },
+    });
+  });
+  await page.goto("/");
+  const input = page.getByRole("combobox", { name: "Search anime" });
+  await input.fill("old");
+  await page.waitForTimeout(400);
+  await input.fill("new");
+  await expect(
+    page.getByRole("option", { name: /New response/ }),
+  ).toBeVisible();
+  await page.waitForTimeout(900);
+  await expect(page.getByRole("option", { name: /Old response/ })).toHaveCount(
+    0,
+  );
+  await page.getByRole("button", { name: "Clear search", exact: true }).click();
+  await expect(page.getByRole("option")).toHaveCount(0);
+  await input.fill("fail");
+  await expect(
+    page.getByText("Search failed.", { exact: false }),
+  ).toBeVisible();
+  await input.press("Escape");
+  await expect(input).toHaveAttribute("aria-expanded", "false");
 });

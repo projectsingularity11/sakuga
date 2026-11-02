@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { resolveTitle } from "@/lib/metadata";
 import { useState } from "react";
 import { AnimeCard } from "./anime-card";
 import { labels, statuses, type Entry } from "@/lib/domain";
@@ -120,7 +121,9 @@ export function LibraryViews({
                 <tr key={e.anime_id}>
                   <td>
                     <Link href={`/app/anime/${e.anime_id}`}>
-                      {e.anime?.title || "Unavailable title"}
+                      {e.anime
+                        ? resolveTitle(e.anime, language)
+                        : "Unavailable title"}
                     </Link>
                   </td>
                   <td>{labels[e.status]}</td>
@@ -153,7 +156,11 @@ export function LibraryViews({
                     href={`/app/anime/${e.anime_id}`}
                     key={e.anime_id}
                   >
-                    <strong>{e.anime?.title || "Unavailable title"}</strong>
+                    <strong>
+                      {e.anime
+                        ? resolveTitle(e.anime, language)
+                        : "Unavailable title"}
+                    </strong>
                     <span>
                       {e.progress} episodes · {labels[e.status]}
                     </span>

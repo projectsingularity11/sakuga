@@ -54,36 +54,35 @@ for (let n = 0; n < maxPages; n++, page++) {
       if (override)
         decision = { state: override.decision, reason: override.reason };
       check(
-        await client
-          .from("anime")
-          .upsert(
-            {
-              id: m.id,
-              title: m.title.english || m.title.romaji,
-              title_romaji: m.title.romaji,
-              title_native: m.title.native,
-              synonyms: m.synonyms,
-              synopsis: plainSynopsis(m.description),
-              cover_url:
-                decision.state === "published"
-                  ? trustedImage(m.coverImage.large)
-                  : null,
-              format: m.format,
-              year: m.seasonYear,
-              season: m.season,
-              airing_status: m.status,
-              episodes: m.episodes || null,
-              duration: m.duration || null,
-              genres: m.genres,
-              studios: m.studios.nodes.map((s) => s.name),
-              popularity: m.popularity,
-              moderation: decision.state,
-              moderation_reason: decision.reason,
-              mature: m.isAdult || m.genres.includes("Ecchi"),
-              updated_at: new Date().toISOString(),
-            },
-            { onConflict: "id" },
-          ),
+        await client.from("anime").upsert(
+          {
+            id: m.id,
+            title: m.title.english?.trim() || m.title.romaji,
+            title_english: m.title.english?.trim() || null,
+            title_romaji: m.title.romaji,
+            title_native: m.title.native,
+            synonyms: m.synonyms,
+            synopsis: plainSynopsis(m.description),
+            cover_url:
+              decision.state === "published"
+                ? trustedImage(m.coverImage.large)
+                : null,
+            format: m.format,
+            year: m.seasonYear,
+            season: m.season,
+            airing_status: m.status,
+            episodes: m.episodes || null,
+            duration: m.duration || null,
+            genres: m.genres,
+            studios: m.studios.nodes.map((s) => s.name),
+            popularity: m.popularity,
+            moderation: decision.state,
+            moderation_reason: decision.reason,
+            mature: m.isAdult || m.genres.includes("Ecchi"),
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "id" },
+        ),
       );
       const mappings = [
         {
@@ -151,15 +150,13 @@ for (let n = 0; n < maxPages; n++, page++) {
       );
     }
     check(
-      await client
-        .from("ingestion_jobs")
-        .upsert({
-          provider: "anilist",
-          page: page + 1,
-          status: batch.pageInfo.hasNextPage ? "running" : "complete",
-          last_error: null,
-          updated_at: new Date().toISOString(),
-        }),
+      await client.from("ingestion_jobs").upsert({
+        provider: "anilist",
+        page: page + 1,
+        status: batch.pageInfo.hasNextPage ? "running" : "complete",
+        last_error: null,
+        updated_at: new Date().toISOString(),
+      }),
     );
     console.log(
       JSON.stringify({
@@ -171,16 +168,14 @@ for (let n = 0; n < maxPages; n++, page++) {
     if (!batch.pageInfo.hasNextPage) break;
     await new Promise((r) => setTimeout(r, 2200));
   } catch {
-    await client
-      .from("ingestion_jobs")
-      .upsert({
-        provider: "anilist",
-        page,
-        status: "failed",
-        last_error:
-          "Page failed; rerun to retry idempotently. Inspect provider availability and database constraints.",
-        updated_at: new Date().toISOString(),
-      });
+    await client.from("ingestion_jobs").upsert({
+      provider: "anilist",
+      page,
+      status: "failed",
+      last_error:
+        "Page failed; rerun to retry idempotently. Inspect provider availability and database constraints.",
+      updated_at: new Date().toISOString(),
+    });
     throw Error(
       `Ingestion stopped on page ${page}; checkpoint retained. Check provider authorization, schema and network.`,
     );

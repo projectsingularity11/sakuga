@@ -18,6 +18,15 @@ export default async function Page({
     .select("preferences")
     .eq("id", user.id)
     .single();
+  const { data: savedEntries } = await client
+    .from("library")
+    .select("anime_id")
+    .eq("user_id", user.id)
+    .in(
+      "anime_id",
+      titles.map((t) => t.id),
+    );
+  const savedIds = new Set((savedEntries || []).map((e) => e.anime_id));
   function href(n: number) {
     const q = new URLSearchParams(
       Object.entries(p).filter(([, v]) => v !== undefined) as [
@@ -94,6 +103,7 @@ export default async function Page({
             <option value="">All sources</option>
             <option value="anilist">AniList</option>
             <option value="mal">MyAnimeList</option>
+            <option value="kitsu">Kitsu</option>
           </select>
         </label>
         <label>
@@ -132,7 +142,7 @@ export default async function Page({
                 hideMature={profile?.preferences?.hide_mature}
                 language={profile?.preferences?.language}
               />
-              <QuickAdd id={anime.id} />
+              <QuickAdd id={anime.id} initialAdded={savedIds.has(anime.id)} />
             </div>
           ))}
         </div>

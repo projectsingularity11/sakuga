@@ -7,6 +7,7 @@ const config: NextConfig = {
       { protocol: "https", hostname: "s4.anilist.co" },
       { protocol: "https", hostname: "cdn.myanimelist.net" },
       { protocol: "https", hostname: "media.kitsu.app" },
+      { protocol: "https", hostname: "media.kitsu.io" },
     ],
   },
   async headers() {
@@ -23,8 +24,7 @@ const config: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://s4.anilist.co https://cdn.myanimelist.net https://media.kitsu.app https://media.kitsu.io; connect-src 'self' https://*.supabase.co; font-src 'self'; frame-src https://checkout.stripe.com; base-uri 'self'; form-action 'self'; object-src 'none'",
+            value: `default-src 'self'; script-src 'self' 'unsafe-inline' ${process.env.NODE_ENV === "development" ? "'unsafe-eval'" : ""}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://s4.anilist.co https://cdn.myanimelist.net https://media.kitsu.app https://media.kitsu.io; connect-src 'self' https://*.supabase.co; font-src 'self'; frame-src https://checkout.stripe.com; base-uri 'self'; form-action 'self'; object-src 'none'`,
           },
         ],
       },

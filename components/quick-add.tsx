@@ -2,9 +2,15 @@
 import { useState, useTransition } from "react";
 import { Plus, Check } from "lucide-react";
 import { quickAdd } from "@/app/actions";
-export function QuickAdd({ id }: { id: number }) {
+export function QuickAdd({
+  id,
+  initialAdded = false,
+}: {
+  id: number;
+  initialAdded?: boolean;
+}) {
   const [pending, start] = useTransition();
-  const [added, setAdded] = useState(false);
+  const [added, setAdded] = useState(initialAdded);
   const [error, setError] = useState("");
   return (
     <div className="quick-add">

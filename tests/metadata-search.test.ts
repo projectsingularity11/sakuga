@@ -1,0 +1,6 @@
+import {it,expect} from 'vitest';
+import {resolveTitle,alternateTitles,coverQuality} from '../lib/metadata';
+import {normalizeSearch,scalarParams} from '../lib/search';
+it('uses official English first and ignores blank titles',()=>{expect(resolveTitle({title_english:'  ',title_romaji:'Sousou no Frieren',title_native:'葬送のフリーレン'})).toBe('Sousou no Frieren');expect(resolveTitle({title_english:'Frieren',title_romaji:'Sousou',title_native:'葬送'},'native')).toBe('葬送');expect(resolveTitle({title:'  '})).toBe('Untitled anime');expect(alternateTitles({title:'Frieren',title_english:'Frieren',title_romaji:'Sousou'})).toEqual(['Sousou']);});
+it('normalizes Unicode/punctuation without inventing translation',()=>{expect(normalizeSearch('  Fate/stay NIGHT ')).toBe('fate stay night');expect(normalizeSearch('Ｒｅ：Ｚｅｒｏ')).toBe('re zero');expect(normalizeSearch('進撃の巨人')).toBe('進撃の巨人');expect(scalarParams({q:['x','y'],year:'2026'})).toEqual({q:undefined,year:'2026'});});
+it('requires actual portrait dimensions, never just an HD URL label',()=>{expect(coverQuality(460,650)).toBe('unverified');expect(coverQuality(720,1080)).toBe('720p');expect(coverQuality(1080,1620)).toBe('1080p');expect(coverQuality(1080,720)).toBe('unverified');expect(coverQuality()).toBe('unverified');});

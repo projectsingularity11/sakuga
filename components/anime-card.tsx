@@ -1,7 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Anime } from "@/lib/domain";
 import { trustedImage } from "@/lib/domain";
+import {
+  resolveTitle,
+  formatLabel,
+  qualifiedCover,
+  releaseLabel,
+} from "@/lib/metadata";
+import { CoverImage } from "./cover-image";
 export function AnimeCard({
   anime,
   hideMature = false,
@@ -13,47 +19,32 @@ export function AnimeCard({
   language?: string;
   publicPage?: boolean;
 }) {
-  const image =
-    hideMature && anime.mature ? null : trustedImage(anime.cover_url);
-  const title =
-    (language === "native"
-      ? anime.title_native
-      : language === "romaji"
-        ? anime.title_romaji
-        : null) || anime.title;
+  const title = resolveTitle(anime, language),
+    href = `${publicPage ? "/anime" : "/app/anime"}/${anime.id}`;
+  const scores = anime.ratings?.filter((r) => r.score !== null) || [];
   return (
-    <Link
-      href={`${publicPage ? "/anime" : "/app/anime"}/${anime.id}`}
-      className="anime-card"
-    >
-      <div className="cover">
-        {image ? (
-          <Image
-            src={image}
-            alt=""
-            fill
-            sizes="(max-width:600px) 44vw, (max-width:1000px) 25vw, 18vw"
+    <article className="anime-card">
+      <Link href={href} className="poster-link">
+        <div className="cover">
+          <CoverImage
+            key={anime.cover_url}
+            src={
+              hideMature && anime.mature
+                ? null
+                : trustedImage(qualifiedCover(anime))
+            }
+            title={title}
           />
-        ) : (
-          <div className="cover-placeholder">
-            <span>sakuga.</span>
-            <span>
-              {hideMature && anime.mature
-                ? "Artwork hidden"
-                : anime.format || "ANIME"}
-            </span>
-          </div>
-        )}
-      </div>
-      <h3>{title}</h3>
+          <span className="poster-format">{formatLabel(anime.format)}</span>
+        </div>
+        <h3>{title}</h3>
+      </Link>
       <p>
-        {anime.year || "Year unknown"} <span>·</span>{" "}
-        {anime.format || "Format unknown"} {anime.mature && " · Mature themes"}
+        {anime.year || "Year unknown"} · {releaseLabel(anime.airing_status)}
       </p>
-      <div className="source-scores">
-        {anime.ratings
-          ?.filter((r) => r.score !== null)
-          .map((r) => (
+      {scores.length > 0 && (
+        <div className="source-scores">
+          {scores.slice(0, 2).map((r) => (
             <span key={r.provider}>
               {r.provider.toUpperCase()}{" "}
               <b>
@@ -61,7 +52,11 @@ export function AnimeCard({
               </b>
             </span>
           ))}
-      </div>
-    </Link>
+        </div>
+      )}
+      <Link className="card-list-action" href={`/app/anime/${anime.id}`}>
+        ＋ Manage list
+      </Link>
+    </article>
   );
 }
