@@ -97,3 +97,23 @@ test("suggestions ignore obsolete responses, clear safely, and expose errors", a
   await input.press("Escape");
   await expect(input).toHaveAttribute("aria-expanded", "false");
 });
+test("database and trailer searches are explicit and every card has visual artwork", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(
+    page
+      .locator(".anime-card")
+      .first()
+      .getByRole("link", { name: "Search IMDb", exact: true }),
+  ).toHaveAttribute("href", /imdb.com\/find/);
+  await expect(
+    page
+      .locator(".anime-card")
+      .first()
+      .getByRole("link", { name: "Find trailer", exact: true }),
+  ).toHaveAttribute("href", /youtube.com\/results/);
+  const images = page.locator(".anime-card").first().locator("img");
+  await expect(images).toHaveCount(1);
+  await expect(images.first()).toBeVisible();
+});

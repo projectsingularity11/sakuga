@@ -1,3 +1,4 @@
+import { MediaLinks } from "./media-links";
 import Link from "next/link";
 import type { Anime } from "@/lib/domain";
 import { trustedImage } from "@/lib/domain";
@@ -57,6 +58,7 @@ export function AnimeCard({
       <Link className="card-list-action" href={`/app/anime/${anime.id}`}>
         ＋ Manage list
       </Link>
+      <MediaLinks anime={anime} compact />
     </article>
   );
 }

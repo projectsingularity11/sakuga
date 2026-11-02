@@ -19,3 +19,11 @@ Validate desktop and mobile together. Any deployment or catalog completeness cla
 Homepage is now Operate mode: a compact real featured anime with safe synopsis, direct detail/list actions, and independent popular, release-year and upcoming feeds. The original marketing scene and promotional collection mockups are no longer the page structure. Navigation exposes Discover, My list and shared live search. Neutral charcoal surfaces replace the green canvas; a single persimmon accent marks actions and selected navigation. Cards have stable 2:3 covers, two-line titles, release metadata and separate keyboard-accessible list links.
 
 The HD requirement is enforced on original dimensions: minimum 720×1080, target 1080×1620. Lower-quality/unverified images use an explicit fallback; no artificial enlargement or invented HD labels. This can leave many posters unavailable until qualifying source images exist. Current sources do not guarantee the required resolution for every work.
+
+## Premium art direction and coverage revision
+
+The latest brief explicitly prioritizes a picture for every card. Retain smaller real provider originals while continuing to prefer measured higher-resolution candidates; the previous HD-only display gate is superseded. Real source covers take priority. An original Sakuga background with an explicit unavailable-cover caption fills the visual area only when a real cover is missing or fails. Never label that background as the anime's actual promotional artwork.
+
+The feature is now an asymmetric composition of a source banner and real poster stack. The original city artwork is a labeled background fallback. Warm reflected color, a glass navigation/dock, restrained poster frames, editorial typography and persimmon details carry the premium direction. Glass is concentrated on controls and has opaque fallbacks and reduced-transparency support. The catalog remains operational, with persistent search and list controls.
+
+MAL/IMDb/trailer actions are present on cards and details. Direct matches use provider IDs; unmatched cases use explicitly labeled searches. Story text is sourced when available. Otherwise, an English release-facts paragraph is labeled as release information, never presented as an invented plot synopsis. No automatic streaming or trailer autoplay.

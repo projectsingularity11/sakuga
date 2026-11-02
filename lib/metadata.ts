@@ -56,7 +56,5 @@ export function coverQuality(width?: number | null, height?: number | null) {
 export function qualifiedCover(
   a: Pick<Anime, "cover_url" | "cover_width" | "cover_height">,
 ) {
-  return coverQuality(a.cover_width, a.cover_height) === "unverified"
-    ? null
-    : a.cover_url;
+  return a.cover_url;
 }

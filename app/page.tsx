@@ -1,3 +1,6 @@
+import { CoverImage } from "@/components/cover-image";
+import { englishSynopsis, releaseDescription, mediaLinks } from "@/lib/media";
+import { Play, ArrowUpRight } from "lucide-react";
 import { viewerLanguage } from "@/lib/viewer";
 import Link from "next/link";
 import Image from "next/image";
@@ -28,23 +31,27 @@ export default async function Home() {
       ? results[0].value.titles.find((a) => a.synopsis)
       : null;
   const art = featured ? trustedImage(featured.banner_url) : null;
+  const picks =
+    results[0].status === "fulfilled"
+      ? results[0].value.titles.filter((a) => a.id !== featured?.id).slice(0, 2)
+      : [];
+  const preview = featured ? mediaLinks(featured) : null;
   return (
     <div className="cinema-home">
       <PublicNav />
       <main id="main">
         <section className="discovery-feature">
-          {art && (
+          {
             <Image
               className="featured-backdrop"
-              src={art}
+              src={art || "/art/sakuga-city.png"}
               alt=""
               fill
               priority
               sizes="100vw"
             />
-          )}
+          }
           <div className="featured-content">
-            <span className="feature-caption">Find a story worth keeping</span>
             <h1>
               {featured
                 ? resolveTitle(featured, language)
@@ -60,7 +67,9 @@ export default async function Home() {
               </p>
             )}
             <p className="featured-synopsis">
-              {featured?.synopsis ||
+              {(featured
+                ? englishSynopsis(featured) || releaseDescription(featured)
+                : null) ||
                 "Discover anime, compare source ratings, and keep track of every story in your own list."}
             </p>
             <div className="hero-actions">
@@ -73,7 +82,69 @@ export default async function Home() {
               <Link className="button outline" href="/app/library">
                 Open my list
               </Link>
+              {preview && (
+                <a
+                  className="hero-preview"
+                  href={preview.trailer || preview.trailerSearch}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Play size={15} />
+                  {preview.trailer ? "Watch trailer" : "Find trailer"}
+                  <ArrowUpRight size={14} />
+                </a>
+              )}
             </div>
+            <div className="spotlight-note">
+              <span>Keep the stories close.</span>
+              <span>
+                {art ? "Provider artwork" : "Original Sakuga artwork"}
+              </span>
+            </div>
+          </div>
+          <div className="hero-gallery" aria-label="Featured anime artwork">
+            {picks[0] && (
+              <Link
+                className="gallery-side gallery-back"
+                href={`/anime/${picks[0].id}`}
+                aria-label={resolveTitle(picks[0], language)}
+              >
+                <CoverImage
+                  src={trustedImage(picks[0].cover_url)}
+                  title={resolveTitle(picks[0], language)}
+                  priority
+                />
+              </Link>
+            )}
+            {featured && (
+              <Link
+                className="gallery-main"
+                href={`/anime/${featured.id}`}
+                aria-label={resolveTitle(featured, language)}
+              >
+                <CoverImage
+                  src={trustedImage(featured.cover_url)}
+                  title={resolveTitle(featured, language)}
+                  priority
+                />
+              </Link>
+            )}
+            {picks[1] && (
+              <Link
+                className="gallery-side gallery-front"
+                href={`/anime/${picks[1].id}`}
+                aria-label={resolveTitle(picks[1], language)}
+              >
+                <CoverImage
+                  src={trustedImage(picks[1].cover_url)}
+                  title={resolveTitle(picks[1], language)}
+                  priority
+                />
+              </Link>
+            )}
+            <span className="gallery-caption">
+              A new story is a whole new world.
+            </span>
           </div>
         </section>
         <div className="browse-shortcuts">
@@ -86,6 +157,17 @@ export default async function Home() {
             ),
           )}
         </div>
+        <aside className="editorial-strip">
+          <span>For your after-hours.</span>
+          <p>
+            The midnight discoveries.
+            <br />
+            The comfort rewatches. <em>All yours.</em>
+          </p>
+          <Link href="/app/collections">
+            Make a collection <ArrowUpRight size={18} />
+          </Link>
+        </aside>
         {feeds.map((feed, i) => {
           const r = results[i];
           return (

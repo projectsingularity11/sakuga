@@ -1,6 +1,8 @@
+import { MediaLinks } from "@/components/media-links";
+import { englishSynopsis, releaseDescription } from "@/lib/media";
+import { CoverImage } from "@/components/cover-image";
 import { viewerLanguage } from "@/lib/viewer";
 import { resolveTitle, alternateTitles, qualifiedCover } from "@/lib/metadata";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Bookmark } from "lucide-react";
@@ -46,17 +48,7 @@ export default async function AnimeDetail({
         </Link>
         <div className="dossier">
           <div className="dossier-cover">
-            {image ? (
-              <Image
-                src={image}
-                alt={`${resolveTitle(a, language)} cover`}
-                width={300}
-                height={440}
-                priority
-              />
-            ) : (
-              <div className="cover-placeholder">Artwork unavailable</div>
-            )}
+            <CoverImage src={image} title={resolveTitle(a)} priority />
           </div>
           <div>
             <p className="muted">
@@ -76,9 +68,16 @@ export default async function AnimeDetail({
               {a.mature && <span>Mature themes</span>}
             </div>
             <p className="synopsis">
-              {a.synopsis ||
-                "The source has not supplied a synopsis yet. Explore the provider pages below for more about this story."}
+              {englishSynopsis(a) || releaseDescription(a)}
             </p>
+            {!englishSynopsis(a) && (
+              <p className="metadata-note">
+                Release information · an English story synopsis has not been
+                supplied yet.
+              </p>
+            )}
+            <MediaLinks anime={a} />
+
             <p className="muted">
               {a.studios.join(" · ")}
               {a.duration && ` · ${a.duration} minutes per episode`}

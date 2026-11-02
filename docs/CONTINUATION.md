@@ -1,3 +1,5 @@
+Latest premium/media update: see PREMIUM-COVERAGE.md. The latest request supersedes the strict HD-only image display policy. Smaller genuine source covers are displayed, missing art has an explicit illustrated fallback, and source/search trailer/database links are now shared across the product. Earlier snapshots below remain historical evidence.
+
 # Current delivery
 
 The visual redesign and Supabase connection are implemented. The full baseline import completed. The redesigned production release is live at https://sakuga-anime.vercel.app; Vercel reports READY and the public health check returned ready with 20,087 titles. Current setup and the exact remaining owner actions are in DEPLOYMENT.md. Local and hosted test evidence is in VALIDATION.md.

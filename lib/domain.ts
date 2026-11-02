@@ -39,6 +39,9 @@ export type Rule = z.infer<typeof ruleSchema>;
 export type Anime = {
   id: number;
   title: string;
+  imdb_id?: string | null;
+  trailer_url?: string | null;
+  synopsis_language?: string | null;
   title_english?: string | null;
   cover_width?: number | null;
   cover_height?: number | null;
@@ -168,6 +171,7 @@ export function themeTokens(accent: string, intensity: number) {
 }
 export function trustedImage(url: string | null) {
   if (!url) return null;
+  if (/^\/art\/[a-zA-Z0-9._-]+\.(png|jpe?g|webp)$/.test(url)) return url;
   try {
     const u = new URL(url);
     return u.protocol === "https:" &&
@@ -176,6 +180,8 @@ export function trustedImage(url: string | null) {
         "media.kitsu.app",
         "media.kitsu.io",
         "cdn.myanimelist.net",
+        "cdn.anime-planet.com",
+        "cdn.anisearch.com",
       ].includes(u.hostname)
       ? url
       : null;
