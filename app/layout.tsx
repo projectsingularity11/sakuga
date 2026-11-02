@@ -30,7 +30,7 @@ export default async function RootLayout({
   const theme = parsed.success ? polishTheme(parsed.data) : undefined;
   const style = theme
     ? {
-        "--accent": theme.preset === "Iris" ? undefined : theme.accent,
+        "--accent": theme.preset === "Prism" ? undefined : theme.accent,
         "--ambient": `${theme.intensity}%`,
       }
     : undefined;

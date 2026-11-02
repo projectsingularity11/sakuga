@@ -21,11 +21,47 @@ it("chooses distinct illustrated shows without mutating shared catalog data", ()
 });
 it("updates legacy brand defaults without changing custom palette choices", () => {
   expect(polishTheme({ accent: "#fa9877", preset: "Ember" })).toEqual({
-    accent: "#b6a1ff",
-    preset: "Iris",
+    accent: "#72b9ff",
+    preset: "Prism",
   });
   expect(polishTheme({ accent: "#123456", preset: "Ocean" })).toEqual({
     accent: "#123456",
     preset: "Ocean",
   });
+});
+
+it("projects only the fields needed by the interactive feature", async () => {
+  const { projectFeature } = await import("../lib/home-feature");
+  const a = {
+    id: 16498,
+    title: "Attack on Titan",
+    title_english: "Attack on Titan",
+    title_romaji: null,
+    title_native: null,
+    format: "TV",
+    year: 2013,
+    series_count: 9,
+    synopsis: "English plot. ".repeat(100),
+    cover_url: null,
+    banner_url: null,
+    genres: ["Action"],
+    studios: [],
+    episodes: 25,
+    synonyms: Array(300).fill(
+      "Long source alias used only for indexing and search",
+    ),
+    ratings: [],
+    source_mappings: [],
+  } as unknown as Anime;
+  const feature = projectFeature(a, "english");
+  expect(feature.title).toBe("Attack on Titan");
+  expect(feature.parts).toBe("9 seasons / parts");
+  expect(feature.synopsis.length).toBeLessThanOrEqual(420);
+  expect(feature).not.toHaveProperty("synonyms");
+  expect(feature).not.toHaveProperty("ratings");
+  expect(feature).not.toHaveProperty("source_mappings");
+  expect(JSON.stringify(feature).length).toBeLessThan(
+    JSON.stringify(a).length * 0.3,
+  );
+  expect(feature.art?.banner?.width).toBeGreaterThanOrEqual(1500);
 });

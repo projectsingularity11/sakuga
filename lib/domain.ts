@@ -141,7 +141,7 @@ export function parseImport(text: string) {
     .parse(JSON.parse(text));
 }
 export const presets: Record<string, string> = {
-  Iris: "#b6a1ff",
+  Prism: "#72b9ff",
   Ink: "#344b44",
   Porcelain: "#71614b",
   Sakura: "#984b62",
@@ -154,6 +154,7 @@ export const presets: Record<string, string> = {
 export const themeSchema = z.object({
   preset: z.enum([
     "Iris",
+    "Prism",
     "Ink",
     "Porcelain",
     "Sakura",
@@ -174,36 +175,4 @@ export function themeTokens(accent: string, intensity: number) {
     .parse(accent);
   return { accent: parsed, intensity: Math.min(30, Math.max(0, intensity)) };
 }
-export function trustedImage(url: string | null) {
-  if (!url) return null;
-  if (/^\/art\/[a-zA-Z0-9._-]+\.(png|jpe?g|webp)$/.test(url)) return url;
-  try {
-    const u = new URL(url);
-    return u.protocol === "https:" &&
-      [
-        "s4.anilist.co",
-        "media.kitsu.app",
-        "media.kitsu.io",
-        "cdn.myanimelist.net",
-        "cdn.anime-planet.com",
-        "cdn.anisearch.com",
-      ].includes(u.hostname)
-      ? url
-      : null;
-  } catch {
-    return null;
-  }
-}
-export function trustedSource(url: string) {
-  try {
-    const u = new URL(url);
-    return u.protocol === "https:" &&
-      ["anilist.co", "myanimelist.net", "kitsu.app", "kitsu.io"].includes(
-        u.hostname,
-      )
-      ? url
-      : null;
-  } catch {
-    return null;
-  }
-}
+export { trustedImage, trustedSource } from "./asset-urls";

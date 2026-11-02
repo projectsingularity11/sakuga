@@ -6,8 +6,7 @@ const cache = new Map<
   { expires: number; value: { titles: Anime[]; count: number; page: number } }
 >();
 export async function catalog(raw: Record<string, unknown>) {
-  const params = scalarParams(raw),
-    client = await db();
+  const params = scalarParams(raw);
   const page = Math.max(
     1,
     Math.min(10000, Math.floor(Number(params.page) || 1)),
@@ -15,6 +14,7 @@ export async function catalog(raw: Record<string, unknown>) {
   const key = JSON.stringify(Object.entries(params).sort());
   const hit = cache.get(key);
   if (hit && hit.expires > Date.now()) return hit.value;
+  const client = await db();
   const { data, error } = await client.rpc("search_anime", {
     query: (params.q || "").slice(0, 100),
     filters: params,

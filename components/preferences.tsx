@@ -13,7 +13,7 @@ export function ThemeApply({ theme }: { theme: unknown }) {
       (t.mode === "system" &&
         matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.dataset.appearance = dark ? "dark" : "light";
-    if (t.preset === "Iris")
+    if (t.preset === "Prism")
       document.documentElement.style.removeProperty("--accent");
     else document.documentElement.style.setProperty("--accent", t.accent);
     document.documentElement.style.setProperty("--ambient", `${t.intensity}%`);
@@ -32,10 +32,10 @@ export function Preferences({
     initial.success
       ? polishTheme(initial.data)
       : {
-          preset: "Iris" as const,
+          preset: "Prism" as const,
           mode: "dark" as "light" | "dark" | "system",
           intensity: 8,
-          accent: presets.Iris,
+          accent: presets.Prism,
         },
   );
   const [display_name, setName] = useState(name);

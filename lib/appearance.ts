@@ -1,8 +1,9 @@
-export const IRIS_ACCENT = "#b6a1ff";
+export const PRISM_ACCENT = "#72b9ff";
 export function polishTheme<T extends { accent: string; preset: string }>(
   theme: T,
 ): T {
-  return ["#fa9877", "#ef8762"].includes(theme.accent.toLowerCase())
-    ? { ...theme, preset: "Iris", accent: IRIS_ACCENT }
+  return ["Iris", "Prism"].includes(theme.preset) ||
+    ["#fa9877", "#ef8762", "#b6a1ff"].includes(theme.accent.toLowerCase())
+    ? { ...theme, preset: "Prism", accent: PRISM_ACCENT }
     : theme;
 }

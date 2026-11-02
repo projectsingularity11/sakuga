@@ -10,25 +10,16 @@ import {
   Play,
   Plus,
 } from "lucide-react";
-import type { Anime } from "@/lib/domain";
-import { trustedImage } from "@/lib/domain";
-import { resolveTitle, formatLabel } from "@/lib/metadata";
-import { englishSynopsis, releaseDescription, mediaLinks } from "@/lib/media";
-import { animeHref } from "@/lib/series";
+import type { FeatureSlide } from "@/lib/home-feature";
 import { CoverImage } from "./cover-image";
+import { ArtPicture } from "./art-picture";
 const subscribe = (cb: () => void) => {
   const mq = matchMedia("(prefers-reduced-motion: reduce)");
   mq.addEventListener("change", cb);
   return () => mq.removeEventListener("change", cb);
 };
 const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
-export function FeaturedCarousel({
-  titles,
-  language,
-}: {
-  titles: Anime[];
-  language: string;
-}) {
+export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
   const [index, setIndex] = useState(0),
     [paused, setPaused] = useState(false),
     [hovered, setHovered] = useState(false),
@@ -51,6 +42,27 @@ export function FeaturedCarousel({
     }, 7500);
     return () => clearTimeout(timer);
   }, [auto, index, titles.length]);
+  useEffect(() => {
+    const connection = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection;
+    const next = titles[(index + 1) % titles.length];
+    if (hidden || connection?.saveData || !next?.art) return;
+    const image = matchMedia("(max-width:600px)").matches
+      ? next.art.cover
+      : next.art.banner;
+    if (!image) return;
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.as = "image";
+    link.type = "image/avif";
+    link.href = image.avif;
+    const timer = setTimeout(() => document.head.appendChild(link), 1600);
+    return () => {
+      clearTimeout(timer);
+      link.remove();
+    };
+  }, [index, hidden, titles]);
   const a = titles[index];
   function choose(next: number) {
     setManual(true);
@@ -66,8 +78,7 @@ export function FeaturedCarousel({
         </Link>
       </section>
     );
-  const title = resolveTitle(a, language),
-    media = mediaLinks(a);
+  const title = a.title;
   return (
     <section
       className="discovery-feature"
@@ -87,68 +98,64 @@ export function FeaturedCarousel({
         aria-roledescription="slide"
         aria-label={`${index + 1} of ${titles.length}: ${title}`}
       >
-        <Image
-          className="featured-backdrop"
-          src={
-            trustedImage(a.banner_url) ||
-            trustedImage(a.cover_url) ||
-            "/art/sakuga-city.png"
-          }
-          alt=""
-          fill
-          priority={index === 0}
-          sizes="100vw"
-          unoptimized={/^https:\/\/cdn\./.test(
-            a.banner_url || a.cover_url || "",
-          )}
-        />
+        {a.art?.banner ? (
+          <ArtPicture
+            art={a.art.banner}
+            mobile={a.art.cover}
+            className="featured-backdrop"
+            eager={index === 0}
+          />
+        ) : (
+          <Image
+            className="featured-backdrop"
+            src={a.banner || a.cover || "/art/sakuga-city.png"}
+            alt=""
+            fill
+            priority={index === 0}
+            sizes="100vw"
+          />
+        )}
+        <div className="feature-flutes" aria-hidden="true" />
         <div className="feature-light" aria-hidden="true" />
         <div className="featured-content">
           <h1 title={title}>{title}</h1>
           <p className="featured-meta">
-            <span>{formatLabel(a.format)}</span>
-            <span>{a.year || "Year unknown"}</span>
-            <span>
-              {(a.series_count || 1) > 1
-                ? `${a.series_count} seasons / parts`
-                : a.episodes
-                  ? `${a.episodes} episodes`
-                  : "Episodes unannounced"}
-            </span>
+            <span>{a.format}</span>
+            <span>{a.year}</span>
+            <span>{a.parts} </span>
           </p>
-          <p className="featured-synopsis">
-            {englishSynopsis(a) || releaseDescription(a)}
-          </p>
+          <p className="featured-synopsis">{a.synopsis}</p>
           <div className="hero-actions">
-            <Link className="button" href={animeHref(a)}>
+            <Link className="button" href={a.href}>
               Explore anime <ArrowUpRight size={17} />
             </Link>
-            <Link className="button outline" href={animeHref(a, true)}>
+            <Link className="button outline" href={a.libraryHref}>
               <Plus size={16} /> My list
             </Link>
             <a
               className="hero-preview"
-              href={media.trailer || media.trailerSearch}
+              href={a.trailer}
               target="_blank"
               rel="noreferrer"
             >
               <Play size={15} />
               <span className="preview-label">
-                {media.trailer ? "Trailer" : "Find trailer"}
+                {a.hasTrailer ? "Trailer" : "Find trailer"}
               </span>
             </a>
           </div>
         </div>
         <div className="hero-gallery">
-          <div className="glass-orbit" aria-hidden="true" />
+          <div className="glass-edge-plate" aria-hidden="true" />
           <Link
             className="gallery-main"
-            href={animeHref(a)}
+            href={a.href}
             aria-label={`View ${title}`}
           >
             <CoverImage
               key={a.id}
-              src={trustedImage(a.cover_url)}
+              src={a.cover}
+              id={a.id}
               title={title}
               priority={index === 0}
             />
@@ -166,7 +173,7 @@ export function FeaturedCarousel({
               <button
                 key={anime.id}
                 type="button"
-                aria-label={`Show ${resolveTitle(anime, language)}`}
+                aria-label={`Show ${anime.title}`}
                 aria-current={i === index ? "true" : undefined}
                 onClick={() => choose(i)}
               >

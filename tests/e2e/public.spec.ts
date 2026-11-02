@@ -341,3 +341,127 @@ test("search shortcut and mobile menu remain accessible", async ({ page }) => {
   }
   await expect(page.locator(".brand")).not.toContainText(".");
 });
+
+test("glass uses two accents, local artwork and a reduced-motion fallback", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.locator(".glass-field")).toBeAttached();
+  const colors = await page.evaluate(() => {
+    const css = getComputedStyle(document.documentElement);
+    return {
+      blue: css.getPropertyValue("--accent").trim(),
+      orange: css.getPropertyValue("--accent-warm").trim(),
+    };
+  });
+  expect(colors).toEqual({ blue: "#72b9ff", orange: "#ff995b" });
+  expect(
+    await page
+      .locator(".glass-light-blue")
+      .evaluate((el) => getComputedStyle(el).animationName),
+  ).toBe("none");
+  await expect(page.locator(".glass-field canvas")).not.toHaveAttribute(
+    "data-ready",
+    "true",
+  );
+  const image = page.locator(".featured-backdrop img");
+  await expect(image).toBeVisible();
+  await expect(image).toHaveJSProperty("complete", true);
+  expect(
+    await image.evaluate((el: HTMLImageElement) => el.currentSrc),
+  ).toContain("/art/home/");
+});
+test("film strip provides working horizontal navigation without page overflow", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const rail = page.getByRole("region", {
+    name: "Popular with anime fans",
+    exact: true,
+  });
+  await expect(rail).toBeVisible();
+  expect(await rail.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(
+    true,
+  );
+  await page
+    .getByRole("button", { name: "Next Popular with anime fans", exact: true })
+    .click();
+  await expect
+    .poll(() => rail.evaluate((el) => el.scrollLeft))
+    .toBeGreaterThan(100);
+  await page
+    .getByRole("button", {
+      name: "Previous Popular with anime fans",
+      exact: true,
+    })
+    .click();
+  await expect.poll(() => rail.evaluate((el) => el.scrollLeft)).toBe(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+});
+test("glass shader compiles and renders its actual optical field", async ({
+  page,
+}, info) => {
+  test.skip(
+    info.project.name !== "desktop",
+    "The shader compiler check is shared across viewport sizes.",
+  );
+  const { readFileSync } = await import("node:fs");
+  const source = readFileSync("components/glass-renderer.ts", "utf8");
+  const vertex = source.match(/const vertex = `([\s\S]*?)`;/)![1],
+    fragment = source.match(/const fragment = `([\s\S]*?)`;/)![1];
+  await page.goto("/");
+  const result = await page.evaluate(
+    ({ vertex, fragment }) => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 64;
+      canvas.height = 32;
+      const gl = canvas.getContext("webgl");
+      if (!gl) return { unavailable: true };
+      const program = gl.createProgram()!;
+      for (const [type, code] of [
+        [gl.VERTEX_SHADER, vertex],
+        [gl.FRAGMENT_SHADER, fragment],
+      ] as const) {
+        const shader = gl.createShader(type)!;
+        gl.shaderSource(shader, code);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+          return { error: gl.getShaderInfoLog(shader) };
+        gl.attachShader(program, shader);
+      }
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+        return { error: gl.getProgramInfoLog(program) };
+      gl.useProgram(program);
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+        gl.STATIC_DRAW,
+      );
+      const attribute = gl.getAttribLocation(program, "position");
+      gl.enableVertexAttribArray(attribute);
+      gl.vertexAttribPointer(attribute, 2, gl.FLOAT, false, 0, 0);
+      gl.uniform2f(gl.getUniformLocation(program, "pointer"), 0.5, 0.5);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      const pixels = new Uint8Array(64 * 32 * 4);
+      gl.readPixels(0, 0, 64, 32, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      const red = new Set<number>();
+      for (let i = 0; i < pixels.length; i += 4) red.add(pixels[i]);
+      const error = gl.getError();
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      return { colors: red.size, error };
+    },
+    { vertex, fragment },
+  );
+  expect(result.unavailable).not.toBe(true);
+  expect(result.error).toBe(0);
+  expect(result.colors).toBeGreaterThan(3);
+});

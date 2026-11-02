@@ -1,250 +1,99 @@
 {
   "name": "Sakuga",
-  "version": 1,
-  "description": "Editorial personal anime sanctuary with marketing and workspace modes",
+  "version": 2,
+  "description": "Prism cinema: a working anime catalog with vertical optical glass, electric blue and orange light",
   "sources": [
-    "app/globals.css",
+    "app/identity.css",
     "app/page.tsx",
-    "components/brand.tsx",
-    "app/layout.tsx",
+    "components/glass-field.tsx",
+    "components/glass-renderer.ts",
+    "components/featured-carousel.tsx",
+    "components/catalog-shelf.tsx",
     "components/preferences.tsx",
-    "lib/domain.ts"
+    "lib/appearance.ts",
+    "DESIGN.md"
   ],
   "tokens": {
     "color": {
-      "light": {
-        "--paper": "#f4f2eb",
-        "--surface": "#faf9f5",
-        "--ink": "#203d32",
-        "--muted": "#596158",
-        "--line": "#d6d9ce"
-      },
       "dark": {
-        "--paper": "#19241f",
-        "--surface": "#21312a",
-        "--ink": "#f0f0e5",
-        "--muted": "#bac6bc",
-        "--line": "#45574b"
+        "paper": "#080d16",
+        "surface": "#121e2c",
+        "ink": "#edf5ff",
+        "muted": "#b0c3d6",
+        "line": "#34495d",
+        "accent": "#72b9ff",
+        "accentWarm": "#ff995b"
       },
-      "shared": {
-        "--accent": "#a74729",
-        "--ambient": "8%",
-        "--wash": "color-mix(in srgb, var(--accent) var(--ambient), var(--paper))"
-      },
-      "roles": {
-        "--paper": "Canvas and inverse control text",
-        "--surface": "Panels, forms, navigation, covers",
-        "--ink": "Primary text, filled controls, focus, progress",
-        "--muted": "Secondary text",
-        "--line": "Borders, rules, progress track",
-        "--accent": "Editorial emphasis, wordmark dot, ambient tint",
-        "--wash": "Computed canvas and theme preview"
-      },
-      "fixed": {
-        "supportStrip": "#e2e5d9",
-        "authAside": "#203d32",
-        "authText": "#f4f2eb",
-        "authEmphasis": "#d5b899",
-        "danger": "#b2382d",
-        "artwork": "#d5dfcf",
-        "artworkText": "#263e31",
-        "sun": "#d9a77a",
-        "mountain": "#70897a",
-        "mountainFront": "#385547",
-        "artCaption": "#e7eddf",
-        "shelfTab": "#e4dfc9"
+      "light": {
+        "paper": "#edf3f8",
+        "surface": "#f8fbff",
+        "ink": "#152636",
+        "muted": "#526575",
+        "line": "#b9cad7",
+        "accent": "#0759bf",
+        "accentWarm": "#a7400b"
       }
     },
     "typography": {
-      "displayFamily": "\"Newsreader\", Georgia, serif",
-      "bodyFamily": "\"DM Sans\", Arial, sans-serif",
-      "loadedWeights": {
-        "Newsreader": [400],
-        "NewsreaderItalic": [400],
-        "DM Sans": [400, 500]
-      },
-      "body": { "fontSize": "15px", "lineHeight": "1.6" },
-      "h1": {
-        "fontSize": "clamp(2.8rem, 5.6vw, 5.7rem)",
-        "fontWeight": 400,
-        "lineHeight": "1.12",
-        "letterSpacing": "-0.035em"
-      },
-      "h2": {
-        "fontSize": "clamp(1.8rem, 3vw, 3.1rem)",
-        "fontWeight": 400,
-        "lineHeight": "1.12",
-        "letterSpacing": "-0.025em"
-      },
-      "h3": { "fontSize": "1.15rem", "lineHeight": "1.35" },
-      "small": { "fontSize": "0.78rem" },
-      "workspaceH1": { "fontSize": "clamp(2.4rem, 3.5vw, 3.7rem)" },
-      "workspaceH2": { "fontSize": "1.85rem" },
-      "brand": {
-        "fontSize": "2rem",
-        "fontWeight": 700,
-        "lineHeight": "1",
-        "letterSpacing": "-0.04em"
-      },
-      "paragraphMaxWidth": "70ch",
-      "heroCopyMaxWidth": "39ch",
-      "featureCopyMaxWidth": "40ch",
-      "numericStyle": "tabular-nums"
-    },
-    "spacing": {
-      "implementation": "Component-specific CSS values, without global spacing variables",
-      "brandGap": "8px",
-      "actionGap": "10px",
-      "filterGap": "12px",
-      "collectionGap": "20px",
-      "formStackGap": "19px",
-      "formGridGap": "18px",
-      "heroPadding": "60px 6% 85px",
-      "heroGap": "65px",
-      "featurePadding": "110px 8%",
-      "featureGap": "100px",
-      "detailsPadding": "25px 8% 100px",
-      "workspacePadding": "48px 4% 80px",
-      "editorPadding": "28px"
-    },
-    "radii": {
-      "--radius": "12px",
-      "tag": "5px",
-      "artwork": "5px",
-      "progress": "5px",
-      "input": "6px",
-      "sidebarLink": "6px",
-      "button": "7px",
-      "swatchButton": "7px",
-      "cover": "8px",
-      "boardEntry": "8px",
-      "segmentedGroup": "8px",
-      "themePreview": "8px",
-      "shelfArt": "12px",
-      "libraryPreview": "12px",
-      "emptyState": "12px",
-      "editor": "12px",
-      "collectionPanel": "12px",
-      "sun": "50%"
+      "display": "Unbounded",
+      "body": "Syne",
+      "metadata": "Space Mono",
+      "delivery": "Self-hosted"
     },
     "layout": {
-      "marketingMaxWidth": "1440px",
-      "valuesMaxWidth": "1265px",
-      "workspaceMaxWidth": "1450px",
-      "sidebarWidth": "235px",
-      "workspaceHeaderHeight": "78px",
-      "editorMaxWidth": "760px",
-      "catalogColumns": 4,
-      "catalogGap": "30px 22px",
-      "coverAspectRatio": "2/3",
-      "statusBoardColumns": "repeat(5, minmax(180px, 1fr))"
-    },
-    "controls": {
-      "button": {
-        "minHeight": "46px",
-        "padding": "14px 23px",
-        "fontSize": "0.9rem",
-        "fontWeight": 500
-      },
-      "smallButton": {
-        "minHeight": "40px",
-        "padding": "10px 17px",
-        "fontSize": "0.8rem"
-      },
-      "input": { "minHeight": "44px", "padding": "11px 12px" },
-      "focusOutline": "3px solid var(--ink)",
-      "focusOutlineOffset": "4px",
-      "selectedSwatchOutline": "2px solid var(--ink)",
-      "disabledOpacity": "0.5"
-    },
-    "effects": {
-      "shelfShadow": "0 24px 55px -25px #203d3250",
-      "noteShadow": "0 10px 25px -15px #203d3240",
-      "shelfTransform": "rotate(2deg)",
-      "noteTransform": "rotate(-5deg)",
-      "buttonTransition": "background 0.2s",
-      "coverTransition": "transform 0.25s",
-      "coverHoverTransform": "scale(1.025)"
+      "workspaceSidebarExpanded": "242px",
+      "workspaceSidebarCollapsed": "82px",
+      "mobileCatalogColumns": 2,
+      "coverAspectRatio": "2/3"
     }
   },
-  "responsive": {
-    "wide": { "query": "(min-width: 1600px)", "catalogColumns": 5 },
-    "tablet": {
-      "query": "(max-width: 1100px)",
-      "sidebarWidth": "190px",
-      "catalogColumns": 3,
-      "heroTitleSize": "4.3rem",
-      "artworkHeight": "380px",
-      "collectionColumns": 2,
-      "publicSectionNavigation": "hidden"
-    },
-    "mobile": {
-      "query": "(max-width: 700px)",
-      "catalogColumns": 2,
-      "catalogGap": "25px 15px",
-      "heroTitleSize": "clamp(3.5rem, 12vw, 5.4rem)",
-      "artworkHeight": "340px",
-      "shelfTransform": "rotate(1deg)",
-      "notePosition": "relative",
-      "noteMargin": "20px -10px -45px auto",
-      "noteTransform": "rotate(-3deg)",
-      "navigation": "Sticky full-width top bar with horizontal scroll",
-      "workspaceHeaderHeight": "48px",
-      "workspacePadding": "30px 5% 70px",
-      "workspaceTitleSize": "2.5rem",
-      "collectionColumns": 1,
-      "swatchColumns": 2
-    },
-    "reducedMotionQuery": "(prefers-reduced-motion: reduce)",
-    "reducedMotionBehavior": "Disable smooth scrolling, transitions, and animations",
-    "systemDarkQuery": "(prefers-color-scheme: dark)"
+  "material": {
+    "background": "Locally authored cylindrical ribs and optional idle-loaded native WebGL light refraction",
+    "navigation": "Suspended glass with modest backdrop blur",
+    "cards": "Real artwork with reflected gradient edges",
+    "fallbacks": [
+      "reduced motion",
+      "reduced transparency",
+      "data saving",
+      "low core count",
+      "unavailable WebGL",
+      "detected software rendering"
+    ]
   },
-  "modes": {
-    "marketing": {
-      "intent": "Persuade",
-      "character": "Editorial display, original landscape shelf illustration, generous space, empty library preview",
-      "primaryAction": "Start your collection"
-    },
-    "workspace": {
-      "intent": "Operate",
-      "character": "Compact navigation, real catalog covers, status and progress, original source scores, explicit empty and unavailable states",
-      "providerIdentity": "Text labels and original scales, without dedicated provider color tokens"
-    }
+  "motion": {
+    "rendererMaxFPS": 30,
+    "rendererMaxResolution": [1440, 900],
+    "inactiveSleepMS": 1800,
+    "hiddenTabs": "Paused",
+    "cursor": "Local transforms; no inherited root-variable updates per frame",
+    "scroll": "Native document and horizontal film strip; no scroll hijacking"
   },
-  "theme": {
-    "source": "lib/domain.ts and components/preferences.tsx",
-    "appearanceModes": ["light", "dark", "system"],
-    "rootCssDefaultAccent": "#a74729",
-    "freshSettingsDefault": {
-      "preset": "Porcelain",
-      "mode": "light",
-      "intensity": 8,
-      "accent": "#71614b"
-    },
-    "presets": {
-      "Ink": "#344b44",
-      "Porcelain": "#71614b",
-      "Sakura": "#984b62",
-      "Matcha": "#4f633a",
-      "Ocean": "#316579",
-      "Ember": "#a74729",
-      "Lavender": "#70538c",
-      "Slate": "#526372"
-    },
-    "customAccentFormat": "Six-digit hex color",
-    "ambientRangePercent": { "min": 0, "max": 30 },
-    "preview": "Immediate document-wide application; explicit save persists preferences",
-    "reset": "Selected preset accent and 8% intensity; appearance retained",
-    "systemModeLimitation": "Client resolves current media preference on theme application without an OS-change listener"
+  "artwork": {
+    "manifest": "lib/home-artwork.json",
+    "cachedShows": 12,
+    "encoding": ["AVIF", "WebP"],
+    "delivery": "Content-hashed immutable URLs, responsive sources, no source enlargement",
+    "minimumPreferredFeatureBanner": [1400, 600],
+    "scope": "Selected homepage candidates; no claim of universal HD source coverage"
+  },
+  "homepage": {
+    "feature": "Up to six randomly selected distinct non-mature catalog shows; 7.5 second rotation; pause on focus, hover, hidden tab and manual control",
+    "popular": "Horizontal film strip with swipe and bounded previous/next controls",
+    "secondary": "Independently streamed current/upcoming paired galleries"
+  },
+  "preferences": {
+    "appearance": ["light", "dark", "system"],
+    "defaultPreset": "Prism",
+    "customAccents": "Preserved",
+    "sound": "Opt-in click effects only; no lo-fi"
   },
   "review": {
-    "publicHomepage": "Ship within homepage visual scope; reviewer confirmed the sole mobile shelf-note overlap resolved in the updated 390px capture, with caption and arrow unobstructed",
+    "viewports": [375, 390, 768, 1280, 1440],
+    "scope": "Local protocol fixture verifies UI, accessibility, session routing and season state; separate remote checks verify release delivery",
     "screenshots": [
       ".impeccable/review/desktop.png",
       ".impeccable/review/mobile.png"
     ],
-    "authenticatedWorkspace": "Not visually certified; Supabase credentials absent",
-    "launchCertification": false,
-    "launchPrerequisites": "See PRODUCT.md for eligible catalog gate, provider permission, credentials, and deployment"
+    "performance": "Three identical local headless pointer-motion samples: median task time 1.396s before / 0.679s after; median style recalculation 0.671s / 0.090s. Software-renderer static fallback; not production field Web Vitals."
   }
 }

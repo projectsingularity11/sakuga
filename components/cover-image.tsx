@@ -1,16 +1,32 @@
 "use client";
 import Image from "next/image";
+import { artworkFor } from "@/lib/home-artwork";
+import { ArtPicture } from "./art-picture";
 import { useState } from "react";
 export function CoverImage({
   src,
+  id,
   title,
   priority = false,
 }: {
   src: string | null;
+  id?: number;
   title: string;
   priority?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
+  const cached = src && id ? artworkFor(id)?.cover : undefined;
+  if (cached && !failed)
+    return (
+      <ArtPicture
+        art={cached}
+        className="cached-cover"
+        alt={`${title} cover`}
+        eager={priority}
+        kind="cover"
+        onError={() => setFailed(true)}
+      />
+    );
   return src && !failed ? (
     <Image
       src={src}

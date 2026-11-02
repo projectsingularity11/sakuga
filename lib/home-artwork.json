@@ -1,0 +1,290 @@
+{
+  "1": {
+    "banner": {
+      "webp": "/art/home/1-banner-5fb051ce4d2f.webp",
+      "avif": "/art/home/1-banner-03a50df1e736.avif",
+      "width": 1400,
+      "height": 875,
+      "source": "https://media.kitsu.app/anime/1/cover_image/fb57e5f25616633a41f0f5f1ded938ee.jpeg",
+      "bytes": 65400,
+      "smallWebp": "/art/home/1-banner-525eeb2309b5.webp",
+      "smallAvif": "/art/home/1-banner-273a31b67b3a.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/1-cover-cc58e9b79bc1.webp",
+      "avif": "/art/home/1-cover-ce77aee46ea0.avif",
+      "width": 550,
+      "height": 780,
+      "source": "https://media.kitsu.app/anime/poster_images/1/large.jpg",
+      "bytes": 101322,
+      "smallWebp": "/art/home/1-cover-5329b5491f09.webp",
+      "smallAvif": "/art/home/1-cover-dc2696be3965.avif",
+      "smallWidth": 380
+    }
+  },
+  "20": {
+    "banner": {
+      "webp": "/art/home/20-banner-10c2a992df47.webp",
+      "avif": "/art/home/20-banner-b1e316bb8d62.avif",
+      "width": 1279,
+      "height": 768,
+      "source": "https://media.kitsu.app/anime/cover_images/11/original.jpg",
+      "bytes": 318632,
+      "smallWebp": "/art/home/20-banner-373cabdbf18f.webp",
+      "smallAvif": "/art/home/20-banner-4f4bfe738ad8.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/20-cover-4ffdc34c6ac0.webp",
+      "avif": "/art/home/20-cover-105462ddf6cb.avif",
+      "width": 550,
+      "height": 780,
+      "source": "https://media.kitsu.app/anime/11/poster_image/large-5e901605066f7f2727f49d01859bbfe4.jpeg",
+      "bytes": 87560,
+      "smallWebp": "/art/home/20-cover-02f1102798cf.webp",
+      "smallAvif": "/art/home/20-cover-0bd74004d050.avif",
+      "smallWidth": 380
+    }
+  },
+  "21": {
+    "banner": {
+      "webp": "/art/home/21-banner-477eb01e93a3.webp",
+      "avif": "/art/home/21-banner-7a7866f21518.avif",
+      "width": 1900,
+      "height": 400,
+      "source": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/21-wf37VakJmZqs.jpg",
+      "bytes": 217710,
+      "smallWebp": "/art/home/21-banner-b8479b13a7d4.webp",
+      "smallAvif": "/art/home/21-banner-d2690b4fa6b8.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/21-cover-2808f19d940b.webp",
+      "avif": "/art/home/21-cover-0e873c602a89.avif",
+      "width": 550,
+      "height": 780,
+      "source": "https://media.kitsu.app/anime/poster_images/12/large.jpg",
+      "bytes": 121570,
+      "smallWebp": "/art/home/21-cover-4d4a88555d70.webp",
+      "smallAvif": "/art/home/21-cover-df2a2b37fdc0.avif",
+      "smallWidth": 380
+    }
+  },
+  "16498": {
+    "banner": {
+      "webp": "/art/home/16498-banner-a8cb9806ddce.webp",
+      "avif": "/art/home/16498-banner-34aeb689c527.avif",
+      "width": 1920,
+      "height": 1080,
+      "source": "https://media.kitsu.app/anime/cover_images/7442/original.png",
+      "bytes": 747000,
+      "smallWebp": "/art/home/16498-banner-2093b3a5031b.webp",
+      "smallAvif": "/art/home/16498-banner-1a8c4a1e07f5.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/16498-cover-28033dd7fd60.webp",
+      "avif": "/art/home/16498-cover-5106baa6a855.avif",
+      "width": 920,
+      "height": 1270,
+      "source": "https://media.kitsu.app/anime/poster_images/7442/original.jpg",
+      "bytes": 188256,
+      "smallWebp": "/art/home/16498-cover-907b58eaba40.webp",
+      "smallAvif": "/art/home/16498-cover-ec1da55d5d52.avif",
+      "smallWidth": 380
+    }
+  },
+  "21507": {
+    "banner": {
+      "webp": "/art/home/21507-banner-68fccaee7478.webp",
+      "avif": "/art/home/21507-banner-04cec0c55c25.avif",
+      "width": 1920,
+      "height": 1080,
+      "source": "https://media.kitsu.app/anime/cover_images/11578/original.jpg",
+      "bytes": 198988,
+      "smallWebp": "/art/home/21507-banner-3bcd31d65a6b.webp",
+      "smallAvif": "/art/home/21507-banner-bd073ed8be8b.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/21507-cover-453c0cbf1c1d.webp",
+      "avif": "/art/home/21507-cover-2c62030d2a3e.avif",
+      "width": 1000,
+      "height": 1403,
+      "source": "https://media.kitsu.app/anime/11578/poster_image/eb491c185d46b275e17fb82204d9a53b.jpg",
+      "bytes": 450186,
+      "smallWebp": "/art/home/21507-cover-3b5d071f4a3f.webp",
+      "smallAvif": "/art/home/21507-cover-783029d699f5.avif",
+      "smallWidth": 380
+    }
+  },
+  "21519": {
+    "cover": {
+      "webp": "/art/home/21519-cover-f4bf56f2ec30.webp",
+      "avif": "/art/home/21519-cover-3fcd92dbd6fa.avif",
+      "width": 1000,
+      "height": 1414,
+      "source": "https://media.kitsu.app/anime/poster_images/11614/original.jpg",
+      "bytes": 183916,
+      "smallWebp": "/art/home/21519-cover-227f1f327175.webp",
+      "smallAvif": "/art/home/21519-cover-8c9302a9ed5f.avif",
+      "smallWidth": 380
+    },
+    "banner": {
+      "webp": "/art/home/21519-banner-e249e66d19c2.webp",
+      "avif": "/art/home/21519-banner-abe6fb0f47c3.avif",
+      "width": 1500,
+      "height": 844,
+      "source": "https://media.kitsu.app/anime/cover_images/11614/original.jpg",
+      "bytes": 144578,
+      "smallWebp": "/art/home/21519-banner-9512be3468cf.webp",
+      "smallAvif": "/art/home/21519-banner-99599acbd274.avif",
+      "smallWidth": 960
+    }
+  },
+  "21827": {
+    "banner": {
+      "webp": "/art/home/21827-banner-2ac3b0a3fb63.webp",
+      "avif": "/art/home/21827-banner-4f785774357d.avif",
+      "width": 1680,
+      "height": 931,
+      "source": "https://media.kitsu.app/anime/cover_images/12230/original.jpg",
+      "bytes": 217738,
+      "smallWebp": "/art/home/21827-banner-e33d18517832.webp",
+      "smallAvif": "/art/home/21827-banner-1c7e7e00ef85.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/21827-cover-02074582ee14.webp",
+      "avif": "/art/home/21827-cover-02b73c1abaf7.avif",
+      "width": 768,
+      "height": 1074,
+      "source": "https://media.kitsu.app/anime/poster_images/12230/original.jpg",
+      "bytes": 100452,
+      "smallWebp": "/art/home/21827-cover-4e021e191d0c.webp",
+      "smallAvif": "/art/home/21827-cover-9e9fa50e2227.avif",
+      "smallWidth": 380
+    }
+  },
+  "101922": {
+    "banner": {
+      "webp": "/art/home/101922-banner-319767f9e041.webp",
+      "avif": "/art/home/101922-banner-2def08dae02e.avif",
+      "width": 1920,
+      "height": 468,
+      "source": "https://media.kitsu.app/anime/41370/cover_image/7958f9c01b57c980636386d124553791.jpg",
+      "bytes": 81648,
+      "smallWebp": "/art/home/101922-banner-476cda8bc8c5.webp",
+      "smallAvif": "/art/home/101922-banner-976d0e3887d4.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/101922-cover-0d8b7805d1b3.webp",
+      "avif": "/art/home/101922-cover-dc476a76060e.avif",
+      "width": 1000,
+      "height": 1265,
+      "source": "https://media.kitsu.app/anime/poster_images/41370/original.jpg",
+      "bytes": 172466,
+      "smallWebp": "/art/home/101922-cover-030790799632.webp",
+      "smallAvif": "/art/home/101922-cover-c0584d67aa9f.avif",
+      "smallWidth": 380
+    }
+  },
+  "113415": {
+    "banner": {
+      "webp": "/art/home/113415-banner-992ba92d3bee.webp",
+      "avif": "/art/home/113415-banner-702f9ad18977.avif",
+      "width": 1920,
+      "height": 527,
+      "source": "https://media.kitsu.app/anime/cover_images/42765/original.jpeg",
+      "bytes": 319248,
+      "smallWebp": "/art/home/113415-banner-f13318b476d1.webp",
+      "smallAvif": "/art/home/113415-banner-83265c3c12e1.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/113415-cover-d2be6f4a1395.webp",
+      "avif": "/art/home/113415-cover-85bdf1c7d59a.avif",
+      "width": 686,
+      "height": 1024,
+      "source": "https://media.kitsu.app/anime/42765/poster_image/5f099d83883544fc6200be91706d70e0.jpg",
+      "bytes": 182244,
+      "smallWebp": "/art/home/113415-cover-6acd5693d04d.webp",
+      "smallAvif": "/art/home/113415-cover-fbd59e02624f.avif",
+      "smallWidth": 380
+    }
+  },
+  "127230": {
+    "banner": {
+      "webp": "/art/home/127230-banner-f3ab15d69a8f.webp",
+      "avif": "/art/home/127230-banner-f50bcdd9a033.avif",
+      "width": 1696,
+      "height": 536,
+      "source": "https://media.kitsu.app/anime/43806/cover_image/1b642a40124b8cbb1b13b97597c0b6f1.jpg",
+      "bytes": 122518,
+      "smallWebp": "/art/home/127230-banner-6ad17687acdd.webp",
+      "smallAvif": "/art/home/127230-banner-f7dffaddfe6f.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/127230-cover-80ee44b33870.webp",
+      "avif": "/art/home/127230-cover-af95925abbe0.avif",
+      "width": 550,
+      "height": 780,
+      "source": "https://media.kitsu.app/anime/43806/poster_image/large-815d6008fb3b56f4291b9f0ffa05cd8f.jpeg",
+      "bytes": 104158,
+      "smallWebp": "/art/home/127230-cover-b57cf14462c9.webp",
+      "smallAvif": "/art/home/127230-cover-79d74f086b87.avif",
+      "smallWidth": 380
+    }
+  },
+  "154587": {
+    "banner": {
+      "webp": "/art/home/154587-banner-569e8b51b3e8.webp",
+      "avif": "/art/home/154587-banner-2f0c344fb598.avif",
+      "width": 1920,
+      "height": 615,
+      "source": "https://media.kitsu.app/anime/46474/cover_image/883c308356a4db76a9c0af900ada96ed.jpg",
+      "bytes": 248722,
+      "smallWebp": "/art/home/154587-banner-2bd137529421.webp",
+      "smallAvif": "/art/home/154587-banner-f645aa664096.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/154587-cover-14f3184fa474.webp",
+      "avif": "/art/home/154587-cover-d1d4682123d8.avif",
+      "width": 550,
+      "height": 780,
+      "source": "https://media.kitsu.app/anime/46474/poster_image/large-ec9b98dd5fbf8f92532d1edb45f9e882.jpeg",
+      "bytes": 97816,
+      "smallWebp": "/art/home/154587-cover-be48db63eace.webp",
+      "smallAvif": "/art/home/154587-cover-b8b638432162.avif",
+      "smallWidth": 380
+    }
+  },
+  "171018": {
+    "banner": {
+      "webp": "/art/home/171018-banner-167e05e657e9.webp",
+      "avif": "/art/home/171018-banner-91cf923b84f9.avif",
+      "width": 1920,
+      "height": 684,
+      "source": "https://media.kitsu.app/anime/48269/cover_image/da32721ee7cba725cc2ddf6884f22bb1.jpg",
+      "bytes": 200892,
+      "smallWebp": "/art/home/171018-banner-533d12e09b08.webp",
+      "smallAvif": "/art/home/171018-banner-a1e210d990b6.avif",
+      "smallWidth": 960
+    },
+    "cover": {
+      "webp": "/art/home/171018-cover-24e1760795d3.webp",
+      "avif": "/art/home/171018-cover-73e0b5832963.avif",
+      "width": 1000,
+      "height": 1414,
+      "source": "https://media.kitsu.app/anime/48269/poster_image/4ca623665992a9df00c5bb2a21063aaf.jpg",
+      "bytes": 339330,
+      "smallWebp": "/art/home/171018-cover-6e57bdacc4b1.webp",
+      "smallAvif": "/art/home/171018-cover-edf3dc7aa82d.avif",
+      "smallWidth": 380
+    }
+  }
+}

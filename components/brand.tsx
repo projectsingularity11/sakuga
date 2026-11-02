@@ -25,7 +25,11 @@ export function SakugaMark({ className = "" }: { className?: string }) {
         strokeLinecap="round"
       />
       <path d="M26 13C19 18 19 30 27 35L33 28L26 13Z" fill="currentColor" />
-      <path d="M31 13L44 24L32 35L37 24L31 13Z" fill="currentColor" />
+      <path
+        className="mark-aperture"
+        d="M31 13L44 24L32 35L37 24L31 13Z"
+        fill="currentColor"
+      />
     </svg>
   );
 }

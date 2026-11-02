@@ -5,7 +5,7 @@ import { Search, X, ArrowUpRight } from "lucide-react";
 import type { Anime } from "@/lib/domain";
 import { resolveTitle, formatLabel, qualifiedCover } from "@/lib/metadata";
 import { CoverImage } from "./cover-image";
-import { trustedImage } from "@/lib/domain";
+import { trustedImage } from "@/lib/asset-urls";
 import { animeHref } from "@/lib/series";
 import { normalizeSearch } from "@/lib/search";
 const cache = new Map<string, { expires: number; items: Anime[] }>();
@@ -193,6 +193,7 @@ export function SearchBox({
               >
                 <span className="suggestion-cover">
                   <CoverImage
+                    id={a.id}
                     src={trustedImage(qualifiedCover(a))}
                     title={resolveTitle(a, language)}
                   />

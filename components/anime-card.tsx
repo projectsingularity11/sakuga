@@ -31,6 +31,7 @@ export function AnimeCard({
         <div className="cover">
           <CoverImage
             key={anime.cover_url}
+            id={anime.id}
             src={
               hideMature && anime.mature
                 ? null

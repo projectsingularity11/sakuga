@@ -2498,3 +2498,746 @@ h3,
     min-height: 30px;
   }
 }
+/* Prism cinema: electric light passes through a wall of vertical optical glass. */
+:root,
+:root[data-appearance="light"] {
+  --accent: #0759bf;
+  --accent-warm: #a7400b;
+  --accent-on: #fff;
+  --warm-on: #fff;
+  --paper: #edf3f8;
+  --surface: #f8fbff;
+  --ink: #152636;
+  --muted: #526575;
+  --line: #b9cad7;
+  --wash: #edf3f8;
+  --accent-ink: var(--accent);
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+:root[data-appearance="dark"] {
+  --accent: #72b9ff;
+  --accent-warm: #ff995b;
+  --accent-on: #071629;
+  --warm-on: #231006;
+  --paper: #080d16;
+  --surface: #121e2c;
+  --ink: #edf5ff;
+  --muted: #b0c3d6;
+  --line: #34495d;
+  --wash: #080d16;
+}
+body {
+  isolation: isolate;
+  background: var(--paper);
+}
+.glass-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--paper);
+  contain: strict;
+}
+.glass-light {
+  position: absolute;
+  inset: -25%;
+  will-change: transform;
+  opacity: 0.65;
+}
+.glass-light-blue {
+  background: radial-gradient(ellipse at 20% 35%, #1363ec60, transparent 53%);
+  animation: blue-drift 19s ease-in-out infinite alternate;
+}
+.glass-light-orange {
+  background: radial-gradient(ellipse at 80% 70%, #e8641845, transparent 48%);
+  animation: orange-drift 23s ease-in-out infinite alternate;
+}
+.glass-ribs {
+  position: absolute;
+  inset: 0;
+  background: url("/art/glass-ribs.svg") center/100% 100%;
+  opacity: 0.8;
+}
+.glass-field canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.glass-field canvas[data-ready="true"] {
+  opacity: 1;
+}
+.cinema-home {
+  isolation: auto;
+  background: transparent;
+}
+.cinema-home:before {
+  display: none;
+}
+.prism-home main {
+  position: relative;
+}
+.public-nav {
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 13px 35px #0003,
+    inset 0 1px 0 #ffffff2e;
+}
+.public-nav:before {
+  background: linear-gradient(
+    110deg,
+    #ffffff16,
+    transparent 45%,
+    color-mix(in srgb, var(--accent-warm) 7%, transparent)
+  );
+}
+.public-nav:after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent),
+    transparent 60%,
+    var(--accent-warm),
+    transparent
+  );
+}
+.brand svg {
+  color: var(--accent);
+}
+.brand .mark-aperture {
+  fill: var(--accent-warm);
+}
+.public-nav nav a:nth-child(2) svg {
+  color: var(--accent-warm);
+}
+.public-nav .nav-login {
+  background: var(--accent);
+  color: var(--accent-on);
+}
+.cinema-stage {
+  position: relative;
+  max-width: 1600px;
+  margin: auto;
+  padding-top: 1px;
+}
+.prism-home .discovery-feature {
+  width: calc(100% - 80px);
+  max-width: 1480px;
+  height: 650px;
+  margin: 32px auto 0;
+  border-radius: 5px 28px 5px 28px;
+  background: #080f1b;
+  overflow: hidden;
+  box-shadow: 0 22px 60px -38px #000b;
+}
+.feature-scene {
+  grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.6fr);
+  padding: 55px 65px 110px;
+  gap: 60px;
+  animation: prism-reveal 0.7s var(--ease-out) both;
+}
+.featured-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  filter: none;
+  opacity: 1 !important;
+  overflow: hidden;
+  transform: scale(1.04);
+  will-change: transform;
+}
+.featured-backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+}
+.feature-scene:after {
+  background:
+    linear-gradient(90deg, #06101eeb, #07111db5 47%, #06101e12 80%),
+    linear-gradient(0deg, #06101eef, transparent 60%);
+}
+.feature-light {
+  background: linear-gradient(120deg, #0a75ff16, transparent 50%, #ff782412);
+}
+.feature-flutes {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("/art/glass-ribs.svg") center/100% 100%;
+  mask-image: linear-gradient(
+    90deg,
+    #0008,
+    transparent 38%,
+    transparent 78%,
+    #000
+  );
+  opacity: 0.7;
+}
+.featured-content h1 {
+  font-size: clamp(30px, 3.8vw, 54px);
+  max-width: 19ch;
+  color: #f2f7ff;
+  text-shadow: 0 3px 20px #04102066;
+}
+.featured-content .featured-meta {
+  color: #d3e9ff;
+}
+.featured-meta > span + span:before {
+  background: var(--accent-warm);
+}
+.featured-synopsis {
+  color: #d2e1ed;
+  font-size: 15px;
+}
+.featured-content .button {
+  background: #ff995b;
+  color: #231006;
+  border-color: transparent;
+}
+.featured-content .button:hover {
+  background: #ffb07b;
+}
+.featured-content .button.outline {
+  background: #e0efff0d;
+  color: #edf5ff;
+  border-color: #d0e7ff66;
+  backdrop-filter: none;
+}
+.hero-preview {
+  color: #deeeff;
+  backdrop-filter: none;
+}
+.hero-gallery {
+  width: 100%;
+  max-width: 280px;
+  will-change: transform;
+}
+.gallery-main {
+  transform: rotate(-3deg);
+  outline-color: #d0e7ff69;
+  outline-offset: 10px;
+  box-shadow: 18px 30px 45px #0007;
+}
+.gallery-main .cached-cover {
+  height: 100%;
+}
+.glass-edge-plate {
+  position: absolute;
+  inset: -17px -24px;
+  border: 1px solid #a9d7ff4d;
+  transform: rotate(4deg);
+  border-radius: 15px;
+  box-shadow:
+    inset 10px 0 15px -12px #8fcaff,
+    inset -10px 0 15px -12px #ffa167;
+  pointer-events: none;
+}
+.poster-open,
+.poster-format {
+  backdrop-filter: none;
+  background: #071420eb;
+  color: #eaf5ff;
+}
+.feature-controls {
+  border-color: #e0efff38;
+}
+.feature-pages button[aria-current] > span {
+  background: #ff995b;
+}
+.feature-transport .icon-control {
+  backdrop-filter: none;
+  background: #091727c4;
+  border-color: #a9d7ff4d;
+  color: #e7f3ff;
+}
+.feature-transport .icon-control:hover {
+  background: #173650;
+}
+.cached-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.cached-cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.prism-home .browse-shortcuts {
+  max-width: 1400px;
+  width: calc(100% - 130px);
+  gap: 12px;
+  padding: 24px 0 34px;
+}
+.browse-shortcuts .shortcut-all {
+  background: var(--accent);
+  color: var(--accent-on);
+}
+.browse-shortcuts a {
+  background: color-mix(in srgb, var(--surface) 65%, transparent);
+  border-color: color-mix(in srgb, var(--ink) 25%, transparent);
+}
+.prism-home .catalog-section {
+  max-width: 1480px;
+  width: calc(100% - 80px);
+  margin: 0 auto;
+  padding: 30px 0 44px;
+}
+.catalog-strip {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 38px;
+  align-items: start;
+}
+.catalog-strip > .shelf-heading {
+  display: block;
+  padding-top: 24px;
+  position: sticky;
+  top: 130px;
+}
+.catalog-strip > .shelf-heading h2 {
+  font-size: 29px;
+  line-height: 1.35;
+  max-width: 10ch;
+}
+.catalog-strip > .shelf-heading a {
+  display: inline-flex;
+  margin-top: 12px;
+  gap: 16px;
+  color: var(--accent-warm);
+  border-color: var(--accent-warm);
+}
+.film-rail-shell {
+  position: relative;
+  min-width: 0;
+  padding-top: 62px;
+}
+.film-rail-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 9px;
+}
+.film-rail-controls .icon-control {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  box-shadow: inset 0 1px 0 #fff2;
+}
+.film-rail-controls button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.film-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(180px, 17vw, 245px);
+  gap: 23px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+  padding: 10px 2px 22px;
+  scroll-padding-inline: 2px;
+}
+.film-rail > .anime-card {
+  scroll-snap-align: start;
+}
+.home-gallery-pair {
+  max-width: 1480px;
+  width: calc(100% - 80px);
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 70px;
+  align-items: start;
+  margin: 34px auto 0;
+  position: relative;
+}
+.home-gallery-pair:before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  bottom: 80px;
+  left: 56.5%;
+  width: 1px;
+  background: linear-gradient(
+    transparent,
+    var(--accent),
+    var(--accent-warm),
+    transparent
+  );
+  opacity: 0.45;
+}
+.prism-home .home-gallery-pair .catalog-section {
+  width: 100%;
+  padding: 35px 0;
+}
+.home-gallery-pair .catalog-gallery:nth-child(2) {
+  margin-top: 90px;
+}
+.home-gallery-pair .shelf-heading {
+  gap: 20px;
+  align-items: baseline;
+}
+.home-gallery-pair .shelf-heading h2 {
+  font-size: clamp(22px, 2.1vw, 31px);
+}
+.home-gallery-pair .home-anime-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 22px;
+}
+.home-gallery-pair .anime-card:nth-child(even) {
+  padding-top: 45px;
+}
+.home-gallery-pair .catalog-gallery:nth-child(2) .poster-format {
+  border-color: #ff995b55;
+}
+.home-gallery-pair .catalog-gallery:nth-child(2) .shelf-heading > a {
+  color: var(--accent-warm);
+  border-color: var(--accent-warm);
+}
+.prism-home .card-list-action,
+.prism-home .series-count {
+  color: var(--accent);
+}
+.prism-home .anime-card .card-sources a:hover {
+  color: var(--accent-warm);
+}
+.shelf-placeholder {
+  max-width: 1380px;
+  height: 360px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  width: calc(100% - 80px);
+  margin: 30px auto;
+}
+.shelf-placeholder span {
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border: 1px solid var(--line);
+}
+.pointer-lens > span {
+  backdrop-filter: none;
+  border-color: var(--accent);
+  background: linear-gradient(120deg, #72b9ff13, transparent, #ff995b10);
+}
+.pointer-lens > span:after {
+  border-color: color-mix(in srgb, var(--accent-warm) 35%, transparent);
+}
+.glass-orbit {
+  display: none;
+}
+.workspace-header,
+.sidebar {
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--surface) 91%, transparent);
+}
+.search-menu {
+  backdrop-filter: none;
+  background: var(--surface);
+}
+.audio-toggle {
+  backdrop-filter: none;
+  background: var(--surface);
+}
+.button.outline {
+  backdrop-filter: none;
+}
+::selection {
+  background: var(--accent-warm);
+  color: var(--warm-on);
+}
+.scroll-progress {
+  background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+}
+.cinema-home footer > a {
+  color: var(--accent);
+}
+.cinema-home footer > a:hover {
+  color: var(--accent-warm);
+}
+@keyframes blue-drift {
+  from {
+    transform: translate3d(-3%, -2%, 0);
+  }
+  to {
+    transform: translate3d(5%, 3%, 0);
+  }
+}
+@keyframes orange-drift {
+  from {
+    transform: translate3d(4%, 3%, 0);
+  }
+  to {
+    transform: translate3d(-5%, -3%, 0);
+  }
+}
+@keyframes prism-reveal {
+  from {
+    opacity: 0.8;
+    clip-path: inset(0 0 0 1.3%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+@media (min-width: 1650px) {
+  .prism-home .discovery-feature {
+    height: 700px;
+  }
+  .feature-scene {
+    padding-inline: 85px;
+  }
+  .hero-gallery {
+    max-width: 320px;
+  }
+}
+@media (max-width: 1100px) {
+  .prism-home .discovery-feature {
+    width: calc(100% - 40px);
+    height: 620px;
+  }
+  .feature-scene {
+    padding-inline: 40px;
+    gap: 35px;
+  }
+  .prism-home .browse-shortcuts {
+    width: calc(100% - 80px);
+  }
+  .prism-home .catalog-section {
+    width: calc(100% - 60px);
+  }
+  .catalog-strip {
+    grid-template-columns: 175px minmax(0, 1fr);
+    gap: 24px;
+  }
+  .catalog-strip > .shelf-heading h2 {
+    font-size: 24px;
+  }
+  .home-gallery-pair {
+    width: calc(100% - 60px);
+    gap: 40px;
+  }
+  .home-gallery-pair .shelf-heading {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .home-gallery-pair .shelf-heading h2 {
+    font-size: 23px;
+  }
+  .home-gallery-pair .shelf-heading > a {
+    min-height: 30px;
+  }
+  .home-gallery-pair:before {
+    left: 56.5%;
+  }
+  .film-rail {
+    grid-auto-columns: 210px;
+    gap: 18px;
+  }
+  .hero-gallery {
+    max-width: 230px;
+  }
+  .featured-content h1 {
+    font-size: 38px;
+  }
+}
+@media (max-width: 800px) {
+  .catalog-strip {
+    display: block;
+  }
+  .catalog-strip > .shelf-heading {
+    position: static;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-top: 0;
+  }
+  .catalog-strip > .shelf-heading h2 {
+    max-width: none;
+  }
+  .catalog-strip > .shelf-heading a {
+    margin: 0;
+  }
+  .film-rail-shell {
+    padding-top: 50px;
+  }
+  .home-gallery-pair {
+    gap: 32px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .home-gallery-pair:before {
+    display: none;
+  }
+  .home-gallery-pair .anime-card h3 {
+    font-size: 16px;
+  }
+  .home-gallery-pair .home-anime-grid {
+    gap: 25px 14px;
+  }
+  .home-gallery-pair .anime-card:nth-child(even) {
+    padding-top: 25px;
+  }
+}
+@media (max-width: 600px) {
+  .prism-home .discovery-feature {
+    width: calc(100% - 28px);
+    height: 620px;
+    min-height: 620px;
+    margin-top: 18px;
+    border-radius: 5px 22px 5px 22px;
+  }
+  .feature-scene {
+    padding: 24px 22px 98px;
+    gap: 24px;
+    grid-template-columns: none;
+  }
+  .featured-content h1 {
+    font-size: clamp(26px, 7.2vw, 32px);
+  }
+  .feature-scene:after {
+    background: linear-gradient(0deg, #07121ff7, #07121fe3 45%, #07121f66);
+  }
+  .hero-gallery {
+    max-width: none;
+    width: 100px;
+  }
+  .glass-edge-plate {
+    inset: -9px -13px;
+    border-radius: 12px;
+  }
+  .feature-flutes {
+    mask-image: linear-gradient(
+      90deg,
+      #000,
+      transparent 24%,
+      transparent 77%,
+      #000
+    );
+  }
+  .prism-home .browse-shortcuts {
+    width: calc(100% - 36px);
+    padding-bottom: 20px;
+    gap: 8px;
+  }
+  .prism-home .catalog-section {
+    width: calc(100% - 36px);
+    padding: 25px 0;
+  }
+  .catalog-strip > .shelf-heading h2 {
+    font-size: 23px;
+    max-width: 12ch;
+  }
+  .catalog-strip > .shelf-heading a {
+    font-size: 12px;
+  }
+  .film-rail {
+    grid-auto-columns: 58vw;
+    gap: 16px;
+    padding-bottom: 18px;
+  }
+  .film-rail-shell {
+    padding-top: 50px;
+  }
+  .film-rail-controls .icon-control {
+    min-height: 38px;
+    min-width: 38px;
+    height: 38px;
+    width: 38px;
+  }
+  .home-gallery-pair {
+    width: calc(100% - 36px);
+    display: block;
+    margin-top: 10px;
+  }
+  .prism-home .home-gallery-pair .catalog-section {
+    padding: 28px 0;
+  }
+  .home-gallery-pair .catalog-gallery:nth-child(2) {
+    margin-top: 0;
+  }
+  .home-gallery-pair .shelf-heading {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .home-gallery-pair .shelf-heading h2 {
+    font-size: 24px;
+  }
+  .home-gallery-pair .home-anime-grid {
+    gap: 28px 16px;
+  }
+  .home-gallery-pair .anime-card:nth-child(even) {
+    padding-top: 28px;
+  }
+  .shelf-placeholder {
+    width: calc(100% - 36px);
+    height: 280px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .shelf-placeholder span:nth-child(n + 3) {
+    display: none;
+  }
+  .glass-ribs {
+    background-size: 180% 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-light {
+    animation: none;
+    will-change: auto;
+  }
+  .glass-field canvas {
+    display: none;
+  }
+  .feature-scene {
+    animation: none;
+  }
+  .featured-backdrop,
+  .hero-gallery {
+    will-change: auto;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass-field {
+    opacity: 0.35;
+  }
+  .public-nav,
+  .workspace-header,
+  .sidebar,
+  .button.outline,
+  .hero-preview {
+    backdrop-filter: none;
+    background: var(--surface);
+  }
+  .feature-flutes {
+    opacity: 0.2;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-appearance="system"] {
+    --accent: #72b9ff;
+    --accent-warm: #ff995b;
+    --accent-on: #071629;
+    --warm-on: #231006;
+    --paper: #080d16;
+    --surface: #121e2c;
+    --ink: #edf5ff;
+    --muted: #b0c3d6;
+    --line: #34495d;
+    --wash: #080d16;
+  }
+}

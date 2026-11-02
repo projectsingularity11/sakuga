@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { GlassField } from "./glass-field";
 import { Volume2, VolumeX } from "lucide-react";
 export function Experience() {
   const [enabled, setEnabled] = useState(false);
@@ -112,8 +113,7 @@ export function Experience() {
     };
   }, []);
   useEffect(() => {
-    const root = document.documentElement,
-      reduce = matchMedia("(prefers-reduced-motion:reduce)"),
+    const reduce = matchMedia("(prefers-reduced-motion:reduce)"),
       fine = matchMedia("(pointer:fine)");
     let frame = 0,
       x = innerWidth * 0.5,
@@ -121,32 +121,41 @@ export function Experience() {
       tx = x,
       ty = y,
       visible = false;
+    let gallery: HTMLElement | null = null,
+      backdrop: HTMLElement | null = null,
+      maxScroll = 1;
+    const progress = document.querySelector<HTMLElement>(".scroll-progress");
+    const measure = () => {
+      maxScroll = Math.max(
+        1,
+        document.documentElement.scrollHeight - innerHeight,
+      );
+    };
     const render = () => {
       frame = 0;
-      if (reduce.matches) return;
-      x += (tx - x) * 0.16;
-      y += (ty - y) * 0.16;
-      root.style.setProperty("--pointer-x", `${(x / innerWidth) * 100}%`);
-      root.style.setProperty("--pointer-y", `${(y / innerHeight) * 100}%`);
-      root.style.setProperty("--mx", `${(x / innerWidth - 0.5) * 2}`);
-      root.style.setProperty("--my", `${(y / innerHeight - 0.5) * 2}`);
-      root.style.setProperty(
-        "--page-scroll",
-        `${Math.min(1, scrollY / Math.max(1, root.scrollHeight - innerHeight))}`,
-      );
-      root.style.setProperty(
-        "--hero-drift",
-        `${Math.min(scrollY * 0.16, 90)}px`,
-      );
+      if (reduce.matches || document.hidden) return;
+      x += (tx - x) * 0.18;
+      y += (ty - y) * 0.18;
       if (lens.current) {
         lens.current.style.transform = `translate3d(${x}px,${y}px,0)`;
         lens.current.dataset.visible = String(visible);
       }
-      if (Math.abs(tx - x) + Math.abs(ty - y) > 0.15)
+      if (!gallery?.isConnected)
+        gallery = document.querySelector<HTMLElement>(".hero-gallery");
+      if (!backdrop?.isConnected)
+        backdrop = document.querySelector<HTMLElement>(".featured-backdrop");
+      const mx = (x / innerWidth - 0.5) * 2,
+        my = (y / innerHeight - 0.5) * 2;
+      if (gallery)
+        gallery.style.transform = `perspective(1200px) rotateX(${my * -3}deg) rotateY(${mx * 4}deg)`;
+      if (backdrop)
+        backdrop.style.transform = `translate3d(${mx * -7}px,${Math.min(scrollY * 0.08, 45) + my * -4}px,0) scale(1.04)`;
+      if (Math.abs(tx - x) + Math.abs(ty - y) > 0.2)
         frame = requestAnimationFrame(render);
     };
     const schedule = () => {
-      if (!reduce.matches && !frame) frame = requestAnimationFrame(render);
+      if (!reduce.matches && !frame && !document.hidden)
+        frame = requestAnimationFrame(render);
     };
     const move = (event: PointerEvent) => {
       if (!fine.matches || event.pointerType !== "mouse") return;
@@ -160,35 +169,45 @@ export function Experience() {
         );
       schedule();
     };
+    const scroll = () => {
+      if (progress)
+        progress.style.transform = `scaleX(${Math.min(1, scrollY / maxScroll)})`;
+      schedule();
+    };
     const leave = () => {
       visible = false;
       if (lens.current) lens.current.dataset.visible = "false";
     };
-    const media = () => {
-      if (reduce.matches) {
+    const stop = () => {
+      if (document.hidden || reduce.matches) {
         cancelAnimationFrame(frame);
         frame = 0;
         leave();
-        root.style.setProperty("--mx", "0");
-        root.style.setProperty("--my", "0");
-        root.style.setProperty("--hero-drift", "0px");
+        if (gallery) gallery.style.transform = "none";
+        if (backdrop) backdrop.style.transform = "none";
       } else schedule();
     };
+    const observer = new ResizeObserver(measure);
+    observer.observe(document.body);
+    measure();
     window.addEventListener("pointermove", move, { passive: true });
-    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("scroll", scroll, { passive: true });
     document.documentElement.addEventListener("pointerleave", leave);
-    reduce.addEventListener("change", media);
-    schedule();
+    document.addEventListener("visibilitychange", stop);
+    reduce.addEventListener("change", stop);
     return () => {
       cancelAnimationFrame(frame);
+      observer.disconnect();
       window.removeEventListener("pointermove", move);
-      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("scroll", scroll);
       document.documentElement.removeEventListener("pointerleave", leave);
-      reduce.removeEventListener("change", media);
+      document.removeEventListener("visibilitychange", stop);
+      reduce.removeEventListener("change", stop);
     };
   }, []);
   return (
     <>
+      <GlassField />
       <div className="scroll-progress" aria-hidden="true" />
       <div className="pointer-lens" ref={lens} aria-hidden="true">
         <span />
