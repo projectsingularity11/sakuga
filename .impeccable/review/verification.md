@@ -11,7 +11,7 @@ Current redesign evidence recorded for 2026-11-02 (America/Chicago). This replac
 | Focused geometry/carousel rerun | Passed: 10/10 across all five widths in 22.5s after `align-self: start` corrected the feature height |
 | Browser scenario disposition | Every one of the 70 scenarios passed after the focused rerun; no single 70/70 final matrix run is claimed |
 | `npm run build` | Passed |
-| Production deployment | Pending for this redesign |
+| Production deployment | READY: `60df89c1948017d1aa9f62cf1b7be803c781a377` |
 
 Browser coverage includes 375, 390, 768, 1280 and 1440px, light/dark appearance, keyboard access, reduced motion, navigation, search races, filter submissions, source/image fallbacks, carousel behavior, season switching, session refresh, saved progress and preferences across reload, and cancellation of native list-removal confirmation. Authenticated flows use a local Supabase protocol fixture. Fixture titles, profile values, dates and synopsis strings are test data; no live customer data was mutated.
 
@@ -22,3 +22,5 @@ The interface uses the neutral journal ground, self-hosted Space Grotesk 500/700
 Existing source-backed artwork, cached AVIF/WebP derivatives, source URLs, attribution and measured dimensions remain. Large fallback artwork is explicitly labeled; tiny missing-cover thumbnails use a labeled unavailable-image icon. This does not establish universal artwork quality, provider permissions or catalog coverage. Selected-season IDs/editor keys, progress/status/score, collection membership, session/auth behavior, stored preference fields and existing integrations retain their contracts. The stored `Midnight` preset remains compatible while the UI labels it Sakuga.
 
 No successful live HTTP, deployed authentication, production persistence, real provider integration or launch catalog-coverage claim is made. Previous connector/proxy restrictions prevented live fetching; those attempts were not rerun for this documentation pass. No current production performance benchmark is claimed.
+
+Production deployment `dpl_Ark6uMADgeQ1BGWMy6osEiu5T31A` reached READY for the release commit above. Vercel's scoped API confirmed `sakuga-anime.vercel.app` and the existing aliases on this deployment. The runtime-error scan returned no errors in its queried post-deployment window. These are control-plane and log checks; direct live-page HTTP/browser verification remains unavailable because of the previously observed connector/proxy restrictions.
