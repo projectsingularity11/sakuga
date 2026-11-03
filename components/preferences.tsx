@@ -1,22 +1,29 @@
 "use client";
 import { useState, useTransition, useEffect } from "react";
 import { savePreferences, importLibrary, previewImport } from "@/app/actions";
-import { polishTheme } from "@/lib/appearance";
+import { polishTheme, customAccentTokens } from "@/lib/appearance";
 import { presets, themeSchema, parseImport } from "@/lib/domain";
 export function ThemeApply({ theme }: { theme: unknown }) {
   useEffect(() => {
     const p = themeSchema.safeParse(theme);
     if (!p.success) return;
     const t = polishTheme(p.data);
-    const dark =
-      t.mode === "dark" ||
-      (t.mode === "system" &&
-        matchMedia("(prefers-color-scheme: dark)").matches);
-    document.documentElement.dataset.appearance = dark ? "dark" : "light";
-    if (t.preset === "Prism")
-      document.documentElement.style.removeProperty("--accent");
-    else document.documentElement.style.setProperty("--accent", t.accent);
+    const scheme = matchMedia("(prefers-color-scheme: dark)");
+    const applyMode = () => {
+      const dark = t.mode === "dark" || (t.mode === "system" && scheme.matches);
+      document.documentElement.dataset.appearance = dark ? "dark" : "light";
+    };
+    applyMode();
+    scheme.addEventListener("change", applyMode);
+    if (t.preset === "Midnight") {
+      for (const key of ["--accent", "--accent-on", "--accent-hover"])
+        document.documentElement.style.removeProperty(key);
+    } else {
+      for (const [key, value] of Object.entries(customAccentTokens(t.accent)))
+        document.documentElement.style.setProperty(key, value);
+    }
     document.documentElement.style.setProperty("--ambient", `${t.intensity}%`);
+    return () => scheme.removeEventListener("change", applyMode);
   }, [theme]);
   return null;
 }
@@ -32,10 +39,10 @@ export function Preferences({
     initial.success
       ? polishTheme(initial.data)
       : {
-          preset: "Prism" as const,
+          preset: "Midnight" as const,
           mode: "dark" as "light" | "dark" | "system",
           intensity: 8,
-          accent: presets.Prism,
+          accent: presets.Midnight,
         },
   );
   const [display_name, setName] = useState(name);
@@ -138,7 +145,9 @@ export function Preferences({
             <input
               type="color"
               value={theme.accent}
-              onChange={(e) => setTheme({ ...theme, accent: e.target.value })}
+              onChange={(e) =>
+                setTheme({ ...theme, preset: "Custom", accent: e.target.value })
+              }
             />
           </label>
         </div>
@@ -164,7 +173,11 @@ export function Preferences({
           type="button"
           className="text-link"
           onClick={() =>
-            setTheme({ ...theme, accent: presets[theme.preset], intensity: 8 })
+            setTheme({
+              ...theme,
+              accent: presets[theme.preset] || theme.accent,
+              intensity: 8,
+            })
           }
         >
           Reset this palette

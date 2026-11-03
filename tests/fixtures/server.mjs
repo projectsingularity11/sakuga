@@ -102,6 +102,9 @@ const titles = [
   mature: false,
   updated_at: "2026-11-02",
 }));
+const libraryUpdates = new Map();
+let savedPreferences = null,
+  savedName = "Fixture viewer";
 const server = http.createServer(async (req, res) => {
   let text = "";
   for await (const chunk of req) text += chunk;
@@ -142,8 +145,21 @@ const server = http.createServer(async (req, res) => {
         completed_on: null,
         updated_at: "2026-11-02",
         created_at: "2026-11-02",
+        ...libraryUpdates.get(a.id),
       }));
     return res.end(JSON.stringify({ count: 1, entries }));
+  }
+  if (url.pathname === "/rest/v1/rpc/personal_statistics" && auth) {
+    return res.end(
+      JSON.stringify({
+        total: 2,
+        episodes: 10,
+        statuses: { watching: 2 },
+        scores: {},
+        genres: { Action: 2 },
+        formats: { TV: 2 },
+      }),
+    );
   }
   if (req.url.includes("/rpc/search_anime")) {
     const input = JSON.parse(text || "{}"),
@@ -183,12 +199,18 @@ const server = http.createServer(async (req, res) => {
       ),
     );
   }
-  if (url.pathname === "/rest/v1/profiles" && auth)
+  if (url.pathname === "/rest/v1/profiles" && auth) {
+    if (req.method === "PATCH") {
+      const value = JSON.parse(text);
+      savedPreferences = value.preferences;
+      savedName = value.display_name;
+      return res.end("{}");
+    }
     return res.end(
       JSON.stringify({
         id: user.id,
-        display_name: "Fixture viewer",
-        preferences: {
+        display_name: savedName,
+        preferences: savedPreferences || {
           language: "english",
           theme: {
             mode: "dark",
@@ -199,11 +221,17 @@ const server = http.createServer(async (req, res) => {
         },
       }),
     );
+  }
   if (
     ["/rest/v1/library", "/rest/v1/collections"].includes(url.pathname) &&
     auth
   ) {
     if (url.pathname === "/rest/v1/collections") return res.end("[]");
+    if (req.method === "POST") {
+      const value = JSON.parse(text);
+      libraryUpdates.set(value.anime_id, value);
+      return res.end(JSON.stringify(value));
+    }
     const entries = titles
       .filter((a) => a.series_id === 16498)
       .map((a) => ({
@@ -222,6 +250,7 @@ const server = http.createServer(async (req, res) => {
         completed_on: null,
         updated_at: "2026-11-02",
         created_at: "2026-11-02",
+        ...libraryUpdates.get(a.id),
       }));
     const selected = url.searchParams.get("anime_id");
     if (selected?.startsWith("eq."))

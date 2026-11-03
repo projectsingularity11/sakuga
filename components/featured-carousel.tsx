@@ -101,7 +101,6 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
         {a.art?.banner ? (
           <ArtPicture
             art={a.art.banner}
-            mobile={a.art.cover}
             className="featured-backdrop"
             eager={index === 0}
           />
@@ -115,8 +114,6 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
             sizes="100vw"
           />
         )}
-        <div className="feature-flutes" aria-hidden="true" />
-        <div className="feature-light" aria-hidden="true" />
         <div className="featured-content">
           <h1 title={title}>{title}</h1>
           <p className="featured-meta">
@@ -134,6 +131,7 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
             </Link>
             <a
               className="hero-preview"
+              aria-label={a.hasTrailer ? "Watch trailer" : "Find trailer"}
               href={a.trailer}
               target="_blank"
               rel="noreferrer"
@@ -146,7 +144,6 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
           </div>
         </div>
         <div className="hero-gallery">
-          <div className="glass-edge-plate" aria-hidden="true" />
           <Link
             className="gallery-main"
             href={a.href}

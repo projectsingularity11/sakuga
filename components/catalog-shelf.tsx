@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { AnimeCard } from "./anime-card";
 import { FilmRail } from "./film-rail";
 import type { catalog } from "@/lib/catalog";
@@ -34,7 +35,7 @@ export async function CatalogShelf({
       <div className="shelf-heading">
         <h2>{title}</h2>
         <Link href={href}>
-          View all <span aria-hidden="true">↗</span>
+          View all <ArrowUpRight size={14} />
         </Link>
       </div>
       {cards.length ? (

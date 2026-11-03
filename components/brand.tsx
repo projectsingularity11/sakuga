@@ -36,7 +36,7 @@ export function SakugaMark({ className = "" }: { className?: string }) {
 export function Brand() {
   return (
     <Link href="/" className="brand" aria-label="Sakuga home">
-      <SakugaMark />
+      <SakugaMark className="brand-mark" />
       <span>sakuga</span>
     </Link>
   );

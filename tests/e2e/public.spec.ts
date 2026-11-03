@@ -129,10 +129,11 @@ test("database and trailer searches are explicit and every card has visual artwo
   await expect(images).toHaveCount(1);
   await expect(images.first()).toBeVisible();
 });
-test("light appearance keeps shared glass and source controls readable", async ({
+test("light appearance keeps shared surfaces and source controls readable", async ({
   page,
 }) => {
   const { default: AxeBuilder } = await import("@axe-core/playwright");
+  await page.emulateMedia({ reducedMotion: "reduce" });
   for (const route of ["/", "/discover"]) {
     await page.goto(route);
     await page.evaluate(() => {
@@ -147,7 +148,7 @@ test("light appearance keeps shared glass and source controls readable", async (
 test("home refreshes an expired session and preserves access after returning home", async ({
   page,
   context,
-}) => {
+}, info) => {
   const expired = [
     Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString(
       "base64url",
@@ -219,6 +220,29 @@ test("home refreshes an expired session and preserves access after returning hom
   await expect(progress).toHaveValue("7");
   await page.getByLabel("Season / part").selectOption("16498");
   await expect(progress).toHaveValue("3");
+  await page.screenshot({
+    path: `.impeccable/review/${info.project.name}-workspace.png`,
+    fullPage: true,
+  });
+  await progress.fill("5");
+  await page.getByRole("button", { name: "Save changes", exact: true }).click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "Saved to your library." }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(progress).toHaveValue("5");
+  page.once("dialog", (dialog) => dialog.dismiss());
+  await page
+    .getByRole("button", { name: "Remove from library", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Save changes", exact: true }),
+  ).toBeVisible();
+  await progress.fill("3");
+  await page.getByRole("button", { name: "Save changes", exact: true }).click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "Saved to your library." }),
+  ).toBeVisible();
   const toggle = page.getByRole("button", { name: /sidebar/ });
   const before = await page.locator(".workspace").boundingBox();
   await toggle.click();
@@ -237,6 +261,54 @@ test("home refreshes an expired session and preserves access after returning hom
     expect(after!.x + after!.width).toBeCloseTo(page.viewportSize()!.width, 0);
   }
   await toggle.click();
+  const { default: AxeBuilder } = await import("@axe-core/playwright");
+  for (const [route, heading] of [
+    ["/app/settings", "Settings"],
+    ["/app/collections", "Collections"],
+    ["/app/statistics", "Statistics"],
+  ]) {
+    await page.goto(route);
+    await expect(
+      page.getByRole("heading", { name: heading, exact: true }),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag22aa"])
+      .analyze();
+    expect(result.violations).toEqual([]);
+    await page.screenshot({
+      path: `.impeccable/review/${info.project.name}-${heading.toLowerCase()}.png`,
+      fullPage: true,
+    });
+    if (heading === "Settings" && info.project.name === "desktop") {
+      await page.getByRole("button", { name: "Ink", exact: true }).click();
+      const custom = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag22aa"])
+        .analyze();
+      expect(custom.violations).toEqual([]);
+      await page
+        .getByRole("button", { name: "Save my preferences", exact: true })
+        .click();
+      await expect(
+        page.getByRole("status").filter({ hasText: "Preferences saved." }),
+      ).toBeVisible();
+      await page.reload();
+      await expect(
+        page.getByLabel("Accent color", { exact: true }),
+      ).toHaveValue("#344b44");
+      await page.getByRole("button", { name: "Midnight", exact: true }).click();
+      await page
+        .getByRole("button", { name: "Save my preferences", exact: true })
+        .click();
+      await expect(
+        page.getByRole("status").filter({ hasText: "Preferences saved." }),
+      ).toBeVisible();
+    }
+  }
 });
 test("seasons share one index and selector follows legacy links", async ({
   page,
@@ -342,35 +414,58 @@ test("search shortcut and mobile menu remain accessible", async ({ page }) => {
   await expect(page.locator(".brand")).not.toContainText(".");
 });
 
-test("glass uses two accents, local artwork and a reduced-motion fallback", async ({
+test("Midnight Sakura uses static surfaces, cached artwork and reduced motion", async ({
   page,
 }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await expect(page.locator(".glass-field")).toBeAttached();
-  const colors = await page.evaluate(() => {
+  await expect(
+    page.locator(".glass-field,.pointer-lens,.feature-flutes,canvas"),
+  ).toHaveCount(0);
+  const surfaces = await page.evaluate(() => {
     const css = getComputedStyle(document.documentElement);
+    const nav = getComputedStyle(document.querySelector(".public-nav")!);
     return {
-      blue: css.getPropertyValue("--accent").trim(),
-      orange: css.getPropertyValue("--accent-warm").trim(),
+      pink: css.getPropertyValue("--accent").trim().toLowerCase(),
+      lavender: css.getPropertyValue("--secondary").trim().toLowerCase(),
+      background: css.getPropertyValue("--paper").trim().toLowerCase(),
+      blur: nav.backdropFilter,
+      animation: getComputedStyle(document.body).animationName,
+      backgroundImage: getComputedStyle(document.body).backgroundImage,
     };
   });
-  expect(colors).toEqual({ blue: "#72b9ff", orange: "#ff995b" });
+  expect(surfaces).toMatchObject({
+    pink: "#ff8fb8",
+    lavender: "#b9a3ff",
+    background: "#0f1220",
+    blur: "none",
+    animation: "none",
+  });
+  await page.mouse.move(100, 400);
+  await page.mouse.move(300, 200);
   expect(
-    await page
-      .locator(".glass-light-blue")
-      .evaluate((el) => getComputedStyle(el).animationName),
-  ).toBe("none");
-  await expect(page.locator(".glass-field canvas")).not.toHaveAttribute(
-    "data-ready",
-    "true",
-  );
-  const image = page.locator(".featured-backdrop img");
+    await page.evaluate(() => getComputedStyle(document.body).backgroundImage),
+  ).toBe(surfaces.backgroundImage);
+  await page
+    .getByRole("button", { name: "Show Cowboy Bebop", exact: true })
+    .click();
+  const image = page.locator(".gallery-main img");
   await expect(image).toBeVisible();
   await expect(image).toHaveJSProperty("complete", true);
   expect(
     await image.evaluate((el: HTMLImageElement) => el.currentSrc),
   ).toContain("/art/home/");
+  const feature = await page.locator(".discovery-feature").boundingBox();
+  expect(feature!.height).toBeLessThan(450);
+  expect(
+    await page
+      .locator(".cover")
+      .first()
+      .evaluate((el) => getComputedStyle(el).animationName),
+  ).toBe("none");
+  expect(errors).toEqual([]);
 });
 test("film strip provides working horizontal navigation without page overflow", async ({
   page,
@@ -404,64 +499,28 @@ test("film strip provides working horizontal navigation without page overflow", 
     ),
   ).toBe(true);
 });
-test("glass shader compiles and renders its actual optical field", async ({
+
+test("catalog filters preserve submitted values and keyboard operation", async ({
   page,
-}, info) => {
-  test.skip(
-    info.project.name !== "desktop",
-    "The shader compiler check is shared across viewport sizes.",
-  );
-  const { readFileSync } = await import("node:fs");
-  const source = readFileSync("components/glass-renderer.ts", "utf8");
-  const vertex = source.match(/const vertex = `([\s\S]*?)`;/)![1],
-    fragment = source.match(/const fragment = `([\s\S]*?)`;/)![1];
-  await page.goto("/");
-  const result = await page.evaluate(
-    ({ vertex, fragment }) => {
-      const canvas = document.createElement("canvas");
-      canvas.width = 64;
-      canvas.height = 32;
-      const gl = canvas.getContext("webgl");
-      if (!gl) return { unavailable: true };
-      const program = gl.createProgram()!;
-      for (const [type, code] of [
-        [gl.VERTEX_SHADER, vertex],
-        [gl.FRAGMENT_SHADER, fragment],
-      ] as const) {
-        const shader = gl.createShader(type)!;
-        gl.shaderSource(shader, code);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-          return { error: gl.getShaderInfoLog(shader) };
-        gl.attachShader(program, shader);
-      }
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-        return { error: gl.getProgramInfoLog(program) };
-      gl.useProgram(program);
-      const buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      gl.bufferData(
-        gl.ARRAY_BUFFER,
-        new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-        gl.STATIC_DRAW,
-      );
-      const attribute = gl.getAttribLocation(program, "position");
-      gl.enableVertexAttribArray(attribute);
-      gl.vertexAttribPointer(attribute, 2, gl.FLOAT, false, 0, 0);
-      gl.uniform2f(gl.getUniformLocation(program, "pointer"), 0.5, 0.5);
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-      const pixels = new Uint8Array(64 * 32 * 4);
-      gl.readPixels(0, 0, 64, 32, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-      const red = new Set<number>();
-      for (let i = 0; i < pixels.length; i += 4) red.add(pixels[i]);
-      const error = gl.getError();
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
-      return { colors: red.size, error };
-    },
-    { vertex, fragment },
-  );
-  expect(result.unavailable).not.toBe(true);
-  expect(result.error).toBe(0);
-  expect(result.colors).toBeGreaterThan(3);
+}) => {
+  await page.goto("/discover");
+  const filters = page.locator(".catalog-filters");
+  await filters.getByText("Filters & sorting", { exact: true }).click();
+  await filters.getByLabel("Search anime", { exact: true }).fill("Attack");
+  await filters
+    .getByRole("combobox", { name: "Genre", exact: true })
+    .selectOption("Action");
+  await filters.getByLabel("Year", { exact: true }).fill("2013");
+  await filters
+    .getByRole("combobox", { name: "Sort", exact: true })
+    .selectOption("newest");
+  await filters.getByRole("button", { name: "Search", exact: true }).click();
+  await expect(page).toHaveURL(/q=Attack/);
+  await expect(
+    filters.getByRole("combobox", { name: "Genre", exact: true }),
+  ).toHaveValue("Action");
+  await expect(filters.getByLabel("Year", { exact: true })).toHaveValue("2013");
+  await expect(page.locator(".anime-card")).toHaveCount(1);
+  await filters.getByRole("link", { name: "Reset", exact: true }).click();
+  await expect(page).toHaveURL(/\/discover$/);
 });

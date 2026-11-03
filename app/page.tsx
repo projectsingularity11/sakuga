@@ -27,7 +27,7 @@ export default async function Home() {
     main.status === "fulfilled" ? main.value.titles : [],
   ).map((a) => projectFeature(a, language));
   return (
-    <div className="cinema-home prism-home">
+    <div className="cinema-home midnight-home">
       <PublicNav />
       <main id="main">
         <div className="cinema-stage">

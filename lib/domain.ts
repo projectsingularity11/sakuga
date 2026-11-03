@@ -141,7 +141,7 @@ export function parseImport(text: string) {
     .parse(JSON.parse(text));
 }
 export const presets: Record<string, string> = {
-  Prism: "#72b9ff",
+  Midnight: "#FF8FB8",
   Ink: "#344b44",
   Porcelain: "#71614b",
   Sakura: "#984b62",
@@ -155,6 +155,8 @@ export const themeSchema = z.object({
   preset: z.enum([
     "Iris",
     "Prism",
+    "Midnight",
+    "Custom",
     "Ink",
     "Porcelain",
     "Sakura",

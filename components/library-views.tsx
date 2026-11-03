@@ -136,7 +136,9 @@ export function LibraryViews({
                     )
                   }
                 />
-                {labels[e.status]} · {e.progress}/{e.anime?.episodes ?? "?"}
+                <span className="status-badge" data-status={e.status}>
+                  {labels[e.status]} · {e.progress}/{e.anime?.episodes ?? "?"}
+                </span>
               </label>
             </div>
           ))}
@@ -169,7 +171,11 @@ export function LibraryViews({
                     </Link>
                     {seasonSelect(e)}
                   </td>
-                  <td>{labels[e.status]}</td>
+                  <td>
+                    <span className="status-badge" data-status={e.status}>
+                      {labels[e.status]}
+                    </span>
+                  </td>
                   <td>
                     {e.progress}/{e.anime?.episodes ?? "?"}
                   </td>
@@ -185,7 +191,10 @@ export function LibraryViews({
             ? [...statuses]
             : [...new Set(entries.flatMap((e) => e.anime?.genres || []))]
           ).map((group) => (
-            <section key={group}>
+            <section
+              key={group}
+              data-status={view === "board" ? group : undefined}
+            >
               <h2>{labels[group] || group}</h2>
               {visibleEntries
                 .filter((e) =>

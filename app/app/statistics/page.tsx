@@ -20,7 +20,7 @@ export default async function Page() {
       <section className="editor">
         <h2>Your library</h2>
         {Object.entries(labels).map(([status, label]) => (
-          <div className="stat-row" key={status}>
+          <div className="stat-row" key={status} data-status={status}>
             <span>{label}</span>
             <progress value={s.statuses[status] || 0} max={s.total || 1} />
             <strong>{s.statuses[status] || 0}</strong>

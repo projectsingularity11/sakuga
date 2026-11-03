@@ -1,99 +1,626 @@
 {
-  "name": "Sakuga",
-  "version": 2,
-  "description": "Prism cinema: a working anime catalog with vertical optical glass, electric blue and orange light",
-  "sources": [
-    "app/identity.css",
-    "app/page.tsx",
-    "components/glass-field.tsx",
-    "components/glass-renderer.ts",
-    "components/featured-carousel.tsx",
-    "components/catalog-shelf.tsx",
-    "components/preferences.tsx",
-    "lib/appearance.ts",
-    "DESIGN.md"
-  ],
-  "tokens": {
-    "color": {
-      "dark": {
-        "paper": "#080d16",
-        "surface": "#121e2c",
-        "ink": "#edf5ff",
-        "muted": "#b0c3d6",
-        "line": "#34495d",
-        "accent": "#72b9ff",
-        "accentWarm": "#ff995b"
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T00:00:00Z",
+  "title": "Design System: Sakuga — Midnight Sakura",
+  "extensions": {
+    "sources": [
+      "DESIGN.md",
+      "app/globals.css",
+      "app/layout.tsx",
+      "lib/appearance.ts",
+      "components/preferences.tsx",
+      "components/workspace-shell.tsx",
+      "components/anime-card.tsx",
+      "components/featured-carousel.tsx",
+      "components/experience.tsx"
+    ],
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0290 274.03)",
+          "oklch(26% 0.0290 274.03)",
+          "oklch(38% 0.0290 274.03)",
+          "oklch(49% 0.0290 274.03)",
+          "oklch(61% 0.0290 274.03)",
+          "oklch(72% 0.0290 274.03)",
+          "oklch(84% 0.0290 274.03)",
+          "oklch(95% 0.0290 274.03)"
+        ]
       },
-      "light": {
-        "paper": "#edf3f8",
-        "surface": "#f8fbff",
-        "ink": "#152636",
-        "muted": "#526575",
-        "line": "#b9cad7",
-        "accent": "#0759bf",
-        "accentWarm": "#a7400b"
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0371 274.16)",
+          "oklch(26% 0.0371 274.16)",
+          "oklch(38% 0.0371 274.16)",
+          "oklch(49% 0.0371 274.16)",
+          "oklch(61% 0.0371 274.16)",
+          "oklch(72% 0.0371 274.16)",
+          "oklch(84% 0.0371 274.16)",
+          "oklch(95% 0.0371 274.16)"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Raised",
+        "tonalRamp": [
+          "oklch(15% 0.0448 272.63)",
+          "oklch(26% 0.0448 272.63)",
+          "oklch(38% 0.0448 272.63)",
+          "oklch(49% 0.0448 272.63)",
+          "oklch(61% 0.0448 272.63)",
+          "oklch(72% 0.0448 272.63)",
+          "oklch(84% 0.0448 272.63)",
+          "oklch(95% 0.0448 272.63)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15% 0.0530 272.14)",
+          "oklch(26% 0.0530 272.14)",
+          "oklch(38% 0.0530 272.14)",
+          "oklch(49% 0.0530 272.14)",
+          "oklch(61% 0.0530 272.14)",
+          "oklch(72% 0.0530 272.14)",
+          "oklch(84% 0.0530 272.14)",
+          "oklch(95% 0.0530 272.14)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Accent",
+        "tonalRamp": [
+          "oklch(15% 0.1419 357.56)",
+          "oklch(26% 0.1419 357.56)",
+          "oklch(38% 0.1419 357.56)",
+          "oklch(49% 0.1419 357.56)",
+          "oklch(61% 0.1419 357.56)",
+          "oklch(72% 0.1419 357.56)",
+          "oklch(84% 0.1419 357.56)",
+          "oklch(95% 0.1419 357.56)"
+        ]
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Accent Hover",
+        "tonalRamp": [
+          "oklch(15% 0.1091 356.08)",
+          "oklch(26% 0.1091 356.08)",
+          "oklch(38% 0.1091 356.08)",
+          "oklch(49% 0.1091 356.08)",
+          "oklch(61% 0.1091 356.08)",
+          "oklch(72% 0.1091 356.08)",
+          "oklch(84% 0.1091 356.08)",
+          "oklch(95% 0.1091 356.08)"
+        ]
+      },
+      "accent-on": {
+        "role": "primary",
+        "displayName": "Accent On",
+        "tonalRamp": [
+          "oklch(15% 0.0290 274.03)",
+          "oklch(26% 0.0290 274.03)",
+          "oklch(38% 0.0290 274.03)",
+          "oklch(49% 0.0290 274.03)",
+          "oklch(61% 0.0290 274.03)",
+          "oklch(72% 0.0290 274.03)",
+          "oklch(84% 0.0290 274.03)",
+          "oklch(95% 0.0290 274.03)"
+        ]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Secondary",
+        "tonalRamp": [
+          "oklch(15% 0.1307 294.10)",
+          "oklch(26% 0.1307 294.10)",
+          "oklch(38% 0.1307 294.10)",
+          "oklch(49% 0.1307 294.10)",
+          "oklch(61% 0.1307 294.10)",
+          "oklch(72% 0.1307 294.10)",
+          "oklch(84% 0.1307 294.10)",
+          "oklch(95% 0.1307 294.10)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0107 280.48)",
+          "oklch(26% 0.0107 280.48)",
+          "oklch(38% 0.0107 280.48)",
+          "oklch(49% 0.0107 280.48)",
+          "oklch(61% 0.0107 280.48)",
+          "oklch(72% 0.0107 280.48)",
+          "oklch(84% 0.0107 280.48)",
+          "oklch(95% 0.0107 280.48)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0384 271.93)",
+          "oklch(26% 0.0384 271.93)",
+          "oklch(38% 0.0384 271.93)",
+          "oklch(49% 0.0384 271.93)",
+          "oklch(61% 0.0384 271.93)",
+          "oklch(72% 0.0384 271.93)",
+          "oklch(84% 0.0384 271.93)",
+          "oklch(95% 0.0384 271.93)"
+        ]
+      },
+      "watching": {
+        "role": "semantic",
+        "displayName": "Watching",
+        "tonalRamp": [
+          "oklch(15% 0.1051 235.72)",
+          "oklch(26% 0.1051 235.72)",
+          "oklch(38% 0.1051 235.72)",
+          "oklch(49% 0.1051 235.72)",
+          "oklch(61% 0.1051 235.72)",
+          "oklch(72% 0.1051 235.72)",
+          "oklch(84% 0.1051 235.72)",
+          "oklch(95% 0.1051 235.72)"
+        ]
+      },
+      "completed": {
+        "role": "semantic",
+        "displayName": "Completed",
+        "tonalRamp": [
+          "oklch(15% 0.1098 165.52)",
+          "oklch(26% 0.1098 165.52)",
+          "oklch(38% 0.1098 165.52)",
+          "oklch(49% 0.1098 165.52)",
+          "oklch(61% 0.1098 165.52)",
+          "oklch(72% 0.1098 165.52)",
+          "oklch(84% 0.1098 165.52)",
+          "oklch(95% 0.1098 165.52)"
+        ]
+      },
+      "planned": {
+        "role": "semantic",
+        "displayName": "Planned",
+        "tonalRamp": [
+          "oklch(15% 0.1307 294.10)",
+          "oklch(26% 0.1307 294.10)",
+          "oklch(38% 0.1307 294.10)",
+          "oklch(49% 0.1307 294.10)",
+          "oklch(61% 0.1307 294.10)",
+          "oklch(72% 0.1307 294.10)",
+          "oklch(84% 0.1307 294.10)",
+          "oklch(95% 0.1307 294.10)"
+        ]
+      },
+      "on-hold": {
+        "role": "semantic",
+        "displayName": "On Hold",
+        "tonalRamp": [
+          "oklch(15% 0.1091 83.06)",
+          "oklch(26% 0.1091 83.06)",
+          "oklch(38% 0.1091 83.06)",
+          "oklch(49% 0.1091 83.06)",
+          "oklch(61% 0.1091 83.06)",
+          "oklch(72% 0.1091 83.06)",
+          "oklch(84% 0.1091 83.06)",
+          "oklch(95% 0.1091 83.06)"
+        ]
+      },
+      "dropped": {
+        "role": "semantic",
+        "displayName": "Dropped",
+        "tonalRamp": [
+          "oklch(15% 0.1314 15.31)",
+          "oklch(26% 0.1314 15.31)",
+          "oklch(38% 0.1314 15.31)",
+          "oklch(49% 0.1314 15.31)",
+          "oklch(61% 0.1314 15.31)",
+          "oklch(72% 0.1314 15.31)",
+          "oklch(84% 0.1314 15.31)",
+          "oklch(95% 0.1314 15.31)"
+        ]
+      },
+      "rating": {
+        "role": "semantic",
+        "displayName": "Rating",
+        "tonalRamp": [
+          "oklch(15% 0.1091 83.06)",
+          "oklch(26% 0.1091 83.06)",
+          "oklch(38% 0.1091 83.06)",
+          "oklch(49% 0.1091 83.06)",
+          "oklch(61% 0.1091 83.06)",
+          "oklch(72% 0.1091 83.06)",
+          "oklch(84% 0.1091 83.06)",
+          "oklch(95% 0.1091 83.06)"
+        ]
+      },
+      "danger": {
+        "role": "semantic",
+        "displayName": "Danger",
+        "tonalRamp": [
+          "oklch(15% 0.1314 15.31)",
+          "oklch(26% 0.1314 15.31)",
+          "oklch(38% 0.1314 15.31)",
+          "oklch(49% 0.1314 15.31)",
+          "oklch(61% 0.1314 15.31)",
+          "oklch(72% 0.1314 15.31)",
+          "oklch(84% 0.1314 15.31)",
+          "oklch(95% 0.1314 15.31)"
+        ]
+      },
+      "light-paper": {
+        "role": "neutral",
+        "displayName": "Light Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0080 293.91)",
+          "oklch(26% 0.0080 293.91)",
+          "oklch(38% 0.0080 293.91)",
+          "oklch(49% 0.0080 293.91)",
+          "oklch(61% 0.0080 293.91)",
+          "oklch(72% 0.0080 293.91)",
+          "oklch(84% 0.0080 293.91)",
+          "oklch(95% 0.0080 293.91)"
+        ]
+      },
+      "light-surface": {
+        "role": "neutral",
+        "displayName": "Light Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "light-raised": {
+        "role": "neutral",
+        "displayName": "Light Raised",
+        "tonalRamp": [
+          "oklch(15% 0.0149 294.46)",
+          "oklch(26% 0.0149 294.46)",
+          "oklch(38% 0.0149 294.46)",
+          "oklch(49% 0.0149 294.46)",
+          "oklch(61% 0.0149 294.46)",
+          "oklch(72% 0.0149 294.46)",
+          "oklch(84% 0.0149 294.46)",
+          "oklch(95% 0.0149 294.46)"
+        ]
+      },
+      "light-line": {
+        "role": "neutral",
+        "displayName": "Light Line",
+        "tonalRamp": [
+          "oklch(15% 0.0262 290.68)",
+          "oklch(26% 0.0262 290.68)",
+          "oklch(38% 0.0262 290.68)",
+          "oklch(49% 0.0262 290.68)",
+          "oklch(61% 0.0262 290.68)",
+          "oklch(72% 0.0262 290.68)",
+          "oklch(84% 0.0262 290.68)",
+          "oklch(95% 0.0262 290.68)"
+        ]
+      },
+      "light-ink": {
+        "role": "neutral",
+        "displayName": "Light Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0436 277.13)",
+          "oklch(26% 0.0436 277.13)",
+          "oklch(38% 0.0436 277.13)",
+          "oklch(49% 0.0436 277.13)",
+          "oklch(61% 0.0436 277.13)",
+          "oklch(72% 0.0436 277.13)",
+          "oklch(84% 0.0436 277.13)",
+          "oklch(95% 0.0436 277.13)"
+        ]
+      },
+      "light-muted": {
+        "role": "neutral",
+        "displayName": "Light Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0386 275.73)",
+          "oklch(26% 0.0386 275.73)",
+          "oklch(38% 0.0386 275.73)",
+          "oklch(49% 0.0386 275.73)",
+          "oklch(61% 0.0386 275.73)",
+          "oklch(72% 0.0386 275.73)",
+          "oklch(84% 0.0386 275.73)",
+          "oklch(95% 0.0386 275.73)"
+        ]
+      },
+      "light-secondary": {
+        "role": "secondary",
+        "displayName": "Light Secondary",
+        "tonalRamp": [
+          "oklch(15% 0.1668 293.93)",
+          "oklch(26% 0.1668 293.93)",
+          "oklch(38% 0.1668 293.93)",
+          "oklch(49% 0.1668 293.93)",
+          "oklch(61% 0.1668 293.93)",
+          "oklch(72% 0.1668 293.93)",
+          "oklch(84% 0.1668 293.93)",
+          "oklch(95% 0.1668 293.93)"
+        ]
+      },
+      "light-watching": {
+        "role": "semantic",
+        "displayName": "Light Watching",
+        "tonalRamp": [
+          "oklch(15% 0.0994 243.62)",
+          "oklch(26% 0.0994 243.62)",
+          "oklch(38% 0.0994 243.62)",
+          "oklch(49% 0.0994 243.62)",
+          "oklch(61% 0.0994 243.62)",
+          "oklch(72% 0.0994 243.62)",
+          "oklch(84% 0.0994 243.62)",
+          "oklch(95% 0.0994 243.62)"
+        ]
+      },
+      "light-completed": {
+        "role": "semantic",
+        "displayName": "Light Completed",
+        "tonalRamp": [
+          "oklch(15% 0.0908 161.04)",
+          "oklch(26% 0.0908 161.04)",
+          "oklch(38% 0.0908 161.04)",
+          "oklch(49% 0.0908 161.04)",
+          "oklch(61% 0.0908 161.04)",
+          "oklch(72% 0.0908 161.04)",
+          "oklch(84% 0.0908 161.04)",
+          "oklch(95% 0.0908 161.04)"
+        ]
+      },
+      "light-planned": {
+        "role": "semantic",
+        "displayName": "Light Planned",
+        "tonalRamp": [
+          "oklch(15% 0.1668 293.93)",
+          "oklch(26% 0.1668 293.93)",
+          "oklch(38% 0.1668 293.93)",
+          "oklch(49% 0.1668 293.93)",
+          "oklch(61% 0.1668 293.93)",
+          "oklch(72% 0.1668 293.93)",
+          "oklch(84% 0.1668 293.93)",
+          "oklch(95% 0.1668 293.93)"
+        ]
+      },
+      "light-on-hold": {
+        "role": "semantic",
+        "displayName": "Light On Hold",
+        "tonalRamp": [
+          "oklch(15% 0.0965 78.75)",
+          "oklch(26% 0.0965 78.75)",
+          "oklch(38% 0.0965 78.75)",
+          "oklch(49% 0.0965 78.75)",
+          "oklch(61% 0.0965 78.75)",
+          "oklch(72% 0.0965 78.75)",
+          "oklch(84% 0.0965 78.75)",
+          "oklch(95% 0.0965 78.75)"
+        ]
+      },
+      "light-dropped": {
+        "role": "semantic",
+        "displayName": "Light Dropped",
+        "tonalRamp": [
+          "oklch(15% 0.1614 13.81)",
+          "oklch(26% 0.1614 13.81)",
+          "oklch(38% 0.1614 13.81)",
+          "oklch(49% 0.1614 13.81)",
+          "oklch(61% 0.1614 13.81)",
+          "oklch(72% 0.1614 13.81)",
+          "oklch(84% 0.1614 13.81)",
+          "oklch(95% 0.1614 13.81)"
+        ]
+      },
+      "light-rating": {
+        "role": "semantic",
+        "displayName": "Light Rating",
+        "tonalRamp": [
+          "oklch(15% 0.0965 78.75)",
+          "oklch(26% 0.0965 78.75)",
+          "oklch(38% 0.0965 78.75)",
+          "oklch(49% 0.0965 78.75)",
+          "oklch(61% 0.0965 78.75)",
+          "oklch(72% 0.0965 78.75)",
+          "oklch(84% 0.0965 78.75)",
+          "oklch(95% 0.0965 78.75)"
+        ]
+      },
+      "light-danger": {
+        "role": "semantic",
+        "displayName": "Light Danger",
+        "tonalRamp": [
+          "oklch(15% 0.1614 13.81)",
+          "oklch(26% 0.1614 13.81)",
+          "oklch(38% 0.1614 13.81)",
+          "oklch(49% 0.1614 13.81)",
+          "oklch(61% 0.1614 13.81)",
+          "oklch(72% 0.1614 13.81)",
+          "oklch(84% 0.1614 13.81)",
+          "oklch(95% 0.1614 13.81)"
+        ]
       }
     },
-    "typography": {
-      "display": "Unbounded",
-      "body": "Syne",
-      "metadata": "Space Mono",
-      "delivery": "Self-hosted"
+    "previewRampPolicy": "Synthesized OKLCH lightness studies for panel previews only; not application tokens. Normative colors live in DESIGN.md frontmatter and app/globals.css.",
+    "typographyMeta": {
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "Only self-hosted Syne 700; logo and branded unavailable-art fallback."
+      },
+      "body": {
+        "displayName": "Product text",
+        "purpose": "System sans across headings, controls and reading text."
+      }
     },
+    "shadows": [
+      {
+        "name": "search-popover",
+        "value": "0 14px 30px #0003",
+        "purpose": "Local search overlay separation."
+      },
+      {
+        "name": "poster-hover",
+        "value": "0 8px 18px #0004",
+        "purpose": "Fine-pointer hover/focus only."
+      },
+      {
+        "name": "mobile-drawer",
+        "value": "12px 0 30px #0005",
+        "purpose": "Mobile workspace navigation separation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Restrained ease-out state changes."
+      },
+      {
+        "name": "fast",
+        "value": "160ms",
+        "purpose": "Hover, press and popover state transitions."
+      },
+      {
+        "name": "panel",
+        "value": "220ms",
+        "purpose": "Reserved panel duration token."
+      },
+      {
+        "name": "popover-in",
+        "value": "translateY(5px) to translateY(0); opacity 0.5 to 1",
+        "purpose": "Small state entrance."
+      },
+      {
+        "name": "skeleton",
+        "value": "1.8s ease-in-out infinite alternate; opacity 0.6 to 1",
+        "purpose": "Pending real-data skeletons only."
+      }
+    ],
+    "reducedMotion": "Disable all animation/transitions, poster lift and scale, button press scale, smooth scrolling and carousel auto-advance; manual navigation remains.",
+    "breakpoints": [
+      {
+        "name": "tablet-wide",
+        "value": "1100px"
+      },
+      {
+        "name": "tablet",
+        "value": "800px"
+      },
+      {
+        "name": "mobile",
+        "value": "600px"
+      }
+    ],
     "layout": {
-      "workspaceSidebarExpanded": "242px",
-      "workspaceSidebarCollapsed": "82px",
-      "mobileCatalogColumns": 2,
-      "coverAspectRatio": "2/3"
+      "workspaceExpanded": "242px",
+      "workspaceCollapsed": "82px",
+      "mobileDrawer": "242px",
+      "publicMaxWidth": "1360px",
+      "workspaceMaxWidth": "1500px",
+      "posterAspectRatio": "2 / 3"
+    },
+    "ambient": {
+      "lavender": "static upper-right radial gradient at 6%",
+      "pink": "static upper-left radial gradient; clamp(0%, calc(var(--ambient) / 2), 5%); default 4%",
+      "defaultIntensity": "8%"
+    },
+    "contracts": {
+      "on_hold": {
+        "cssToken": "--on-hold",
+        "label": "On hold"
+      },
+      "customAccent": "lib/appearance.ts calculates black/white foreground from relative luminance and derives a readable hover color.",
+      "migration": "Legacy Prism/Iris/default accents migrate through polishTheme to Midnight; explicit Custom is preserved.",
+      "audio": "Opt-in click/hover/selection sound only; pointerover is not a visual effect."
     }
   },
-  "material": {
-    "background": "Locally authored cylindrical ribs and optional idle-loaded native WebGL light refraction",
-    "navigation": "Suspended glass with modest backdrop blur",
-    "cards": "Real artwork with reflected gradient edges",
-    "fallbacks": [
-      "reduced motion",
-      "reduced transparency",
-      "data saving",
-      "low core count",
-      "unavailable WebGL",
-      "detected software rendering"
-    ]
-  },
-  "motion": {
-    "rendererMaxFPS": 30,
-    "rendererMaxResolution": [1440, 900],
-    "inactiveSleepMS": 1800,
-    "hiddenTabs": "Paused",
-    "cursor": "Local transforms; no inherited root-variable updates per frame",
-    "scroll": "Native document and horizontal film strip; no scroll hijacking"
-  },
-  "artwork": {
-    "manifest": "lib/home-artwork.json",
-    "cachedShows": 12,
-    "encoding": ["AVIF", "WebP"],
-    "delivery": "Content-hashed immutable URLs, responsive sources, no source enlargement",
-    "minimumPreferredFeatureBanner": [1400, 600],
-    "scope": "Selected homepage candidates; no claim of universal HD source coverage"
-  },
-  "homepage": {
-    "feature": "Up to six randomly selected distinct non-mature catalog shows; 7.5 second rotation; pause on focus, hover, hidden tab and manual control",
-    "popular": "Horizontal film strip with swipe and bounded previous/next controls",
-    "secondary": "Independently streamed current/upcoming paired galleries"
-  },
-  "preferences": {
-    "appearance": ["light", "dark", "system"],
-    "defaultPreset": "Prism",
-    "customAccents": "Preserved",
-    "sound": "Opt-in click effects only; no lo-fi"
-  },
-  "review": {
-    "viewports": [375, 390, 768, 1280, 1440],
-    "scope": "Local protocol fixture verifies UI, accessibility, session routing and season state; separate remote checks verify release delivery",
-    "screenshots": [
-      ".impeccable/review/desktop.png",
-      ".impeccable/review/mobile.png"
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Shared action with visible focus and state feedback.",
+      "html": "<button class=\"ds-primary\">Save changes</button>",
+      "css": ".ds-primary{font:650 0.875rem/1.4 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:10px;cursor:pointer;transition:background 160ms cubic-bezier(0.22, 1, 0.36, 1),transform 160ms cubic-bezier(0.22, 1, 0.36, 1);background:var(--accent,#ff8fb8);color:var(--accent-on,#0f1220);border:1px solid transparent}.ds-primary:hover{background:var(--accent-hover,#ffa8c8)}.ds-primary:active{transform:scale(.98)}.ds-primary:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}.ds-primary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}.ds-primary:active{transform:none}}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Shared action with visible focus and state feedback.",
+      "html": "<button class=\"ds-secondary\">Save changes</button>",
+      "css": ".ds-secondary{font:650 0.875rem/1.4 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:10px;cursor:pointer;transition:background 160ms cubic-bezier(0.22, 1, 0.36, 1),transform 160ms cubic-bezier(0.22, 1, 0.36, 1);background:var(--surface,#191d30);color:var(--ink,#f3f4fc);border:1px solid var(--line,#353d5b)}.ds-secondary:hover{background:var(--raised,#242a42)}.ds-secondary:active{transform:scale(.98)}.ds-secondary:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}.ds-secondary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-secondary{transition:none}.ds-secondary:active{transform:none}}"
+    },
+    {
+      "name": "Labeled input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Opaque labeled field with a crisp focus ring.",
+      "html": "<label class=\"ds-label\">Display name<input class=\"ds-input\" placeholder=\"Your name\"></label>",
+      "css": ".ds-label{display:flex;flex-direction:column;gap:7px;color:var(--ink,#f3f4fc);font:500 .875rem -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif}.ds-input{min-height:44px;padding:10px 12px;border:1px solid var(--line,#353d5b);border-radius:8px;background:var(--paper,#0f1220);color:var(--ink,#f3f4fc);font:inherit;caret-color:var(--secondary,#b9a3ff);transition:border-color 160ms cubic-bezier(0.22, 1, 0.36, 1)}.ds-input::placeholder{color:var(--muted,#a7afc9)}.ds-input:hover{border-color:var(--muted,#a7afc9)}.ds-input:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-input{transition:none}}"
+    },
+    {
+      "name": "Workspace navigation",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "Current route remains explicit through aria-current and tonal selection.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Workspace\"><a href=\"#library\" aria-current=\"page\">My library</a><a href=\"#discover\">Discover</a></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;gap:5px;font:400 .875rem -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif}.ds-nav a{display:flex;align-items:center;min-height:46px;padding:12px 14px;border-radius:8px;color:var(--muted,#a7afc9);text-decoration:none}.ds-nav a:hover,.ds-nav a[aria-current=\"page\"]{background:var(--raised,#242a42);color:var(--secondary,#b9a3ff)}.ds-nav a:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}"
+    },
+    {
+      "name": "Genre tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Supporting genre destination with a restrained raised fill.",
+      "html": "<a class=\"ds-tag\" href=\"#genre\">Adventure</a>",
+      "css": ".ds-tag{display:inline-flex;align-items:center;min-height:30px;padding:3px 10px;border-radius:6px;background:var(--raised,#242a42);color:var(--secondary,#b9a3ff);font:400 .75rem -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;text-decoration:none}.ds-tag:hover{text-decoration:underline;text-underline-offset:4px}.ds-tag:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}"
+    },
+    {
+      "name": "Poster card",
+      "kind": "card",
+      "refersTo": "poster",
+      "description": "Structural preview; unavailable artwork is labeled and list management remains separate.",
+      "html": "<article class=\"ds-card\"><a class=\"ds-poster\" href=\"#anime\"><div class=\"ds-cover\">Artwork unavailable</div><h3>Anime title</h3></a><p>Year unknown</p><a class=\"ds-manage\" href=\"#list\">Manage list</a></article>",
+      "css": ".ds-card{width:180px;font:400 .75rem/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--muted,#a7afc9)}.ds-poster{display:block;color:var(--ink,#f3f4fc);text-decoration:none;border-radius:14px}.ds-cover{aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;border:1px solid var(--line,#353d5b);border-radius:14px;overflow:hidden;background:var(--surface,#191d30);transition:transform 160ms cubic-bezier(0.22, 1, 0.36, 1),border-color 160ms cubic-bezier(0.22, 1, 0.36, 1),box-shadow 160ms cubic-bezier(0.22, 1, 0.36, 1)}.ds-poster h3{margin:12px 0 4px;font-size:.875rem;line-height:1.45;font-weight:600}.ds-card p{margin:0 0 8px}.ds-manage{display:inline-flex;align-items:center;min-height:36px;color:var(--secondary,#b9a3ff);font-size:.8125rem;text-decoration:none}.ds-manage:hover{text-decoration:underline}.ds-poster:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}.ds-manage:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}@media(hover:hover) and (pointer:fine){.ds-poster:hover .ds-cover,.ds-poster:focus-visible .ds-cover{transform:translateY(-3px);border-color:var(--muted,#a7afc9);box-shadow:0 8px 18px #0004}.ds-poster:hover h3{color:var(--secondary,#b9a3ff)}}@media(prefers-reduced-motion:reduce){.ds-cover{transition:none}.ds-poster:hover .ds-cover,.ds-poster:focus-visible .ds-cover{transform:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The late-night anime journal",
+    "overview": "Midnight Sakura is atmospheric, crisp and restrained. Opaque midnight and indigo surfaces support readable product text; real anime artwork supplies the strongest color and visual interest. The same foundations serve public discovery, authentication, private library operations and supporting routes.\n\nThis replaces the retired Prism world. The eye/aperture mark and lowercase wordmark remain; optical glass, oversized display lettering and pointer-driven scenery do not belong to the current identity.",
+    "keyCharacteristics": [
+      "Artwork-led browsing with persistent titles and direct list paths.",
+      "Compact navigation, visible search and aligned, responsive content.",
+      "Opaque surfaces, quiet static ambience and accessible state feedback."
     ],
-    "performance": "Three identical local headless pointer-motion samples: median task time 1.396s before / 0.679s after; median style recalculation 0.671s / 0.090s. Software-renderer static fallback; not production field Web Vitals."
+    "rules": [
+      {
+        "name": "The Text Before Color Rule",
+        "body": "Status, source availability and errors must remain understandable without their color.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do use shared foundations and real artwork across every route.",
+      "Do preserve visible titles, search, focus and season-specific list paths on touch and keyboard.",
+      "Do keep the shared sidebar grid and readable light/system/custom palettes intact.",
+      "Do preserve source attribution, cached-art provenance, measured derivatives and explicit unavailable labels.",
+      "Do preserve authentication/session refresh, verified season grouping, selected-season editor keys and original anime IDs for progress, scores, notes and collection membership."
+    ],
+    "donts": [
+      "Don't restore Prism glass, shaders, canvas scenery, refracting lenses, visual pointer loops, tilt, parallax, ripple or animated backgrounds.",
+      "Don't introduce oversized marketing panels, fabricated ratings, statistics or activity.",
+      "Don't apply Syne to ordinary UI text or restore Unbounded and Space Mono.",
+      "Don't hide essential actions behind hover or communicate status through color alone.",
+      "Don't discard real smaller source art, enlarge cached originals or treat fallback Sakuga artwork as the anime's poster."
+    ]
   }
 }

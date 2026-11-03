@@ -1,29 +1,223 @@
-# Sakuga — prism cinema
+---
+name: Sakuga — Midnight Sakura
+description: A quiet, artwork-led anime discovery and personal library system.
+colors:
+  paper: "#0f1220"
+  surface: "#191d30"
+  raised: "#242a42"
+  line: "#353d5b"
+  accent: "#ff8fb8"
+  accent-hover: "#ffa8c8"
+  accent-on: "#0f1220"
+  secondary: "#b9a3ff"
+  ink: "#f3f4fc"
+  muted: "#a7afc9"
+  watching: "#7dcfff"
+  completed: "#7ee0b8"
+  planned: "#b9a3ff"
+  on-hold: "#f3ca7a"
+  dropped: "#ff929b"
+  rating: "#f3ca7a"
+  danger: "#ff929b"
+  light-paper: "#f5f4fa"
+  light-surface: "#ffffff"
+  light-raised: "#ebe9f4"
+  light-line: "#d0cee1"
+  light-ink: "#1d2037"
+  light-muted: "#5f647c"
+  light-secondary: "#6744b2"
+  light-watching: "#185c8a"
+  light-completed: "#176545"
+  light-planned: "#6744b2"
+  light-on-hold: "#805b12"
+  light-dropped: "#a52742"
+  light-rating: "#805b12"
+  light-danger: "#a52742"
+typography:
+  wordmark:
+    fontFamily: 'Syne, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontSize: "1.8rem"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "-0.035em"
+  headline:
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontSize: "clamp(1.8rem, 3.3vw, 2.6rem)"
+    fontWeight: 650
+    lineHeight: 1.25
+    letterSpacing: "-0.03em"
+  title:
+    fontSize: "1.35rem"
+    fontWeight: 650
+    lineHeight: 1.25
+    letterSpacing: "-0.02em"
+  card-title:
+    fontSize: "0.875rem"
+    fontWeight: 600
+    lineHeight: 1.45
+  body:
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontSize: "15px"
+    fontWeight: 400
+    lineHeight: 1.6
+  label:
+    fontSize: "0.875rem"
+    fontWeight: 500
+  metadata:
+    fontSize: "0.8125rem"
+rounded:
+  tag: "6px"
+  input: "8px"
+  control: "10px"
+  panel: "12px"
+  poster: "14px"
+  feature: "16px"
+spacing:
+  space-1: "4px"
+  space-2: "8px"
+  space-3: "12px"
+  space-4: "16px"
+  space-5: "24px"
+  space-6: "32px"
+  space-7: "48px"
+  space-8: "64px"
+components:
+  button-primary:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.accent-on}"
+    rounded: "{rounded.control}"
+    padding: "10px 18px"
+  button-primary-hover:
+    backgroundColor: "{colors.accent-hover}"
+  button-secondary:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.control}"
+    padding: "10px 18px"
+  button-secondary-hover:
+    backgroundColor: "{colors.raised}"
+  input:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.input}"
+    padding: "10px 12px"
+  navigation-active:
+    backgroundColor: "{colors.raised}"
+    textColor: "{colors.secondary}"
+    rounded: "{rounded.input}"
+    padding: "12px 14px"
+  tag:
+    backgroundColor: "{colors.raised}"
+    textColor: "{colors.secondary}"
+    rounded: "{rounded.tag}"
+    padding: "3px 10px"
+  poster:
+    backgroundColor: "{colors.surface}"
+    rounded: "{rounded.poster}"
+---
 
-The current brief replaces the earlier midnight-cinema layout. The homepage remains an operational anime-discovery surface: real featured artwork, direct catalog and library actions, and independent popular, release-year and upcoming queries. Reference points are Unseen's material and motion, Miruro's artwork density, and Lusion's immersive composition. Retain the eye and animation concept as a precise, geometric aperture mark. Use two clean eye contours and a forward-cut pupil, without sketch ticks or duplicate rough lines. The wordmark and favicon have no trailing period.
+# Design System: Sakuga — Midnight Sakura
 
-Use a near-black graphite canvas, warm ivory text and two accents: electric blue for navigation and focus, orange for primary feature actions and warm reflections (deeper variants in light appearance). Unbounded supplies wide, expressive display lettering; Syne supplies the wordmark and legible product text; Space Mono supplies release metadata and numerical controls. Self-host all three, with no leftover legacy font declarations or packages. Use large, legible posters and a framed feature poster surrounded by a transparent refracting orbit. No promotional slogans, decorative statistics or catchphrases. Controls should name their action.
+## Overview
 
-Liquid glass belongs on the suspended navigation, search dock, sidebar and small sound controls. Use translucent surfaces, fine reflected edges, inset highlights and backdrop blur; supply opaque fallbacks and respect reduced transparency. Light/dark/system and a user's saved accent remain functional across public and private pages.
+**Creative North Star: "The late-night anime journal"**
 
-Mouse movement shifts the feature lighting, tilts the poster plane and moves a small refracting lens that expands over controls. Card hover sweeps a reflected highlight across the artwork. Scrolling refracts the vertical glass field and updates a thin progress line. Keep these changes out of React renders. Coarse pointers do not drive the lighting, and reduced motion disables these effects, animated hover and smooth scrolling. Essential links and list actions remain visible without hover.
+Midnight Sakura is atmospheric, crisp and restrained. Opaque midnight and indigo surfaces support readable product text; real anime artwork supplies the strongest color and visual interest. The same foundations serve public discovery, authentication, private library operations and supporting routes.
 
-Mobile has a two-column cover grid, a full-width search row and a collapsible navigation. The workspace sidebar can collapse to an icon rail on desktop, resizing the header and entire content area from one shared grid width and starts closed on small screens unless the user has chosen otherwise. Discovery filters are explicitly collapsible. Never allow search suggestions to hide behind the feature artwork.
+This replaces the retired Prism world. The eye/aperture mark and lowercase wordmark remain; optical glass, oversized display lettering and pointer-driven scenery do not belong to the current identity.
 
-Sound is a single opt-in control for click, hover and selection sounds. Clicks are more audible than in the previous release. Lo-fi music and its scheduler are removed. Migrate old sound preferences by preserving effects and dropping the music field. Keep a compact icon toggle and no promotional copy.
+**Key Characteristics:**
 
-Verified AniList PREQUEL/SEQUEL relationships join narrative seasons and parts across TV, web, special, OVA and film formats. Music videos remain separate. Side stories, spin-offs and title similarity alone never establish a series. Search and library pagination operate on shows. Public and private show pages select a season with a dropdown; legacy season links resolve to the show with that season selected. Saved progress, scores, notes and collection membership retain the original season's anime ID. Always key the editor by the selected season.
+- Artwork-led browsing with persistent titles and direct list paths.
+- Compact navigation, visible search and aligned, responsive content.
+- Opaque surfaces, quiet static ambience and accessible state feedback.
 
-Artwork and metadata are source-backed. Prefer measured high-resolution originals but retain real smaller originals when HD art does not exist. Missing covers use original Sakuga background artwork explicitly marked unavailable; do not label that background as the anime's poster. Names default to official English, then romaji. Source English synopses take priority; otherwise label release facts honestly. Direct verified MAL/IMDb/trailer links take priority, with clearly named searches for missing matches. Never manufacture metadata or universal coverage claims.
+## Colors
 
-Verify 375, 390, 768, 1280 and 1440 pixel widths together, including keyboard, contrast in both appearances, missing artwork, search races, season changes and authenticated homepage returns. Fixture screenshots demonstrate layout only; production claims need remote evidence.
+The frontmatter records the normative values from `app/globals.css`; unprefixed colors are the dark defaults. `light-*` values replace their corresponding roles in light appearance. Primary pink, its hover color and midnight button text remain unchanged in the default light palette.
 
-The homepage feature now shuffles up to six distinct, non-mature catalog shows on each server-rendered visit, preferring real artwork. The catalog cache stays immutable. Slides use genuine titles, metadata, synopses and links. Auto-advance every 7.5 seconds; pause while hovered, focused, hidden or manually navigated. Keep previous/next, slide selectors and pause/play visible. Reduced motion disables auto-advance and animated transitions but keeps manual selection available. Reserve the mobile frame height so different title lengths cannot move the page during rotation.
+### Primary
 
-Navigation uses explicit Discover and My list destinations with shared search. Search accepts / and Ctrl/Cmd+K shortcuts without intercepting typing in editable fields. Workspace navigation highlights the current route and includes search in its header. Keep all header controls inside their glass container at 375px.
+Sakura pink (`accent`) identifies primary actions and selected feature controls. `accent-hover` brightens hover; `accent-on` supplies their text.
 
-The November 2026 theme introduces full-height cylindrical glass ribs, with blue light on the left and orange on the right. A locally authored SVG provides the immediate static material. An idle-loaded native WebGL shader bends the light through thirteen vertical flutes; it responds to pointer and scroll at a maximum 30 fps, capped at 1440×900 internal resolution. It sleeps after inactivity and pauses in hidden tabs. Reduced motion retains a static field. Data saving, low-core devices, unavailable WebGL and detected software rendering retain the lightweight CSS field. The cursor and artwork update local transforms without changing inherited variables on every frame. Avoid new per-card backdrop filters.
+### Secondary
 
-The homepage streams its feature before independent secondary catalog shelves. A horizontal popular film strip has native swipe, keyboard focus and explicit previous/next buttons with boundary states. Current and upcoming titles occupy staggered paired galleries on wide screens. Small screens retain native scrolling and a two-column cover grid; never hijack scroll.
+Lavender (`secondary`) identifies supporting links, selection, keyboard focus and secondary controls. Light appearance uses the deeper lavender equivalent.
 
-Twelve feature candidates have verified, locally cached source artwork. Responsive AVIF/WebP files have content-hashed names and immutable cache headers. The manifest records original URLs and measured dimensions; derivatives never enlarge the source. Prefer feature banners at least 1400 pixels wide and 600 pixels tall when enough candidates exist. Smaller catalog images remain truthful originals or labeled unavailable artwork. Project only display fields into the carousel, and prefetch at most the next local AVIF after initial rendering, respecting data saving. The one-time Supabase artwork exporter remains disabled (410); normal browsing does not depend on it. Shader code, textures and fonts ship with the app and can be browser-cached after the first visit. This is not an offline installation.
+### Neutral
+
+Midnight (`paper`), indigo (`surface`) and raised indigo (`raised`) establish background, contained work and active layers. `line` separates surfaces; `ink` and `muted` distinguish reading priority without hiding metadata.
+
+Status roles are watching, completed, planned, on hold and dropped. Rating uses the amber role; danger follows dropped. Always pair status color with its label. The stored/API key `on_hold` maps to the CSS `--on-hold` token and the visible label “On hold”; never rename that contract to `paused`.
+
+Light, dark and system appearance remain supported. Saved custom accents use `customAccentTokens` in `lib/appearance.ts`: relative luminance above 0.179 selects black control text, otherwise white; hover mixes 88% accent with white or black in the same readable direction. Preserve this foreground calculation when changing custom palettes. `polishTheme` migrates legacy Prism/Iris/default accent values to Midnight, while explicit Custom palettes remain custom.
+
+**The Text Before Color Rule.** Status, source availability and errors must remain understandable without their color.
+
+## Typography
+
+All product text uses the system sans stack in the frontmatter. Only Syne 700 is self-hosted, for the established wordmark and branded artwork fallback. Ordinary headings, controls and metadata use no decorative face; Unbounded and Space Mono are removed.
+
+Page headings use the headline role; section headings use title; poster titles stay readable below their artwork. Body paragraphs have a maximum width of 72ch. Small metadata may step to 0.75rem for compact source labels; keep the muted role and explicit meaning. Numbers in ratings, progress tables and statistics use tabular numerals. Headings balance wrapping; long titles and source strings must wrap without overflow.
+
+## Layout
+
+Use the central spacing rhythm in the frontmatter. Public content is centered within 1360px, with 24px horizontal padding and 32px top padding; narrow screens use 16px and 24px. Workspace content has a 1500px maximum and responsive side padding.
+
+The private shell is one real grid: `242px minmax(0, 1fr)`, collapsing to `82px minmax(0, 1fr)`. Header and content share the second column. At 600px and below the sidebar becomes a fixed 242px drawer; it starts closed unless a saved user choice says otherwise. Keep the collapse control and its accessible state synchronized.
+
+The public header keeps search visible: below 800px it occupies its own full-width row, and below 600px route links use a menu toggle. Main adaptation breakpoints are 1100px, 800px and 600px. Desktop catalog grids have five columns, then four, three and two; the workspace uses fewer columns where its sidebar consumes space. Mobile poster grids remain two columns.
+
+The discovery feature is a compact bordered panel with a 144px poster, content and a right-hand scene on wide desktops. The scene disappears below 1100px; mobile uses an 88px poster and a reserved 330px minimum content frame. Keep real metadata, synopsis, direct actions and feature controls available. Genre shortcuts lead directly into the first poster shelf. Rails use native horizontal scrolling and bounded previous/next controls, without taking over page scroll.
+
+## Elevation & Depth
+
+Opaque tonal layers and fine borders establish structure. Background ambience is two static CSS radial gradients: lavender at 6% near the upper right, pink near the upper left at half the saved ambient intensity, capped at 5% (default 4%). It never tracks input or animates. No grain, glass or backdrop blur is required.
+
+Shadows are localized: search popovers use `0 14px 30px #0003`, focused/hovered posters use `0 8px 18px #0004`, and the mobile drawer uses `12px 0 30px #0005`. Resting poster cards have no shadow cloud.
+
+## Shapes
+
+Posters keep a reserved 2:3 frame and the poster radius. Features use the largest radius; panels, controls, inputs and tags step down according to role. Thin borders and clipped images make the shape; do not distort artwork or rotate card planes.
+
+## Components
+
+### Buttons and fields
+
+Primary buttons use sakura fill and computed readable text; secondary buttons use a solid surface and border, brightening to raised on hover. Standard buttons and fields have a 44px minimum height; compact buttons use 40px. Disabled buttons reduce opacity to 0.5 and show the unavailable cursor. Pending operations retain clear labels and status feedback.
+
+Fields have visible labels, opaque backgrounds, clear borders, lavender carets and muted placeholders. Search uses a solid surface, a 46px frame and its own focus-within ring. Global keyboard focus is a 2px lavender outline with 4px offset; search uses 2px offset. Keep existing Lucide icons and accessible icon-button names.
+
+### Navigation, tags and filters
+
+Workspace active routes use raised indigo and lavender text; public active routes use raised indigo and main text. Tags use restrained raised surfaces and lavender labels. Collapsible discovery filters and segmented library views retain their real selected state. Search retains `/` and Ctrl/Cmd+K shortcuts without intercepting typing in editable fields; suggestions must stay above feature content.
+
+### Artwork and discovery
+
+Poster titles, metadata, list-management links and separate source destinations remain reachable without hover or nested interactive elements. Fine-pointer hover/focus may lift the poster by at most 3px, brighten its border and add the localized shadow; only its clipped image scales to 1.025. Touch users keep direct actions.
+
+The feature retains visible manual selection and pause/play. Its existing 7.5-second content rotation pauses on hover, focus, hidden tabs, manual selection and reduced motion. This content carousel is separate from the static background. Skeletons reserve poster dimensions and may pulse gently while real content loads.
+
+### State and accessibility
+
+State transitions use `--fast` (160ms) and `--ease` (`cubic-bezier(0.22, 1, 0.36, 1)`); `--panel` is reserved at 220ms. Popovers enter from 5px below. Buttons may press to 0.98. Reduced motion removes animations, transitions, poster lift/scaling, press scaling and smooth rail scrolling; the carousel retains manual navigation. Do not add entrance delays to real data or animate whole catalog grids.
+
+List feedback, empty/error states and explicitly unavailable artwork must remain meaningful. Destructive removal and import retain native confirmation behavior. Opt-in click/hover/selection audio remains available through its compact toggle; its pointerover listener supplies sound only and is not a visual pointer effect. No music or ambient visual loop is part of the system.
+
+## Do's and Don'ts
+
+### Do:
+
+- **Do** use shared foundations and real artwork across every route.
+- **Do** preserve visible titles, search, focus and season-specific list paths on touch and keyboard.
+- **Do** keep the shared sidebar grid and readable light/system/custom palettes intact.
+- **Do** preserve source attribution, cached-art provenance, measured derivatives and explicit unavailable labels.
+- **Do** preserve authentication/session refresh, verified season grouping, selected-season editor keys and original anime IDs for progress, scores, notes and collection membership.
+
+### Don't:
+
+- **Don't** restore Prism glass, shaders, canvas scenery, refracting lenses, visual pointer loops, tilt, parallax, ripple or animated backgrounds.
+- **Don't** introduce oversized marketing panels, fabricated ratings, statistics or activity.
+- **Don't** apply Syne to ordinary UI text or restore Unbounded and Space Mono.
+- **Don't** hide essential actions behind hover or communicate status through color alone.
+- **Don't** discard real smaller source art, enlarge cached originals or treat fallback Sakuga artwork as the anime's poster.

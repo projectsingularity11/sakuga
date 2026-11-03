@@ -21,8 +21,8 @@ it("chooses distinct illustrated shows without mutating shared catalog data", ()
 });
 it("updates legacy brand defaults without changing custom palette choices", () => {
   expect(polishTheme({ accent: "#fa9877", preset: "Ember" })).toEqual({
-    accent: "#72b9ff",
-    preset: "Prism",
+    accent: "#FF8FB8",
+    preset: "Midnight",
   });
   expect(polishTheme({ accent: "#123456", preset: "Ocean" })).toEqual({
     accent: "#123456",

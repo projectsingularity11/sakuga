@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import "@fontsource/syne/400.css";
-import "@fontsource/syne/500.css";
 import "@fontsource/syne/700.css";
-import "@fontsource/syne/800.css";
-import "@fontsource/unbounded/500.css";
-import "@fontsource/unbounded/600.css";
-import "@fontsource/space-mono/400.css";
 import "./globals.css";
-import "./identity.css";
 import { Experience } from "@/components/experience";
 import { viewer } from "@/lib/viewer";
-import { polishTheme } from "@/lib/appearance";
+import { polishTheme, customAccentTokens } from "@/lib/appearance";
 import { themeSchema } from "@/lib/domain";
 export const metadata: Metadata = {
   title: {
@@ -30,14 +23,15 @@ export default async function RootLayout({
   const theme = parsed.success ? polishTheme(parsed.data) : undefined;
   const style = theme
     ? {
-        "--accent": theme.preset === "Prism" ? undefined : theme.accent,
+        ...(theme.preset === "Midnight"
+          ? {}
+          : customAccentTokens(theme.accent)),
         "--ambient": `${theme.intensity}%`,
       }
     : undefined;
   return (
     <html
       lang="en"
-      data-scroll-behavior="smooth"
       suppressHydrationWarning
       data-appearance={
         theme?.mode === "dark"
