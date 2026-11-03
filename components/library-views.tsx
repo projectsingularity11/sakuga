@@ -4,6 +4,9 @@ import { resolveTitle } from "@/lib/metadata";
 import { useState } from "react";
 import { groupEntries, animeHref } from "@/lib/series";
 import { AnimeCard } from "./anime-card";
+import { CoverImage } from "./cover-image";
+import { trustedImage } from "@/lib/asset-urls";
+import { qualifiedCover } from "@/lib/metadata";
 import { labels, statuses, type Entry } from "@/lib/domain";
 import { saveEntry } from "@/app/actions";
 export function LibraryViews({
@@ -47,7 +50,7 @@ export function LibraryViews({
       </label>
     );
   }
-  const [view, setView] = useState("shelf");
+  const [view, setView] = useState("list");
   const [message, setMessage] = useState("");
   const [selected, setSelected] = useState<number[]>([]);
   async function bulk(status: Entry["status"]) {
@@ -81,7 +84,8 @@ export function LibraryViews({
           ))}
         </div>
         <span>
-          {groups.length} shows · {entries.length} saved seasons / films
+          {groups.length} {groups.length === 1 ? "show" : "shows"} ·{" "}
+          {entries.length} saved seasons / films
         </span>
       </div>
       {selected.length > 0 && (
@@ -145,7 +149,7 @@ export function LibraryViews({
         </div>
       ) : view === "list" ? (
         <div className="table-wrap">
-          <table>
+          <table className="library-table">
             <thead>
               <tr>
                 <th>Title</th>
@@ -158,18 +162,45 @@ export function LibraryViews({
               {visibleEntries.map((e) => (
                 <tr key={e.anime_id}>
                   <td>
-                    <Link
-                      href={
-                        e.anime
-                          ? animeHref(e.anime, true)
-                          : `/app/anime/${e.anime_id}`
-                      }
-                    >
-                      {e.anime
-                        ? resolveTitle(e.anime, language)
-                        : "Unavailable title"}
-                    </Link>
-                    {seasonSelect(e)}
+                    <div className="library-title">
+                      <Link
+                        href={
+                          e.anime
+                            ? animeHref(e.anime, true)
+                            : `/app/anime/${e.anime_id}`
+                        }
+                        aria-label={`View ${e.anime ? resolveTitle(e.anime, language) : "unavailable title"}`}
+                      >
+                        <CoverImage
+                          compact
+                          id={e.anime_id}
+                          src={
+                            e.anime && !(hideMature && e.anime.mature)
+                              ? trustedImage(qualifiedCover(e.anime))
+                              : null
+                          }
+                          title={
+                            e.anime
+                              ? resolveTitle(e.anime, language)
+                              : "Unavailable title"
+                          }
+                        />
+                      </Link>
+                      <div>
+                        <Link
+                          href={
+                            e.anime
+                              ? animeHref(e.anime, true)
+                              : `/app/anime/${e.anime_id}`
+                          }
+                        >
+                          {e.anime
+                            ? resolveTitle(e.anime, language)
+                            : "Unavailable title"}
+                        </Link>
+                        {seasonSelect(e)}
+                      </div>
+                    </div>
                   </td>
                   <td>
                     <span className="status-badge" data-status={e.status}>
@@ -177,7 +208,19 @@ export function LibraryViews({
                     </span>
                   </td>
                   <td>
-                    {e.progress}/{e.anime?.episodes ?? "?"}
+                    <div className="episode-progress" data-status={e.status}>
+                      <span>
+                        {e.progress} / {e.anime?.episodes ?? "?"}
+                      </span>
+                      <progress
+                        aria-label="Episode progress"
+                        value={e.progress}
+                        max={e.anime?.episodes || Math.max(1, e.progress)}
+                      />
+                      <small className="library-mobile-score">
+                        Score {e.score ?? "—"}
+                      </small>
+                    </div>
                   </td>
                   <td>{e.score ?? "—"}</td>
                 </tr>

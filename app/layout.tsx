@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import "@fontsource/syne/700.css";
+import "@fontsource/space-grotesk/latin-500.css";
+import "@fontsource/space-grotesk/latin-700.css";
+import "@fontsource/manrope/latin-400.css";
+import "@fontsource/manrope/latin-600.css";
 import "./globals.css";
 import { Experience } from "@/components/experience";
 import { viewer } from "@/lib/viewer";

@@ -45,88 +45,100 @@ export default async function Page({
         </div>
         <span>{count.toLocaleString()} shows & films</span>
       </div>
-      <form className="filter-bar">
-        <label className="search-field">
-          Search titles
-          <input
-            name="q"
-            placeholder="English, romaji, or native title…"
-            defaultValue={p.q}
-            maxLength={100}
-          />
-        </label>
-        <label>
-          Format
-          <select name="format" defaultValue={p.format || ""}>
-            <option value="">All formats</option>
-            {["TV", "MOVIE", "OVA", "ONA", "SPECIAL", "TV_SHORT", "MUSIC"].map(
-              (f) => (
+      <details
+        className="library-filters"
+        open={Object.keys(p).some((key) => key !== "page")}
+      >
+        <summary>Filters & sorting</summary>
+        <form className="filter-bar">
+          <label className="search-field">
+            Search titles
+            <input
+              name="q"
+              placeholder="English, romaji, or native title…"
+              defaultValue={p.q}
+              maxLength={100}
+            />
+          </label>
+          <label>
+            Format
+            <select name="format" defaultValue={p.format || ""}>
+              <option value="">All formats</option>
+              {[
+                "TV",
+                "MOVIE",
+                "OVA",
+                "ONA",
+                "SPECIAL",
+                "TV_SHORT",
+                "MUSIC",
+              ].map((f) => (
                 <option key={f}>{f}</option>
-              ),
-            )}
-          </select>
-        </label>
-        <label>
-          Genre
-          <select name="genre" defaultValue={p.genre || ""}>
-            <option value="">All genres</option>
-            {[
-              "Action",
-              "Adventure",
-              "Comedy",
-              "Drama",
-              "Fantasy",
-              "Romance",
-              "Sci-Fi",
-              "Slice of Life",
-              "Sports",
-              "Thriller",
-            ].map((g) => (
-              <option key={g}>{g}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Year
-          <input
-            type="number"
-            name="year"
-            min="1900"
-            max="2100"
-            defaultValue={p.year}
-          />
-        </label>
-        <label>
-          Rating source
-          <select name="source" defaultValue={p.source || ""}>
-            <option value="">All sources</option>
-            <option value="anilist">AniList</option>
-            <option value="mal">MyAnimeList</option>
-            <option value="kitsu">Kitsu</option>
-          </select>
-        </label>
-        <label>
-          Minimum score / 10
-          <input
-            type="number"
-            name="rating"
-            min="0"
-            max="10"
-            step="0.5"
-            defaultValue={p.rating}
-          />
-        </label>
-        <label className="check-label">
-          <input
-            type="checkbox"
-            name="short"
-            value="true"
-            defaultChecked={p.short === "true"}
-          />
-          13 episodes or fewer
-        </label>
-        <button className="button">Explore</button>
-      </form>
+              ))}
+            </select>
+          </label>
+          <label>
+            Genre
+            <select name="genre" defaultValue={p.genre || ""}>
+              <option value="">All genres</option>
+              {[
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy",
+                "Romance",
+                "Sci-Fi",
+                "Slice of Life",
+                "Sports",
+                "Thriller",
+              ].map((g) => (
+                <option key={g}>{g}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Year
+            <input
+              type="number"
+              name="year"
+              min="1900"
+              max="2100"
+              defaultValue={p.year}
+            />
+          </label>
+          <label>
+            Rating source
+            <select name="source" defaultValue={p.source || ""}>
+              <option value="">All sources</option>
+              <option value="anilist">AniList</option>
+              <option value="mal">MyAnimeList</option>
+              <option value="kitsu">Kitsu</option>
+            </select>
+          </label>
+          <label>
+            Minimum score / 10
+            <input
+              type="number"
+              name="rating"
+              min="0"
+              max="10"
+              step="0.5"
+              defaultValue={p.rating}
+            />
+          </label>
+          <label className="check-label">
+            <input
+              type="checkbox"
+              name="short"
+              value="true"
+              defaultChecked={p.short === "true"}
+            />
+            13 episodes or fewer
+          </label>
+          <button className="button">Explore</button>
+        </form>
+      </details>
       <p className="muted">
         Popularity follows AniList membership counts where available. Ratings
         retain their original source scales. The minimum filter converts your

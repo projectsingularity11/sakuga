@@ -16,17 +16,19 @@ export function AnimeCard({
   hideMature = false,
   language = "english",
   publicPage = false,
+  compact = false,
 }: {
   anime: Anime;
   hideMature?: boolean;
   language?: string;
   publicPage?: boolean;
+  compact?: boolean;
 }) {
   const title = resolveTitle(anime, language),
     href = animeHref(anime, !publicPage);
   const scores = anime.ratings?.filter((r) => r.score !== null) || [];
   return (
-    <article className="anime-card">
+    <article className={`anime-card ${compact ? "card-compact" : ""}`}>
       <Link href={href} className="poster-link">
         <div className="cover">
           <CoverImage
@@ -39,14 +41,16 @@ export function AnimeCard({
             }
             title={title}
           />
-          <span className="poster-format">{formatLabel(anime.format)}</span>
+          {!compact && (
+            <span className="poster-format">{formatLabel(anime.format)}</span>
+          )}
         </div>
-        <h3>{title}</h3>
+        <h3 title={title}>{title}</h3>
       </Link>
       <p>
         {anime.year || "Year unknown"} · {releaseLabel(anime.airing_status)}
       </p>
-      {scores.length > 0 && (
+      {!compact && scores.length > 0 && (
         <div className="source-scores">
           {scores.slice(0, 2).map((r) => (
             <span key={r.provider}>
@@ -59,12 +63,12 @@ export function AnimeCard({
         </div>
       )}
       <Link className="card-list-action" href={animeHref(anime, true)}>
-        <Plus size={13} /> Manage list
+        <Plus size={13} /> {compact ? "My list" : "Manage list"}
       </Link>
-      {(anime.series_count || 1) > 1 && (
+      {!compact && (anime.series_count || 1) > 1 && (
         <p className="series-count">{anime.series_count} seasons / parts</p>
       )}
-      <MediaLinks anime={anime} compact />
+      {!compact && <MediaLinks anime={anime} compact />}
     </article>
   );
 }

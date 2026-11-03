@@ -115,13 +115,13 @@ test("database and trailer searches are explicit and every card has visual artwo
   await page.goto("/");
   await expect(
     page
-      .locator(".anime-card")
+      .locator(".anime-card:not(.card-compact)")
       .first()
       .getByRole("link", { name: "Search IMDb", exact: true }),
   ).toHaveAttribute("href", /imdb.com\/find/);
   await expect(
     page
-      .locator(".anime-card")
+      .locator(".anime-card:not(.card-compact)")
       .first()
       .getByRole("link", { name: "Find trailer", exact: true }),
   ).toHaveAttribute("href", /youtube.com\/results/);
@@ -200,6 +200,21 @@ test("home refreshes an expired session and preserves access after returning hom
   ).toBeVisible();
   await page.goto("/app/library");
   await expect(page).toHaveURL(/\/app\/library$/);
+  await expect(page.locator(".library-table tbody tr")).toHaveCount(1);
+  await expect(page.getByRole("table")).toBeVisible();
+  await expect(
+    page.getByRole("progressbar", { name: "Episode progress" }),
+  ).toHaveAttribute("value", "3");
+  await page.getByLabel("Season / part").selectOption("20958");
+  await expect(
+    page.getByRole("progressbar", { name: "Episode progress" }),
+  ).toHaveAttribute("value", "7");
+  await page.getByLabel("Season / part").selectOption("16498");
+  await page.screenshot({
+    path: `.impeccable/review/${info.project.name}-library.png`,
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "shelf", exact: true }).click();
   await expect(page.locator(".anime-grid .anime-card")).toHaveCount(1);
   await expect(page.getByLabel("Season / part")).toHaveValue("16498");
   await page.getByLabel("Season / part").selectOption("20958");
@@ -300,7 +315,7 @@ test("home refreshes an expired session and preserves access after returning hom
       await expect(
         page.getByLabel("Accent color", { exact: true }),
       ).toHaveValue("#344b44");
-      await page.getByRole("button", { name: "Midnight", exact: true }).click();
+      await page.getByRole("button", { name: "Sakuga", exact: true }).click();
       await page
         .getByRole("button", { name: "Save my preferences", exact: true })
         .click();
@@ -364,35 +379,35 @@ test("featured carousel changes slides, pauses safely and respects reduced motio
 }) => {
   await page.goto("/");
   const carousel = page.getByRole("region", { name: "Featured anime" });
-  await expect(carousel.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(carousel.getByRole("heading", { level: 2 })).toBeVisible();
   const frameHeight = (await carousel.boundingBox())!.height;
-  const first = await carousel.getByRole("heading", { level: 1 }).innerText();
+  const first = await carousel.getByRole("heading", { level: 2 }).innerText();
   await carousel.getByRole("button", { name: "Next featured anime" }).click();
-  await expect(carousel.getByRole("heading", { level: 1 })).not.toHaveText(
+  await expect(carousel.getByRole("heading", { level: 2 })).not.toHaveText(
     first,
   );
   expect((await carousel.boundingBox())!.height).toBe(frameHeight);
   await carousel
     .getByRole("button", { name: "Previous featured anime" })
     .click();
-  await expect(carousel.getByRole("heading", { level: 1 })).toHaveText(first);
+  await expect(carousel.getByRole("heading", { level: 2 })).toHaveText(first);
   await page.clock.install();
   await carousel.getByRole("button", { name: "Play featured anime" }).click();
-  await page.getByRole("link", { name: "Sakuga home" }).focus();
+  await page.getByRole("link", { name: "Sakuga home" }).first().focus();
   await page.mouse.move(1, 1);
   await page.clock.fastForward(7700);
-  await expect(carousel.getByRole("heading", { level: 1 })).not.toHaveText(
+  await expect(carousel.getByRole("heading", { level: 2 })).not.toHaveText(
     first,
   );
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(
     carousel.getByRole("button", { name: "Play featured anime" }),
   ).toBeDisabled();
-  const current = await carousel.getByRole("heading", { level: 1 }).innerText();
+  const current = await carousel.getByRole("heading", { level: 2 }).innerText();
   await page.clock.fastForward(16000);
-  await expect(carousel.getByRole("heading", { level: 1 })).toHaveText(current);
+  await expect(carousel.getByRole("heading", { level: 2 })).toHaveText(current);
   await carousel.getByRole("button", { name: "Next featured anime" }).click();
-  await expect(carousel.getByRole("heading", { level: 1 })).not.toHaveText(
+  await expect(carousel.getByRole("heading", { level: 2 })).not.toHaveText(
     current,
   );
 });
@@ -411,10 +426,10 @@ test("search shortcut and mobile menu remain accessible", async ({ page }) => {
     await page.getByRole("button", { name: "Close menu" }).click();
     await expect(page.getByRole("navigation", { name: "Main" })).toBeHidden();
   }
-  await expect(page.locator(".brand")).not.toContainText(".");
+  await expect(page.locator(".brand").first()).not.toContainText(".");
 });
 
-test("Midnight Sakura uses static surfaces, cached artwork and reduced motion", async ({
+test("neutral journal uses static surfaces, requested typography and cached artwork", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -428,18 +443,26 @@ test("Midnight Sakura uses static surfaces, cached artwork and reduced motion", 
     const css = getComputedStyle(document.documentElement);
     const nav = getComputedStyle(document.querySelector(".public-nav")!);
     return {
-      pink: css.getPropertyValue("--accent").trim().toLowerCase(),
+      pink: css.getPropertyValue("--primary").trim().toLowerCase(),
       lavender: css.getPropertyValue("--secondary").trim().toLowerCase(),
-      background: css.getPropertyValue("--paper").trim().toLowerCase(),
+      background: css.getPropertyValue("--bg").trim().toLowerCase(),
       blur: nav.backdropFilter,
       animation: getComputedStyle(document.body).animationName,
       backgroundImage: getComputedStyle(document.body).backgroundImage,
     };
   });
+  expect(
+    await page
+      .locator("body")
+      .evaluate((el) => getComputedStyle(el).fontFamily),
+  ).toContain("Manrope");
+  expect(
+    await page.locator("h1").evaluate((el) => getComputedStyle(el).fontFamily),
+  ).toContain("Space Grotesk");
   expect(surfaces).toMatchObject({
     pink: "#ff8fb8",
     lavender: "#b9a3ff",
-    background: "#0f1220",
+    background: "#0b0b0d",
     blur: "none",
     animation: "none",
   });
@@ -451,14 +474,14 @@ test("Midnight Sakura uses static surfaces, cached artwork and reduced motion", 
   await page
     .getByRole("button", { name: "Show Cowboy Bebop", exact: true })
     .click();
-  const image = page.locator(".gallery-main img");
+  const image = page.locator(".featured-backdrop img");
   await expect(image).toBeVisible();
   await expect(image).toHaveJSProperty("complete", true);
   expect(
     await image.evaluate((el: HTMLImageElement) => el.currentSrc),
   ).toContain("/art/home/");
   const feature = await page.locator(".discovery-feature").boundingBox();
-  expect(feature!.height).toBeLessThan(450);
+  expect(feature!.height).toBeLessThan(660);
   expect(
     await page
       .locator(".cover")
@@ -473,23 +496,19 @@ test("film strip provides working horizontal navigation without page overflow", 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const rail = page.getByRole("region", {
-    name: "Popular with anime fans",
-    exact: true,
+    name: /Released in/,
   });
   await expect(rail).toBeVisible();
   expect(await rail.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(
     true,
   );
-  await page
-    .getByRole("button", { name: "Next Popular with anime fans", exact: true })
-    .click();
+  await page.getByRole("button", { name: /Next Released in/ }).click();
   await expect
     .poll(() => rail.evaluate((el) => el.scrollLeft))
     .toBeGreaterThan(100);
   await page
     .getByRole("button", {
-      name: "Previous Popular with anime fans",
-      exact: true,
+      name: /Previous Released in/,
     })
     .click();
   await expect.poll(() => rail.evaluate((el) => el.scrollLeft)).toBe(0);

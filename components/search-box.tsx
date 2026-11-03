@@ -193,6 +193,7 @@ export function SearchBox({
               >
                 <span className="suggestion-cover">
                   <CoverImage
+                    compact
                     id={a.id}
                     src={trustedImage(qualifiedCover(a))}
                     title={resolveTitle(a, language)}

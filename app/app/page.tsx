@@ -75,25 +75,25 @@ export default async function Page({
       ) : (
         <div className="empty-state">
           <Bookmark size={40} />
-          <h2>The beginning of a good collection.</h2>
+          <h2>Nothing watching yet.</h2>
           <p>
             Add a title from Discover and mark it Watching.
             <br />
             We’ll keep your place right here.
           </p>
           <Link className="button" href="/app/discover">
-            Find your first story
+            Discover anime
           </Link>
         </div>
       )}
       <div className="workspace-note">
-        <h2>Make this space yours.</h2>
+        <h2>Your preferences</h2>
         <p>
           Save a theme, choose your title language, or organize your favorites
           into collections.
         </p>
         <Link className="text-link" href="/app/settings">
-          Set the atmosphere <ArrowUpRight size={16} />
+          Open settings <ArrowUpRight size={16} />
         </Link>
       </div>
     </>

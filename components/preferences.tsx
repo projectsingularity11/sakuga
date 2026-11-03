@@ -16,7 +16,7 @@ export function ThemeApply({ theme }: { theme: unknown }) {
     applyMode();
     scheme.addEventListener("change", applyMode);
     if (t.preset === "Midnight") {
-      for (const key of ["--accent", "--accent-on", "--accent-hover"])
+      for (const key of ["--primary", "--on-primary", "--primary-hover"])
         document.documentElement.style.removeProperty(key);
     } else {
       for (const [key, value] of Object.entries(customAccentTokens(t.accent)))
@@ -118,7 +118,7 @@ export function Preferences({
               key={name}
             >
               <i style={{ background: color }} />
-              {name}
+              {name === "Midnight" ? "Sakuga" : name}
               {theme.preset === name ? " ✓" : ""}
             </button>
           ))}
@@ -152,7 +152,7 @@ export function Preferences({
           </label>
         </div>
         <label>
-          Ambient tint
+          Background shading
           <input
             type="range"
             min="0"
@@ -164,8 +164,8 @@ export function Preferences({
           />
         </label>
         <div className="theme-preview">
-          <h3>A little room for your favorites.</h3>
-          <p>Your content stays readable. Your color sets the mood.</p>
+          <h3>Preview</h3>
+          <p>Your saved palette and display settings.</p>
           <span className="tag">Watching</span>
           <progress value={6} max={12} />
         </div>
@@ -198,7 +198,7 @@ export function Importer() {
   const [valid, setValid] = useState(false);
   return (
     <section className="editor">
-      <h2>Bring your stories home.</h2>
+      <h2>Import a library</h2>
       <p>
         Import a Sakuga v1 JSON export. Maximum 2 MB and 2,000 rows. Only
         published catalog IDs can be imported; duplicates use the last row.

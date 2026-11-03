@@ -28,8 +28,8 @@ export function accentForeground(hex: string) {
 export function customAccentTokens(accent: string) {
   const foreground = accentForeground(accent);
   return {
-    "--accent": accent,
-    "--accent-on": foreground,
-    "--accent-hover": `color-mix(in srgb, ${accent} 88%, ${foreground === "#000000" ? "white" : "black"})`,
+    "--primary": accent,
+    "--on-primary": foreground,
+    "--primary-hover": `color-mix(in srgb, ${accent} 88%, ${foreground === "#000000" ? "white" : "black"})`,
   };
 }

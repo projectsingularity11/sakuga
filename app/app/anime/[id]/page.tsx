@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MediaLinks } from "@/components/media-links";
 import { englishSynopsis, releaseDescription } from "@/lib/media";
 import { CoverImage } from "@/components/cover-image";
@@ -67,6 +68,9 @@ export default async function Page({
             workspace
             language={profile?.preferences?.language}
           />
+          <Link className="button detail-primary" href="#list-entry">
+            {entry ? "Edit my list" : "Add to my list"}
+          </Link>
           <p className="alternate">
             {alternateTitles(anime, profile?.preferences?.language).join(" / ")}
           </p>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { AnimeCard } from "./anime-card";
+import { AnimeRow } from "./anime-row";
 import { FilmRail } from "./film-rail";
 import type { catalog } from "@/lib/catalog";
 export type FeedResult = PromiseSettledResult<
@@ -12,25 +13,32 @@ export async function CatalogShelf({
   href,
   language,
   rail = false,
+  variant = "posters",
 }: {
   result: Promise<FeedResult>;
   title: string;
   href: string;
   language: string;
   rail?: boolean;
+  variant?: "posters" | "popular" | "rows";
 }) {
   const feed = await result;
-  const cards =
+  const titles =
     feed.status === "fulfilled"
-      ? feed.value.titles
-          .slice(0, rail ? 10 : 4)
-          .map((a) => (
-            <AnimeCard key={a.id} anime={a} language={language} publicPage />
-          ))
+      ? feed.value.titles.slice(0, variant === "popular" || rail ? 8 : 4)
       : [];
+  const cards = titles.map((a) => (
+    <AnimeCard
+      key={a.id}
+      anime={a}
+      language={language}
+      publicPage
+      compact={variant === "popular"}
+    />
+  ));
   return (
     <section
-      className={`catalog-section ${rail ? "catalog-strip" : "catalog-gallery"}`}
+      className={`catalog-section ${rail ? "catalog-strip" : `catalog-${variant}`}`}
     >
       <div className="shelf-heading">
         <h2>{title}</h2>
@@ -38,8 +46,14 @@ export async function CatalogShelf({
           View all <ArrowUpRight size={14} />
         </Link>
       </div>
-      {cards.length ? (
-        rail ? (
+      {titles.length ? (
+        variant === "rows" ? (
+          <div className="anime-row-grid">
+            {titles.map((a) => (
+              <AnimeRow key={a.id} anime={a} language={language} />
+            ))}
+          </div>
+        ) : rail ? (
           <FilmRail label={title}>{cards}</FilmRail>
         ) : (
           <div className="home-anime-grid">{cards}</div>

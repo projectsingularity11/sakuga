@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { account } from "@/app/actions";
 import { LibraryViews } from "@/components/library-views";
 import { labels, statuses, type Entry } from "@/lib/domain";
@@ -31,51 +32,59 @@ export default async function Page({
       <div className="page-heading">
         <div>
           <h1>My library</h1>
-          <p>{count || 0} shows & films</p>
+          <p>
+            {count || 0} {count === 1 ? "show / film" : "shows & films"}
+          </p>
         </div>
         <Link href="/app/discover" className="button">
-          Discover anime ↗
+          Discover anime <ArrowUpRight size={16} />
         </Link>
       </div>
-      <form className="filter-bar">
-        <label className="search-field">
-          Search your library
-          <input
-            name="q"
-            defaultValue={p.q}
-            placeholder="Find a story…"
-            maxLength={100}
-          />
-        </label>
-        <label>
-          Status
-          <select name="status" defaultValue={p.status || ""}>
-            <option value="">All stories</option>
-            {statuses.map((s) => (
-              <option key={s} value={s}>
-                {labels[s]}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Sort
-          <select name="sort" defaultValue={p.sort || "updated"}>
-            <option value="updated">Recently updated</option>
-            <option value="score">Personal score</option>
-          </select>
-        </label>
-        <label className="check-label">
-          <input
-            name="favorite"
-            value="true"
-            type="checkbox"
-            defaultChecked={p.favorite === "true"}
-          />
-          Favorites only
-        </label>
-        <button className="button outline">Apply filters</button>
-      </form>
+      <details
+        className="library-filters"
+        open={Object.keys(p).some((key) => key !== "page")}
+      >
+        <summary>Filters & sorting</summary>
+        <form className="filter-bar">
+          <label className="search-field">
+            Search your library
+            <input
+              name="q"
+              defaultValue={p.q}
+              placeholder="Find a story…"
+              maxLength={100}
+            />
+          </label>
+          <label>
+            Status
+            <select name="status" defaultValue={p.status || ""}>
+              <option value="">All stories</option>
+              {statuses.map((s) => (
+                <option key={s} value={s}>
+                  {labels[s]}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Sort
+            <select name="sort" defaultValue={p.sort || "updated"}>
+              <option value="updated">Recently updated</option>
+              <option value="score">Personal score</option>
+            </select>
+          </label>
+          <label className="check-label">
+            <input
+              name="favorite"
+              value="true"
+              type="checkbox"
+              defaultChecked={p.favorite === "true"}
+            />
+            Favorites only
+          </label>
+          <button className="button outline">Apply filters</button>
+        </form>
+      </details>
       {entries.length ? (
         <LibraryViews
           entries={entries}

@@ -1,514 +1,556 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-03T00:00:00Z",
-  "title": "Design System: Sakuga — Midnight Sakura",
+  "generatedAt": "2026-11-02T19:06:06-06:00",
+  "title": "Design System: Sakuga journal",
   "extensions": {
-    "sources": [
-      "DESIGN.md",
-      "app/globals.css",
-      "app/layout.tsx",
-      "lib/appearance.ts",
-      "components/preferences.tsx",
-      "components/workspace-shell.tsx",
-      "components/anime-card.tsx",
-      "components/featured-carousel.tsx",
-      "components/experience.tsx"
-    ],
     "colorMeta": {
-      "paper": {
+      "bg": {
         "role": "neutral",
-        "displayName": "Paper",
+        "displayName": "Bg",
         "tonalRamp": [
-          "oklch(15% 0.0290 274.03)",
-          "oklch(26% 0.0290 274.03)",
-          "oklch(38% 0.0290 274.03)",
-          "oklch(49% 0.0290 274.03)",
-          "oklch(61% 0.0290 274.03)",
-          "oklch(72% 0.0290 274.03)",
-          "oklch(84% 0.0290 274.03)",
-          "oklch(95% 0.0290 274.03)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
       "surface": {
         "role": "neutral",
         "displayName": "Surface",
         "tonalRamp": [
-          "oklch(15% 0.0371 274.16)",
-          "oklch(26% 0.0371 274.16)",
-          "oklch(38% 0.0371 274.16)",
-          "oklch(49% 0.0371 274.16)",
-          "oklch(61% 0.0371 274.16)",
-          "oklch(72% 0.0371 274.16)",
-          "oklch(84% 0.0371 274.16)",
-          "oklch(95% 0.0371 274.16)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "raised": {
+      "surface-raised": {
         "role": "neutral",
-        "displayName": "Raised",
+        "displayName": "Surface raised",
         "tonalRamp": [
-          "oklch(15% 0.0448 272.63)",
-          "oklch(26% 0.0448 272.63)",
-          "oklch(38% 0.0448 272.63)",
-          "oklch(49% 0.0448 272.63)",
-          "oklch(61% 0.0448 272.63)",
-          "oklch(72% 0.0448 272.63)",
-          "oklch(84% 0.0448 272.63)",
-          "oklch(95% 0.0448 272.63)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "line": {
+      "surface-hover": {
         "role": "neutral",
-        "displayName": "Line",
+        "displayName": "Surface hover",
         "tonalRamp": [
-          "oklch(15% 0.0530 272.14)",
-          "oklch(26% 0.0530 272.14)",
-          "oklch(38% 0.0530 272.14)",
-          "oklch(49% 0.0530 272.14)",
-          "oklch(61% 0.0530 272.14)",
-          "oklch(72% 0.0530 272.14)",
-          "oklch(84% 0.0530 272.14)",
-          "oklch(95% 0.0530 272.14)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "accent": {
-        "role": "primary",
-        "displayName": "Accent",
+      "border": {
+        "role": "neutral",
+        "displayName": "Border",
         "tonalRamp": [
-          "oklch(15% 0.1419 357.56)",
-          "oklch(26% 0.1419 357.56)",
-          "oklch(38% 0.1419 357.56)",
-          "oklch(49% 0.1419 357.56)",
-          "oklch(61% 0.1419 357.56)",
-          "oklch(72% 0.1419 357.56)",
-          "oklch(84% 0.1419 357.56)",
-          "oklch(95% 0.1419 357.56)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "accent-hover": {
-        "role": "primary",
-        "displayName": "Accent Hover",
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "Border strong",
         "tonalRamp": [
-          "oklch(15% 0.1091 356.08)",
-          "oklch(26% 0.1091 356.08)",
-          "oklch(38% 0.1091 356.08)",
-          "oklch(49% 0.1091 356.08)",
-          "oklch(61% 0.1091 356.08)",
-          "oklch(72% 0.1091 356.08)",
-          "oklch(84% 0.1091 356.08)",
-          "oklch(95% 0.1091 356.08)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "accent-on": {
+      "primary": {
         "role": "primary",
-        "displayName": "Accent On",
+        "displayName": "Primary",
         "tonalRamp": [
-          "oklch(15% 0.0290 274.03)",
-          "oklch(26% 0.0290 274.03)",
-          "oklch(38% 0.0290 274.03)",
-          "oklch(49% 0.0290 274.03)",
-          "oklch(61% 0.0290 274.03)",
-          "oklch(72% 0.0290 274.03)",
-          "oklch(84% 0.0290 274.03)",
-          "oklch(95% 0.0290 274.03)"
+          "#4c001c",
+          "#80002f",
+          "#b20041",
+          "#e60054",
+          "#ff1a6e",
+          "#ff4d8e",
+          "#ff99be",
+          "#ffe5ef"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Primary hover",
+        "tonalRamp": [
+          "#4c001c",
+          "#80002f",
+          "#b20042",
+          "#e60054",
+          "#ff1a6e",
+          "#ff4d8e",
+          "#ff99bf",
+          "#ffe5ef"
+        ]
+      },
+      "on-primary": {
+        "role": "neutral",
+        "displayName": "On primary",
+        "tonalRamp": [
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
       "secondary": {
         "role": "secondary",
         "displayName": "Secondary",
         "tonalRamp": [
-          "oklch(15% 0.1307 294.10)",
-          "oklch(26% 0.1307 294.10)",
-          "oklch(38% 0.1307 294.10)",
-          "oklch(49% 0.1307 294.10)",
-          "oklch(61% 0.1307 294.10)",
-          "oklch(72% 0.1307 294.10)",
-          "oklch(84% 0.1307 294.10)",
-          "oklch(95% 0.1307 294.10)"
+          "#12004c",
+          "#1e0080",
+          "#2b00b2",
+          "#3700e6",
+          "#501aff",
+          "#774dff",
+          "#b199ff",
+          "#ece5ff"
         ]
       },
-      "ink": {
+      "text": {
         "role": "neutral",
-        "displayName": "Ink",
+        "displayName": "Text",
         "tonalRamp": [
-          "oklch(15% 0.0107 280.48)",
-          "oklch(26% 0.0107 280.48)",
-          "oklch(38% 0.0107 280.48)",
-          "oklch(49% 0.0107 280.48)",
-          "oklch(61% 0.0107 280.48)",
-          "oklch(72% 0.0107 280.48)",
-          "oklch(84% 0.0107 280.48)",
-          "oklch(95% 0.0107 280.48)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "muted": {
+      "text-muted": {
         "role": "neutral",
-        "displayName": "Muted",
+        "displayName": "Text muted",
         "tonalRamp": [
-          "oklch(15% 0.0384 271.93)",
-          "oklch(26% 0.0384 271.93)",
-          "oklch(38% 0.0384 271.93)",
-          "oklch(49% 0.0384 271.93)",
-          "oklch(61% 0.0384 271.93)",
-          "oklch(72% 0.0384 271.93)",
-          "oklch(84% 0.0384 271.93)",
-          "oklch(95% 0.0384 271.93)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
       "watching": {
-        "role": "semantic",
+        "role": "secondary",
         "displayName": "Watching",
         "tonalRamp": [
-          "oklch(15% 0.1051 235.72)",
-          "oklch(26% 0.1051 235.72)",
-          "oklch(38% 0.1051 235.72)",
-          "oklch(49% 0.1051 235.72)",
-          "oklch(61% 0.1051 235.72)",
-          "oklch(72% 0.1051 235.72)",
-          "oklch(84% 0.1051 235.72)",
-          "oklch(95% 0.1051 235.72)"
+          "#00304c",
+          "#005080",
+          "#0071b2",
+          "#0091e6",
+          "#1aaaff",
+          "#4dbdff",
+          "#99d9ff",
+          "#e5f6ff"
         ]
       },
       "completed": {
-        "role": "semantic",
+        "role": "secondary",
         "displayName": "Completed",
         "tonalRamp": [
-          "oklch(15% 0.1098 165.52)",
-          "oklch(26% 0.1098 165.52)",
-          "oklch(38% 0.1098 165.52)",
-          "oklch(49% 0.1098 165.52)",
-          "oklch(61% 0.1098 165.52)",
-          "oklch(72% 0.1098 165.52)",
-          "oklch(84% 0.1098 165.52)",
-          "oklch(95% 0.1098 165.52)"
+          "#0f3e2b",
+          "#196747",
+          "#239063",
+          "#2cb980",
+          "#46d399",
+          "#6fdcb0",
+          "#adebd2",
+          "#eafaf4"
         ]
       },
       "planned": {
-        "role": "semantic",
+        "role": "secondary",
         "displayName": "Planned",
         "tonalRamp": [
-          "oklch(15% 0.1307 294.10)",
-          "oklch(26% 0.1307 294.10)",
-          "oklch(38% 0.1307 294.10)",
-          "oklch(49% 0.1307 294.10)",
-          "oklch(61% 0.1307 294.10)",
-          "oklch(72% 0.1307 294.10)",
-          "oklch(84% 0.1307 294.10)",
-          "oklch(95% 0.1307 294.10)"
+          "#12004c",
+          "#1e0080",
+          "#2b00b2",
+          "#3700e6",
+          "#501aff",
+          "#774dff",
+          "#b199ff",
+          "#ece5ff"
         ]
       },
       "on-hold": {
-        "role": "semantic",
-        "displayName": "On Hold",
+        "role": "secondary",
+        "displayName": "On hold",
         "tonalRamp": [
-          "oklch(15% 0.1091 83.06)",
-          "oklch(26% 0.1091 83.06)",
-          "oklch(38% 0.1091 83.06)",
-          "oklch(49% 0.1091 83.06)",
-          "oklch(61% 0.1091 83.06)",
-          "oklch(72% 0.1091 83.06)",
-          "oklch(84% 0.1091 83.06)",
-          "oklch(95% 0.1091 83.06)"
+          "#463106",
+          "#75510b",
+          "#a4710f",
+          "#d39213",
+          "#ecab2c",
+          "#f0be5b",
+          "#f7daa1",
+          "#fdf6e8"
         ]
       },
       "dropped": {
-        "role": "semantic",
+        "role": "secondary",
         "displayName": "Dropped",
         "tonalRamp": [
-          "oklch(15% 0.1314 15.31)",
-          "oklch(26% 0.1314 15.31)",
-          "oklch(38% 0.1314 15.31)",
-          "oklch(49% 0.1314 15.31)",
-          "oklch(61% 0.1314 15.31)",
-          "oklch(72% 0.1314 15.31)",
-          "oklch(84% 0.1314 15.31)",
-          "oklch(95% 0.1314 15.31)"
+          "#4c0006",
+          "#80000b",
+          "#b2000f",
+          "#e60013",
+          "#ff1a2c",
+          "#ff4d5b",
+          "#ff99a1",
+          "#ffe5e8"
         ]
       },
       "rating": {
-        "role": "semantic",
+        "role": "secondary",
         "displayName": "Rating",
         "tonalRamp": [
-          "oklch(15% 0.1091 83.06)",
-          "oklch(26% 0.1091 83.06)",
-          "oklch(38% 0.1091 83.06)",
-          "oklch(49% 0.1091 83.06)",
-          "oklch(61% 0.1091 83.06)",
-          "oklch(72% 0.1091 83.06)",
-          "oklch(84% 0.1091 83.06)",
-          "oklch(95% 0.1091 83.06)"
+          "#463106",
+          "#75510b",
+          "#a4710f",
+          "#d39213",
+          "#ecab2c",
+          "#f0be5b",
+          "#f7daa1",
+          "#fdf6e8"
         ]
       },
       "danger": {
-        "role": "semantic",
+        "role": "secondary",
         "displayName": "Danger",
         "tonalRamp": [
-          "oklch(15% 0.1314 15.31)",
-          "oklch(26% 0.1314 15.31)",
-          "oklch(38% 0.1314 15.31)",
-          "oklch(49% 0.1314 15.31)",
-          "oklch(61% 0.1314 15.31)",
-          "oklch(72% 0.1314 15.31)",
-          "oklch(84% 0.1314 15.31)",
-          "oklch(95% 0.1314 15.31)"
+          "#4c0006",
+          "#80000b",
+          "#b2000f",
+          "#e60013",
+          "#ff1a2c",
+          "#ff4d5b",
+          "#ff99a1",
+          "#ffe5e8"
         ]
       },
-      "light-paper": {
+      "light-bg": {
         "role": "neutral",
-        "displayName": "Light Paper",
+        "displayName": "Light bg",
         "tonalRamp": [
-          "oklch(15% 0.0080 293.91)",
-          "oklch(26% 0.0080 293.91)",
-          "oklch(38% 0.0080 293.91)",
-          "oklch(49% 0.0080 293.91)",
-          "oklch(61% 0.0080 293.91)",
-          "oklch(72% 0.0080 293.91)",
-          "oklch(84% 0.0080 293.91)",
-          "oklch(95% 0.0080 293.91)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
       "light-surface": {
         "role": "neutral",
-        "displayName": "Light Surface",
+        "displayName": "Light surface",
         "tonalRamp": [
-          "oklch(15% 0.0000 89.88)",
-          "oklch(26% 0.0000 89.88)",
-          "oklch(38% 0.0000 89.88)",
-          "oklch(49% 0.0000 89.88)",
-          "oklch(61% 0.0000 89.88)",
-          "oklch(72% 0.0000 89.88)",
-          "oklch(84% 0.0000 89.88)",
-          "oklch(95% 0.0000 89.88)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "light-raised": {
+      "light-surface-raised": {
         "role": "neutral",
-        "displayName": "Light Raised",
+        "displayName": "Light surface raised",
         "tonalRamp": [
-          "oklch(15% 0.0149 294.46)",
-          "oklch(26% 0.0149 294.46)",
-          "oklch(38% 0.0149 294.46)",
-          "oklch(49% 0.0149 294.46)",
-          "oklch(61% 0.0149 294.46)",
-          "oklch(72% 0.0149 294.46)",
-          "oklch(84% 0.0149 294.46)",
-          "oklch(95% 0.0149 294.46)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "light-line": {
+      "light-surface-hover": {
         "role": "neutral",
-        "displayName": "Light Line",
+        "displayName": "Light surface hover",
         "tonalRamp": [
-          "oklch(15% 0.0262 290.68)",
-          "oklch(26% 0.0262 290.68)",
-          "oklch(38% 0.0262 290.68)",
-          "oklch(49% 0.0262 290.68)",
-          "oklch(61% 0.0262 290.68)",
-          "oklch(72% 0.0262 290.68)",
-          "oklch(84% 0.0262 290.68)",
-          "oklch(95% 0.0262 290.68)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "light-ink": {
+      "light-border": {
         "role": "neutral",
-        "displayName": "Light Ink",
+        "displayName": "Light border",
         "tonalRamp": [
-          "oklch(15% 0.0436 277.13)",
-          "oklch(26% 0.0436 277.13)",
-          "oklch(38% 0.0436 277.13)",
-          "oklch(49% 0.0436 277.13)",
-          "oklch(61% 0.0436 277.13)",
-          "oklch(72% 0.0436 277.13)",
-          "oklch(84% 0.0436 277.13)",
-          "oklch(95% 0.0436 277.13)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
-      "light-muted": {
+      "light-border-strong": {
         "role": "neutral",
-        "displayName": "Light Muted",
+        "displayName": "Light border strong",
         "tonalRamp": [
-          "oklch(15% 0.0386 275.73)",
-          "oklch(26% 0.0386 275.73)",
-          "oklch(38% 0.0386 275.73)",
-          "oklch(49% 0.0386 275.73)",
-          "oklch(61% 0.0386 275.73)",
-          "oklch(72% 0.0386 275.73)",
-          "oklch(84% 0.0386 275.73)",
-          "oklch(95% 0.0386 275.73)"
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
+        ]
+      },
+      "light-text": {
+        "role": "neutral",
+        "displayName": "Light text",
+        "tonalRamp": [
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
+        ]
+      },
+      "light-text-muted": {
+        "role": "neutral",
+        "displayName": "Light text muted",
+        "tonalRamp": [
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#cccccc",
+          "#f2f2f2"
         ]
       },
       "light-secondary": {
         "role": "secondary",
-        "displayName": "Light Secondary",
+        "displayName": "Light secondary",
         "tonalRamp": [
-          "oklch(15% 0.1668 293.93)",
-          "oklch(26% 0.1668 293.93)",
-          "oklch(38% 0.1668 293.93)",
-          "oklch(49% 0.1668 293.93)",
-          "oklch(61% 0.1668 293.93)",
-          "oklch(72% 0.1668 293.93)",
-          "oklch(84% 0.1668 293.93)",
-          "oklch(95% 0.1668 293.93)"
+          "#201537",
+          "#35235c",
+          "#4b3181",
+          "#603fa6",
+          "#7a59c0",
+          "#977ece",
+          "#c4b5e3",
+          "#f0edf8"
         ]
       },
       "light-watching": {
-        "role": "semantic",
-        "displayName": "Light Watching",
+        "role": "secondary",
+        "displayName": "Light watching",
         "tonalRamp": [
-          "oklch(15% 0.0994 243.62)",
-          "oklch(26% 0.0994 243.62)",
-          "oklch(38% 0.0994 243.62)",
-          "oklch(49% 0.0994 243.62)",
-          "oklch(61% 0.0994 243.62)",
-          "oklch(72% 0.0994 243.62)",
-          "oklch(84% 0.0994 243.62)",
-          "oklch(95% 0.0994 243.62)"
+          "#0b2b41",
+          "#13486d",
+          "#1a6598",
+          "#2282c4",
+          "#3c9cdd",
+          "#67b2e5",
+          "#a8d3f0",
+          "#e9f4fb"
         ]
       },
       "light-completed": {
-        "role": "semantic",
-        "displayName": "Light Completed",
+        "role": "secondary",
+        "displayName": "Light completed",
         "tonalRamp": [
-          "oklch(15% 0.0908 161.04)",
-          "oklch(26% 0.0908 161.04)",
-          "oklch(38% 0.0908 161.04)",
-          "oklch(49% 0.0908 161.04)",
-          "oklch(61% 0.0908 161.04)",
-          "oklch(72% 0.0908 161.04)",
-          "oklch(84% 0.0908 161.04)",
-          "oklch(95% 0.0908 161.04)"
+          "#0e3e2b",
+          "#186847",
+          "#219163",
+          "#2bbb80",
+          "#44d499",
+          "#6edeb0",
+          "#acecd2",
+          "#eafaf4"
         ]
       },
       "light-planned": {
-        "role": "semantic",
-        "displayName": "Light Planned",
+        "role": "secondary",
+        "displayName": "Light planned",
         "tonalRamp": [
-          "oklch(15% 0.1668 293.93)",
-          "oklch(26% 0.1668 293.93)",
-          "oklch(38% 0.1668 293.93)",
-          "oklch(49% 0.1668 293.93)",
-          "oklch(61% 0.1668 293.93)",
-          "oklch(72% 0.1668 293.93)",
-          "oklch(84% 0.1668 293.93)",
-          "oklch(95% 0.1668 293.93)"
+          "#201537",
+          "#35235c",
+          "#4b3181",
+          "#603fa6",
+          "#7a59c0",
+          "#977ece",
+          "#c4b5e3",
+          "#f0edf8"
         ]
       },
       "light-on-hold": {
-        "role": "semantic",
-        "displayName": "Light On Hold",
+        "role": "secondary",
+        "displayName": "Light on hold",
         "tonalRamp": [
-          "oklch(15% 0.0965 78.75)",
-          "oklch(26% 0.0965 78.75)",
-          "oklch(38% 0.0965 78.75)",
-          "oklch(49% 0.0965 78.75)",
-          "oklch(61% 0.0965 78.75)",
-          "oklch(72% 0.0965 78.75)",
-          "oklch(84% 0.0965 78.75)",
-          "oklch(95% 0.0965 78.75)"
+          "#433009",
+          "#704f10",
+          "#9c6f16",
+          "#c98f1c",
+          "#e3a936",
+          "#e9bc63",
+          "#f2d9a6",
+          "#fcf5e9"
         ]
       },
       "light-dropped": {
-        "role": "semantic",
-        "displayName": "Light Dropped",
+        "role": "secondary",
+        "displayName": "Light dropped",
         "tonalRamp": [
-          "oklch(15% 0.1614 13.81)",
-          "oklch(26% 0.1614 13.81)",
-          "oklch(38% 0.1614 13.81)",
-          "oklch(49% 0.1614 13.81)",
-          "oklch(61% 0.1614 13.81)",
-          "oklch(72% 0.1614 13.81)",
-          "oklch(84% 0.1614 13.81)",
-          "oklch(95% 0.1614 13.81)"
+          "#3e0f19",
+          "#671829",
+          "#90223a",
+          "#ba2c4a",
+          "#d34564",
+          "#dd6f86",
+          "#ecacba",
+          "#faeaee"
         ]
       },
       "light-rating": {
-        "role": "semantic",
-        "displayName": "Light Rating",
+        "role": "secondary",
+        "displayName": "Light rating",
         "tonalRamp": [
-          "oklch(15% 0.0965 78.75)",
-          "oklch(26% 0.0965 78.75)",
-          "oklch(38% 0.0965 78.75)",
-          "oklch(49% 0.0965 78.75)",
-          "oklch(61% 0.0965 78.75)",
-          "oklch(72% 0.0965 78.75)",
-          "oklch(84% 0.0965 78.75)",
-          "oklch(95% 0.0965 78.75)"
+          "#433009",
+          "#704f10",
+          "#9c6f16",
+          "#c98f1c",
+          "#e3a936",
+          "#e9bc63",
+          "#f2d9a6",
+          "#fcf5e9"
         ]
       },
       "light-danger": {
-        "role": "semantic",
-        "displayName": "Light Danger",
+        "role": "secondary",
+        "displayName": "Light danger",
         "tonalRamp": [
-          "oklch(15% 0.1614 13.81)",
-          "oklch(26% 0.1614 13.81)",
-          "oklch(38% 0.1614 13.81)",
-          "oklch(49% 0.1614 13.81)",
-          "oklch(61% 0.1614 13.81)",
-          "oklch(72% 0.1614 13.81)",
-          "oklch(84% 0.1614 13.81)",
-          "oklch(95% 0.1614 13.81)"
+          "#3e0f19",
+          "#671829",
+          "#90223a",
+          "#ba2c4a",
+          "#d34564",
+          "#dd6f86",
+          "#ecacba",
+          "#faeaee"
         ]
       }
     },
-    "previewRampPolicy": "Synthesized OKLCH lightness studies for panel previews only; not application tokens. Normative colors live in DESIGN.md frontmatter and app/globals.css.",
     "typographyMeta": {
       "wordmark": {
-        "displayName": "Wordmark",
-        "purpose": "Only self-hosted Syne 700; logo and branded unavailable-art fallback."
+        "displayName": "Sakuga wordmark",
+        "purpose": "Typographic identity with mixed 700/500 ending."
+      },
+      "headline": {
+        "displayName": "Page heading",
+        "purpose": "Confident, compact page hierarchy."
       },
       "body": {
-        "displayName": "Product text",
-        "purpose": "System sans across headings, controls and reading text."
+        "displayName": "Interface body",
+        "purpose": "Reading and interface copy."
       }
     },
     "shadows": [
       {
         "name": "search-popover",
         "value": "0 14px 30px #0003",
-        "purpose": "Local search overlay separation."
+        "purpose": "Temporary search suggestions."
       },
       {
         "name": "poster-hover",
         "value": "0 8px 18px #0004",
-        "purpose": "Fine-pointer hover/focus only."
+        "purpose": "Focused or hovered artwork."
       },
       {
         "name": "mobile-drawer",
         "value": "12px 0 30px #0005",
-        "purpose": "Mobile workspace navigation separation."
+        "purpose": "Mobile workspace navigation."
       }
     ],
     "motion": [
       {
         "name": "ease",
         "value": "cubic-bezier(0.22, 1, 0.36, 1)",
-        "purpose": "Restrained ease-out state changes."
+        "purpose": "Restrained interaction easing."
       },
       {
         "name": "fast",
         "value": "160ms",
-        "purpose": "Hover, press and popover state transitions."
+        "purpose": "Color/focus states and popover entrance."
       },
       {
         "name": "panel",
         "value": "220ms",
-        "purpose": "Reserved panel duration token."
+        "purpose": "Existing panel timing token."
       },
       {
-        "name": "popover-in",
-        "value": "translateY(5px) to translateY(0); opacity 0.5 to 1",
-        "purpose": "Small state entrance."
-      },
-      {
-        "name": "skeleton",
-        "value": "1.8s ease-in-out infinite alternate; opacity 0.6 to 1",
-        "purpose": "Pending real-data skeletons only."
+        "name": "popover-offset",
+        "value": "5px",
+        "purpose": "Short popover entrance; disabled for reduced motion."
       }
     ],
-    "reducedMotion": "Disable all animation/transitions, poster lift and scale, button press scale, smooth scrolling and carousel auto-advance; manual navigation remains.",
     "breakpoints": [
       {
-        "name": "tablet-wide",
+        "name": "compact-desktop",
         "value": "1100px"
       },
       {
@@ -516,111 +558,98 @@
         "value": "800px"
       },
       {
-        "name": "mobile",
+        "name": "phone",
         "value": "600px"
       }
-    ],
-    "layout": {
-      "workspaceExpanded": "242px",
-      "workspaceCollapsed": "82px",
-      "mobileDrawer": "242px",
-      "publicMaxWidth": "1360px",
-      "workspaceMaxWidth": "1500px",
-      "posterAspectRatio": "2 / 3"
-    },
-    "ambient": {
-      "lavender": "static upper-right radial gradient at 6%",
-      "pink": "static upper-left radial gradient; clamp(0%, calc(var(--ambient) / 2), 5%); default 4%",
-      "defaultIntensity": "8%"
-    },
-    "contracts": {
-      "on_hold": {
-        "cssToken": "--on-hold",
-        "label": "On hold"
-      },
-      "customAccent": "lib/appearance.ts calculates black/white foreground from relative luminance and derives a readable hover color.",
-      "migration": "Legacy Prism/Iris/default accents migrate through polishTheme to Midnight; explicit Custom is preserved.",
-      "audio": "Opt-in click/hover/selection sound only; pointerover is not a visual effect."
-    }
+    ]
   },
   "components": [
     {
       "name": "Primary button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Shared action with visible focus and state feedback.",
+      "description": "The strongest task action.",
       "html": "<button class=\"ds-primary\">Save changes</button>",
-      "css": ".ds-primary{font:650 0.875rem/1.4 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:10px;cursor:pointer;transition:background 160ms cubic-bezier(0.22, 1, 0.36, 1),transform 160ms cubic-bezier(0.22, 1, 0.36, 1);background:var(--accent,#ff8fb8);color:var(--accent-on,#0f1220);border:1px solid transparent}.ds-primary:hover{background:var(--accent-hover,#ffa8c8)}.ds-primary:active{transform:scale(.98)}.ds-primary:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}.ds-primary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}.ds-primary:active{transform:none}}"
+      "css": ".ds-primary{background:var(--primary);color:var(--on-primary);border:1px solid transparent;border-radius:8px;min-height:44px;padding:10px 18px;font:600 14px/1.4 Manrope,sans-serif;cursor:pointer;transition:background 160ms cubic-bezier(.22,1,.36,1),transform 160ms cubic-bezier(.22,1,.36,1)}.ds-primary:hover{background:var(--primary-hover)}.ds-primary:active{transform:scale(.98)}.ds-primary:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}.ds-primary:active{transform:none}}"
     },
     {
       "name": "Secondary button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Shared action with visible focus and state feedback.",
-      "html": "<button class=\"ds-secondary\">Save changes</button>",
-      "css": ".ds-secondary{font:650 0.875rem/1.4 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:10px;cursor:pointer;transition:background 160ms cubic-bezier(0.22, 1, 0.36, 1),transform 160ms cubic-bezier(0.22, 1, 0.36, 1);background:var(--surface,#191d30);color:var(--ink,#f3f4fc);border:1px solid var(--line,#353d5b)}.ds-secondary:hover{background:var(--raised,#242a42)}.ds-secondary:active{transform:scale(.98)}.ds-secondary:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}.ds-secondary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-secondary{transition:none}.ds-secondary:active{transform:none}}"
+      "description": "A supporting action on a neutral surface.",
+      "html": "<button class=\"ds-secondary\">View details</button>",
+      "css": ".ds-secondary{background:var(--surface-raised);color:var(--text);border:1px solid var(--border);border-radius:8px;min-height:44px;padding:10px 18px;font:600 14px/1.4 Manrope,sans-serif;cursor:pointer;transition:background 160ms cubic-bezier(.22,1,.36,1)}.ds-secondary:hover{background:var(--surface-raised)}.ds-secondary:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     },
     {
-      "name": "Labeled input",
+      "name": "Text field",
       "kind": "input",
       "refersTo": "input",
-      "description": "Opaque labeled field with a crisp focus ring.",
-      "html": "<label class=\"ds-label\">Display name<input class=\"ds-input\" placeholder=\"Your name\"></label>",
-      "css": ".ds-label{display:flex;flex-direction:column;gap:7px;color:var(--ink,#f3f4fc);font:500 .875rem -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif}.ds-input{min-height:44px;padding:10px 12px;border:1px solid var(--line,#353d5b);border-radius:8px;background:var(--paper,#0f1220);color:var(--ink,#f3f4fc);font:inherit;caret-color:var(--secondary,#b9a3ff);transition:border-color 160ms cubic-bezier(0.22, 1, 0.36, 1)}.ds-input::placeholder{color:var(--muted,#a7afc9)}.ds-input:hover{border-color:var(--muted,#a7afc9)}.ds-input:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-input{transition:none}}"
+      "description": "An explicitly labeled neutral form field.",
+      "html": "<label class=\"ds-field\">Collection name<input placeholder=\"Name your collection\" /></label>",
+      "css": ".ds-field{display:grid;gap:6px;color:var(--text);font:400 14px/1.65 Manrope,sans-serif}.ds-field input{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;min-height:44px;padding:10px 12px;font:inherit}.ds-field input:hover{border-color:var(--border-strong)}.ds-field input:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     },
     {
-      "name": "Workspace navigation",
+      "name": "Active navigation",
       "kind": "nav",
       "refersTo": "navigation-active",
-      "description": "Current route remains explicit through aria-current and tonal selection.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Workspace\"><a href=\"#library\" aria-current=\"page\">My library</a><a href=\"#discover\">Discover</a></nav>",
-      "css": ".ds-nav{display:flex;flex-direction:column;gap:5px;font:400 .875rem -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif}.ds-nav a{display:flex;align-items:center;min-height:46px;padding:12px 14px;border-radius:8px;color:var(--muted,#a7afc9);text-decoration:none}.ds-nav a:hover,.ds-nav a[aria-current=\"page\"]{background:var(--raised,#242a42);color:var(--secondary,#b9a3ff)}.ds-nav a:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}"
+      "description": "Active route with the shared frame-corner motif.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#discover\" aria-current=\"page\">Discover</a><a href=\"#library\">Your list</a></nav>",
+      "css": ".ds-nav{display:flex;gap:6px;font:400 14px/1.65 Manrope,sans-serif}.ds-nav a{position:relative;padding:10px 12px;color:var(--text-muted);border-radius:8px;text-decoration:none}.ds-nav a:hover,.ds-nav a[aria-current]{color:var(--text)}.ds-nav a[aria-current]:after{content:\"\";position:absolute;right:7px;bottom:6px;width:7px;height:7px;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-nav a:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     },
     {
-      "name": "Genre tag",
+      "name": "Status label",
       "kind": "chip",
-      "refersTo": "tag",
-      "description": "Supporting genre destination with a restrained raised fill.",
-      "html": "<a class=\"ds-tag\" href=\"#genre\">Adventure</a>",
-      "css": ".ds-tag{display:inline-flex;align-items:center;min-height:30px;padding:3px 10px;border-radius:6px;background:var(--raised,#242a42);color:var(--secondary,#b9a3ff);font:400 .75rem -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;text-decoration:none}.ds-tag:hover{text-decoration:underline;text-underline-offset:4px}.ds-tag:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}"
+      "description": "Status is named in text; its small dot is supporting information.",
+      "html": "<span class=\"ds-status\">Watching</span>",
+      "css": ".ds-status{display:inline-flex;align-items:center;gap:7px;color:var(--text);font:400 12px/1.65 Manrope,sans-serif}.ds-status:before{content:\"\";width:6px;height:6px;border-radius:50%;background:var(--watching)}"
     },
     {
-      "name": "Poster card",
+      "name": "Unavailable poster",
       "kind": "card",
       "refersTo": "poster",
-      "description": "Structural preview; unavailable artwork is labeled and list management remains separate.",
-      "html": "<article class=\"ds-card\"><a class=\"ds-poster\" href=\"#anime\"><div class=\"ds-cover\">Artwork unavailable</div><h3>Anime title</h3></a><p>Year unknown</p><a class=\"ds-manage\" href=\"#list\">Manage list</a></article>",
-      "css": ".ds-card{width:180px;font:400 .75rem/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--muted,#a7afc9)}.ds-poster{display:block;color:var(--ink,#f3f4fc);text-decoration:none;border-radius:14px}.ds-cover{aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;border:1px solid var(--line,#353d5b);border-radius:14px;overflow:hidden;background:var(--surface,#191d30);transition:transform 160ms cubic-bezier(0.22, 1, 0.36, 1),border-color 160ms cubic-bezier(0.22, 1, 0.36, 1),box-shadow 160ms cubic-bezier(0.22, 1, 0.36, 1)}.ds-poster h3{margin:12px 0 4px;font-size:.875rem;line-height:1.45;font-weight:600}.ds-card p{margin:0 0 8px}.ds-manage{display:inline-flex;align-items:center;min-height:36px;color:var(--secondary,#b9a3ff);font-size:.8125rem;text-decoration:none}.ds-manage:hover{text-decoration:underline}.ds-poster:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}.ds-manage:focus-visible{outline:2px solid var(--secondary,#b9a3ff);outline-offset:4px}@media(hover:hover) and (pointer:fine){.ds-poster:hover .ds-cover,.ds-poster:focus-visible .ds-cover{transform:translateY(-3px);border-color:var(--muted,#a7afc9);box-shadow:0 8px 18px #0004}.ds-poster:hover h3{color:var(--secondary,#b9a3ff)}}@media(prefers-reduced-motion:reduce){.ds-cover{transition:none}.ds-poster:hover .ds-cover,.ds-poster:focus-visible .ds-cover{transform:none}}"
+      "description": "Stable artwork geometry with a truthful unavailable state.",
+      "html": "<a class=\"ds-poster\" href=\"#title\"><span class=\"ds-cover\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"m3 3 18 18M10 3h8a3 3 0 0 1 3 3v12M21 21H6a3 3 0 0 1-3-3V6m1 11 4-4 4 4\"/></svg><small>Cover artwork unavailable</small></span><strong>Anime title</strong></a>",
+      "css": ".ds-poster{display:block;max-width:160px;color:var(--text);text-decoration:none;font:600 14px/1.45 Manrope,sans-serif}.ds-cover{aspect-ratio:2/3;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:12px;color:var(--text-muted)}.ds-cover small{font:400 12px/1.5 Manrope,sans-serif;text-align:center}.ds-poster strong{display:block;margin-top:11px;min-height:2.9em;font-weight:600}.ds-poster:hover strong{text-decoration:underline}.ds-poster:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
+    },
+    {
+      "name": "Sakuga wordmark",
+      "kind": "custom",
+      "description": "Typographic identity with one offset frame corner.",
+      "html": "<a class=\"ds-brand\" href=\"#home\" aria-label=\"Sakuga home\">saku<span>ga</span><i aria-hidden=\"true\"></i></a>",
+      "css": ".ds-brand{position:relative;display:inline-block;padding:0 10px 3px 0;color:var(--text);font:700 1.8rem/1 \"Space Grotesk\",sans-serif;letter-spacing:-.04em;text-decoration:none}.ds-brand span{font-weight:500}.ds-brand i{position:absolute;width:9px;height:9px;right:0;bottom:0;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-brand:hover{text-decoration:none}.ds-brand:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     }
   ],
   "narrative": {
-    "northStar": "The late-night anime journal",
-    "overview": "Midnight Sakura is atmospheric, crisp and restrained. Opaque midnight and indigo surfaces support readable product text; real anime artwork supplies the strongest color and visual interest. The same foundations serve public discovery, authentication, private library operations and supporting routes.\n\nThis replaces the retired Prism world. The eye/aperture mark and lowercase wordmark remain; optical glass, oversized display lettering and pointer-driven scenery do not belong to the current identity.",
+    "northStar": "The personal anime journal",
+    "overview": "Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. Neutral black and charcoal, fine rules and deliberate typography provide the structure; existing anime artwork provides the strongest color. Personality comes from the typographic wordmark, one offset frame corner, artwork proportions and concise language.",
     "keyCharacteristics": [
-      "Artwork-led browsing with persistent titles and direct list paths.",
-      "Compact navigation, visible search and aligned, responsive content.",
-      "Opaque surfaces, quiet static ambience and accessible state feedback."
+      "Early source artwork and compact introductions.",
+      "Contrasting browsing and list compositions with quiet metadata.",
+      "Neutral surfaces, restrained pink/lavender and visible interaction states."
     ],
     "rules": [
       {
         "name": "The Text Before Color Rule",
-        "body": "Status, source availability and errors must remain understandable without their color.",
+        "body": "Status, source availability and errors remain understandable without color.",
         "section": "colors"
+      },
+      {
+        "name": "The Quiet Ground Rule",
+        "body": "Artwork supplies atmosphere; the page field stays neutral and still.",
+        "section": "elevation"
       }
     ],
     "dos": [
-      "Do use shared foundations and real artwork across every route.",
-      "Do preserve visible titles, search, focus and season-specific list paths on touch and keyboard.",
-      "Do keep the shared sidebar grid and readable light/system/custom palettes intact.",
-      "Do preserve source attribution, cached-art provenance, measured derivatives and explicit unavailable labels.",
-      "Do preserve authentication/session refresh, verified season grouping, selected-season editor keys and original anime IDs for progress, scores, notes and collection membership."
+      "Do keep search, real anime artwork and useful actions early.",
+      "Do distinguish general catalog feeds from the signed-in user\u2019s list.",
+      "Do preserve source provenance, selected-season behavior and existing preference fields.",
+      "Do use labels alongside color and keep secondary actions available to touch and keyboard."
     ],
     "donts": [
-      "Don't restore Prism glass, shaders, canvas scenery, refracting lenses, visual pointer loops, tilt, parallax, ripple or animated backgrounds.",
-      "Don't introduce oversized marketing panels, fabricated ratings, statistics or activity.",
-      "Don't apply Syne to ordinary UI text or restore Unbounded and Space Mono.",
-      "Don't hide essential actions behind hover or communicate status through color alone.",
-      "Don't discard real smaller source art, enlarge cached originals or treat fallback Sakuga artwork as the anime's poster."
+      "Don't invent creator profiles, favorites, recommendations, ratings or personal bylines.",
+      "Don't add glass, ripple, visual pointer loops, parallax, tilt, particles, glow or background animation.",
+      "Don't add pink haze, decorative Japanese text, mascots or a frame corner on every card.",
+      "Don't replace each route with the same panel dashboard or an oversized welcome hero."
     ]
   }
 }

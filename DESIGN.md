@@ -1,17 +1,19 @@
 ---
-name: Sakuga — Midnight Sakura
-description: A quiet, artwork-led anime discovery and personal library system.
+name: Sakuga journal
+description: Neutral, artwork-led anime discovery and a personal media library.
 colors:
-  paper: "#0f1220"
-  surface: "#191d30"
-  raised: "#242a42"
-  line: "#353d5b"
-  accent: "#ff8fb8"
-  accent-hover: "#ffa8c8"
-  accent-on: "#0f1220"
+  bg: "#0b0b0d"
+  surface: "#141416"
+  surface-raised: "#1d1d20"
+  surface-hover: "#252528"
+  border: "#2e2e33"
+  border-strong: "#424249"
+  primary: "#ff8fb8"
+  primary-hover: "#ffa8c8"
+  on-primary: "#0b0b0d"
   secondary: "#b9a3ff"
-  ink: "#f3f4fc"
-  muted: "#a7afc9"
+  text: "#f5f5f7"
+  text-muted: "#a6a6af"
   watching: "#7dcfff"
   completed: "#7ee0b8"
   planned: "#b9a3ff"
@@ -19,12 +21,14 @@ colors:
   dropped: "#ff929b"
   rating: "#f3ca7a"
   danger: "#ff929b"
-  light-paper: "#f5f4fa"
+  light-bg: "#f6f6f7"
   light-surface: "#ffffff"
-  light-raised: "#ebe9f4"
-  light-line: "#d0cee1"
-  light-ink: "#1d2037"
-  light-muted: "#5f647c"
+  light-surface-raised: "#ededf0"
+  light-surface-hover: "#e4e4e8"
+  light-border: "#d0d0d5"
+  light-border-strong: "#a3a3ad"
+  light-text: "#202024"
+  light-text-muted: "#626269"
   light-secondary: "#6744b2"
   light-watching: "#185c8a"
   light-completed: "#176545"
@@ -35,43 +39,46 @@ colors:
   light-danger: "#a52742"
 typography:
   wordmark:
-    fontFamily: 'Syne, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontFamily: "Space Grotesk, sans-serif"
     fontSize: "1.8rem"
     fontWeight: 700
     lineHeight: 1
-    letterSpacing: "-0.035em"
+    letterSpacing: "-0.04em"
   headline:
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontFamily: 'Space Grotesk, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "clamp(1.8rem, 3.3vw, 2.6rem)"
-    fontWeight: 650
+    fontWeight: 500
     lineHeight: 1.25
     letterSpacing: "-0.03em"
   title:
+    fontFamily: 'Space Grotesk, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "1.35rem"
-    fontWeight: 650
+    fontWeight: 500
     lineHeight: 1.25
     letterSpacing: "-0.02em"
   card-title:
+    fontFamily: 'Manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "0.875rem"
     fontWeight: 600
     lineHeight: 1.45
   body:
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-    fontSize: "15px"
+    fontFamily: 'Manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontSize: "14px"
     fontWeight: 400
-    lineHeight: 1.6
+    lineHeight: 1.65
   label:
+    fontFamily: 'Manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "0.875rem"
-    fontWeight: 500
+    fontWeight: 600
   metadata:
     fontSize: "0.8125rem"
 rounded:
-  tag: "6px"
-  input: "8px"
-  control: "10px"
+  tag: "3px"
+  thumbnail: "5px"
+  control: "8px"
+  poster: "10px"
   panel: "12px"
-  poster: "14px"
-  feature: "16px"
+  dialog: "16px"
 spacing:
   space-1: "4px"
   space-2: "8px"
@@ -83,141 +90,129 @@ spacing:
   space-8: "64px"
 components:
   button-primary:
-    backgroundColor: "{colors.accent}"
-    textColor: "{colors.accent-on}"
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
     rounded: "{rounded.control}"
     padding: "10px 18px"
+    height: "44px"
   button-primary-hover:
-    backgroundColor: "{colors.accent-hover}"
+    backgroundColor: "{colors.primary-hover}"
   button-secondary:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.ink}"
+    backgroundColor: "{colors.surface-raised}"
+    textColor: "{colors.text}"
     rounded: "{rounded.control}"
     padding: "10px 18px"
-  button-secondary-hover:
-    backgroundColor: "{colors.raised}"
   input:
-    backgroundColor: "{colors.paper}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.input}"
+    backgroundColor: "{colors.bg}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.control}"
     padding: "10px 12px"
   navigation-active:
-    backgroundColor: "{colors.raised}"
-    textColor: "{colors.secondary}"
-    rounded: "{rounded.input}"
-    padding: "12px 14px"
-  tag:
-    backgroundColor: "{colors.raised}"
-    textColor: "{colors.secondary}"
-    rounded: "{rounded.tag}"
-    padding: "3px 10px"
+    backgroundColor: "transparent"
+    textColor: "{colors.text}"
+    rounded: "{rounded.control}"
+    padding: "10px 12px"
   poster:
     backgroundColor: "{colors.surface}"
     rounded: "{rounded.poster}"
 ---
 
-# Design System: Sakuga — Midnight Sakura
+# Design System: Sakuga journal
 
 ## Overview
 
-**Creative North Star: "The late-night anime journal"**
+**Creative North Star: "The personal anime journal"**
 
-Midnight Sakura is atmospheric, crisp and restrained. Opaque midnight and indigo surfaces support readable product text; real anime artwork supplies the strongest color and visual interest. The same foundations serve public discovery, authentication, private library operations and supporting routes.
-
-This replaces the retired Prism world. The eye/aperture mark and lowercase wordmark remain; optical glass, oversized display lettering and pointer-driven scenery do not belong to the current identity.
+Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. Neutral black and charcoal, fine rules and deliberate typography provide the structure; existing anime artwork provides the strongest color. Personality comes from the typographic wordmark, one offset frame corner, artwork proportions and concise language.
 
 **Key Characteristics:**
 
-- Artwork-led browsing with persistent titles and direct list paths.
-- Compact navigation, visible search and aligned, responsive content.
-- Opaque surfaces, quiet static ambience and accessible state feedback.
+- Early source artwork and compact introductions.
+- Contrasting browsing and list compositions with quiet metadata.
+- Neutral surfaces, restrained pink/lavender and visible interaction states.
 
 ## Colors
 
-The frontmatter records the normative values from `app/globals.css`; unprefixed colors are the dark defaults. `light-*` values replace their corresponding roles in light appearance. Primary pink, its hover color and midnight button text remain unchanged in the default light palette.
+The frontmatter records the canonical CSS values in `app/globals.css`. Each unprefixed key maps directly to the same CSS custom property, such as `bg` → `--bg`. `light-*` records the actual light/system-light overrides; primary, primary-hover and on-primary inherit the default values in light appearance.
 
 ### Primary
 
-Sakura pink (`accent`) identifies primary actions and selected feature controls. `accent-hover` brightens hover; `accent-on` supplies their text.
+Sakura pink (`primary`) marks the strongest action and selected feature controls. Its hover and readable foreground roles are `primary-hover` and `on-primary`; avoid filling every action pink.
 
 ### Secondary
 
-Lavender (`secondary`) identifies supporting links, selection, keyboard focus and secondary controls. Light appearance uses the deeper lavender equivalent.
+Lavender (`secondary`) supports links and keyboard focus. Light appearance uses the deeper equivalent.
 
 ### Neutral
 
-Midnight (`paper`), indigo (`surface`) and raised indigo (`raised`) establish background, contained work and active layers. `line` separates surfaces; `ink` and `muted` distinguish reading priority without hiding metadata.
+`bg` is the page ground. `surface`, `surface-raised` and `surface-hover` distinguish controls and temporary layers. `border` and `border-strong` supply quiet rules and stronger boundaries. `text` and `text-muted` establish reading hierarchy. Light appearance is neutral off-white, white and gray, without a blue or purple cast.
 
-Status roles are watching, completed, planned, on hold and dropped. Rating uses the amber role; danger follows dropped. Always pair status color with its label. The stored/API key `on_hold` maps to the CSS `--on-hold` token and the visible label “On hold”; never rename that contract to `paused`.
+Status colors retain watching, completed, planned, on-hold and dropped roles, with rating and danger kept distinct in meaning. Pair every status with text. The data key remains `on_hold`, rendered “On hold” and mapped to `--on-hold`.
 
-Light, dark and system appearance remain supported. Saved custom accents use `customAccentTokens` in `lib/appearance.ts`: relative luminance above 0.179 selects black control text, otherwise white; hover mixes 88% accent with white or black in the same readable direction. Preserve this foreground calculation when changing custom palettes. `polishTheme` migrates legacy Prism/Iris/default accent values to Midnight, while explicit Custom palettes remain custom.
+Saved appearance fields remain intact. The backward-compatible stored preset `Midnight` is labeled “Sakuga” in the UI. Legacy preset migration stays in `polishTheme`; explicit Custom palettes remain custom. `customAccentTokens` now writes `--primary`, `--on-primary` and `--primary-hover`, without renaming persisted preference fields. Its relative-luminance threshold (0.179) selects black or white button text; hover mixes the accent with white or black in the readable direction.
 
-**The Text Before Color Rule.** Status, source availability and errors must remain understandable without their color.
+**The Text Before Color Rule.** Status, source availability and errors remain understandable without color.
 
 ## Typography
 
-All product text uses the system sans stack in the frontmatter. Only Syne 700 is self-hosted, for the established wordmark and branded artwork fallback. Ordinary headings, controls and metadata use no decorative face; Unbounded and Space Mono are removed.
+Self-host Space Grotesk at 500/700 and Manrope at 400/600 only. Space Grotesk supplies headings and the wordmark; Manrope supplies interface text, titles beneath posters and metadata. Preserve system fallbacks. The wordmark mixes 700 with a lighter 500 ending and carries one small frame corner; its mobile size is 1.65rem.
 
-Page headings use the headline role; section headings use title; poster titles stay readable below their artwork. Body paragraphs have a maximum width of 72ch. Small metadata may step to 0.75rem for compact source labels; keep the muted role and explicit meaning. Numbers in ratings, progress tables and statistics use tabular numerals. Headings balance wrapping; long titles and source strings must wrap without overflow.
+The headline and title roles govern page and section hierarchy. The compact home introduction uses `clamp(1.8rem, 3.1vw, 2.75rem)` with 1.13 line height, becoming 1.85rem on phones. Body copy stays within 72ch. Poster titles reserve two readable lines; compact metadata can use 0.75rem. Use tabular numerals for progress, scores and counts. Do not synthesize additional font weights or uppercase every label.
 
 ## Layout
 
-Use the central spacing rhythm in the frontmatter. Public content is centered within 1360px, with 24px horizontal padding and 32px top padding; narrow screens use 16px and 24px. Workspace content has a 1500px maximum and responsive side padding.
+Use the frontmatter spacing rhythm. Public content is centered within 1360px, with 32px side padding and 36px top padding; tablet uses 24px sides/28px top, phones 16px sides/24px top. The workspace retains its shared sidebar/header grid, 242px expanded and 82px collapsed, with a mobile drawer at 600px. Reserve header space for the existing audio control.
 
-The private shell is one real grid: `242px minmax(0, 1fr)`, collapsing to `82px minmax(0, 1fr)`. Header and content share the second column. At 600px and below the sidebar becomes a fixed 242px drawer; it starts closed unless a saved user choice says otherwise. Keep the collapse control and its accessible state synchronized.
+The home introduction is compact and followed by ruled genre navigation. A wide scene/title/actions feature sits beside a denser popular poster shelf, rather than inside a hero panel. Its content height remains intrinsic. Tablet pairs scene and text; phones stack them, retaining early artwork. Popular posters adapt to available width. Recent releases use a native horizontal poster rail; upcoming releases use cover-led rows. Retain honest general-feed labels and native page scrolling.
 
-The public header keeps search visible: below 800px it occupies its own full-width row, and below 600px route links use a menu toggle. Main adaptation breakpoints are 1100px, 800px and 600px. Desktop catalog grids have five columns, then four, three and two; the workspace uses fewer columns where its sidebar consumes space. Mobile poster grids remain two columns.
+Discovery keeps compact, collapsible filtering and sorting. The personal library defaults to the existing list mode: small covers, textual status, selected-season progress numerals/bar and score. Keep shelf, board and genre representations, season selection and bulk actions available. Detail pages put a list action near the title/season choice and retain the full editor below. Settings, forms, statistics and collections use fine section rules where a panel adds no hierarchy.
 
-The discovery feature is a compact bordered panel with a 144px poster, content and a right-hand scene on wide desktops. The scene disappears below 1100px; mobile uses an 88px poster and a reserved 330px minimum content frame. Keep real metadata, synopsis, direct actions and feature controls available. Genre shortcuts lead directly into the first poster shelf. Rails use native horizontal scrolling and bounded previous/next controls, without taking over page scroll.
+Main adaptation breakpoints are 1100px, 800px and 600px. Choose usable poster widths, preserve visible focus and reachable controls, and prevent document overflow. Small-screen library rows retain score below progress rather than losing it.
 
 ## Elevation & Depth
 
-Opaque tonal layers and fine borders establish structure. Background ambience is two static CSS radial gradients: lavender at 6% near the upper right, pink near the upper left at half the saved ambient intensity, capped at 5% (default 4%). It never tracks input or animates. No grain, glass or backdrop blur is required.
+Depth comes primarily from opaque neutral tones, borders and alignment. The optional ambient preference controls barely perceptible, static neutral shading: text color mixed into a single upper-right radial gradient, capped at 3%. There is no pink/purple haze or animated background.
 
-Shadows are localized: search popovers use `0 14px 30px #0003`, focused/hovered posters use `0 8px 18px #0004`, and the mobile drawer uses `12px 0 30px #0005`. Resting poster cards have no shadow cloud.
+Search popovers use `0 14px 30px #0003`; hovered/focused posters use `0 8px 18px #0004`; the mobile drawer uses `12px 0 30px #0005`. Resting content does not acquire a shadow cloud. Interaction transitions use 160ms and `cubic-bezier(0.22, 1, 0.36, 1)`; popovers enter by 5px. Loading skeletons reserve geometry and pulse opacity. Reduced motion removes movement/scaling; manual carousel control remains.
+
+**The Quiet Ground Rule.** Artwork supplies atmosphere; the page field stays neutral and still.
 
 ## Shapes
 
-Posters keep a reserved 2:3 frame and the poster radius. Features use the largest radius; panels, controls, inputs and tags step down according to role. Thin borders and clipped images make the shape; do not distort artwork or rotate card planes.
+Use 8px controls, stable 2:3 posters with 10px corners, 5px small thumbnails and 16px dialogs. Ordinary panels may use the established 12px radius, but sections do not automatically need containers. Fine rules and aligned edges do most of the grouping. The offset frame corner belongs to the wordmark and active routes; do not repeat it on every card.
 
 ## Components
 
-### Buttons and fields
+### Buttons, fields and filters
 
-Primary buttons use sakura fill and computed readable text; secondary buttons use a solid surface and border, brightening to raised on hover. Standard buttons and fields have a 44px minimum height; compact buttons use 40px. Disabled buttons reduce opacity to 0.5 and show the unavailable cursor. Pending operations retain clear labels and status feedback.
+Primary buttons use primary/on-primary; secondary buttons use raised neutral surfaces and a fine border. Standard controls have a 44px minimum height, with existing compact variants used deliberately. Fields use neutral fills, readable labels and lavender focus rings. Preserve search shortcuts, suggestions and filter submission contracts. Collapsible filters expose an ordinary labeled summary.
 
-Fields have visible labels, opaque backgrounds, clear borders, lavender carets and muted placeholders. Search uses a solid surface, a 46px frame and its own focus-within ring. Global keyboard focus is a 2px lavender outline with 4px offset; search uses 2px offset. Keep existing Lucide icons and accessible icon-button names.
+### Navigation and feedback
 
-### Navigation, tags and filters
+Keep search visible and active routes identifiable through text and the small frame corner. Mobile navigation preserves its menu state and keyboard access. Audio occupies its reserved header slot and retains the existing opt-in sound behavior. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
 
-Workspace active routes use raised indigo and lavender text; public active routes use raised indigo and main text. Tags use restrained raised surfaces and lavender labels. Collapsible discovery filters and segmented library views retain their real selected state. Search retains `/` and Ctrl/Cmd+K shortcuts without intercepting typing in editable fields; suggestions must stay above feature content.
+### Posters and source artwork
 
-### Artwork and discovery
+Cards emphasize artwork with little visible outer container, persistent two-line titles and quiet metadata. Compact home cards reduce badges/source clutter; discovery and detail retain database/trailer links. Secondary list paths remain reachable by touch and keyboard. Hover lift is at most 3px and image scale at most 1.025, within clipped frames; reduced motion removes scaling.
 
-Poster titles, metadata, list-management links and separate source destinations remain reachable without hover or nested interactive elements. Fine-pointer hover/focus may lift the poster by at most 3px, brighten its border and add the localized shadow; only its clipped image scales to 1.025. Touch users keep direct actions.
+Retain trusted source URLs, cached AVIF/WebP derivatives, source attribution and measured dimensions. Missing art and unavailable ratings stay explicit. Large cover fallback artwork is labeled as original Sakuga fallback art; tiny missing-cover thumbnails use an accessible, labeled unavailable-image icon. Never imply fallback art is the title’s source image or claim universal high-resolution coverage.
 
-The feature retains visible manual selection and pause/play. Its existing 7.5-second content rotation pauses on hover, focus, hidden tabs, manual selection and reduced motion. This content carousel is separate from the static background. Skeletons reserve poster dimensions and may pulse gently while real content loads.
+### Library and detail actions
 
-### State and accessibility
-
-State transitions use `--fast` (160ms) and `--ease` (`cubic-bezier(0.22, 1, 0.36, 1)`); `--panel` is reserved at 220ms. Popovers enter from 5px below. Buttons may press to 0.98. Reduced motion removes animations, transitions, poster lift/scaling, press scaling and smooth rail scrolling; the carousel retains manual navigation. Do not add entrance delays to real data or animate whole catalog grids.
-
-List feedback, empty/error states and explicitly unavailable artwork must remain meaningful. Destructive removal and import retain native confirmation behavior. Opt-in click/hover/selection audio remains available through its compact toggle; its pointerover listener supplies sound only and is not a visual pointer effect. No music or ambient visual loop is part of the system.
+Preserve selected season IDs, progress/status/score fields, collection membership IDs, save actions and the `LibraryEditor` key tied to `anime.id`. Presentation must not change session refresh, authentication, data or integration contracts. Concise confirmations describe the actual action completed.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** use shared foundations and real artwork across every route.
-- **Do** preserve visible titles, search, focus and season-specific list paths on touch and keyboard.
-- **Do** keep the shared sidebar grid and readable light/system/custom palettes intact.
-- **Do** preserve source attribution, cached-art provenance, measured derivatives and explicit unavailable labels.
-- **Do** preserve authentication/session refresh, verified season grouping, selected-season editor keys and original anime IDs for progress, scores, notes and collection membership.
+- **Do** keep search, real anime artwork and useful actions early.
+- **Do** distinguish general catalog feeds from the signed-in user’s list.
+- **Do** preserve source provenance, selected-season behavior and existing preference fields.
+- **Do** use labels alongside color and keep secondary actions available to touch and keyboard.
 
 ### Don't:
 
-- **Don't** restore Prism glass, shaders, canvas scenery, refracting lenses, visual pointer loops, tilt, parallax, ripple or animated backgrounds.
-- **Don't** introduce oversized marketing panels, fabricated ratings, statistics or activity.
-- **Don't** apply Syne to ordinary UI text or restore Unbounded and Space Mono.
-- **Don't** hide essential actions behind hover or communicate status through color alone.
-- **Don't** discard real smaller source art, enlarge cached originals or treat fallback Sakuga artwork as the anime's poster.
+- **Don't** invent creator profiles, favorites, recommendations, ratings or personal bylines.
+- **Don't** add glass, ripple, visual pointer loops, parallax, tilt, particles, glow or background animation.
+- **Don't** add pink haze, decorative Japanese text, mascots or a frame corner on every card.
+- **Don't** replace each route with the same panel dashboard or an oversized welcome hero.

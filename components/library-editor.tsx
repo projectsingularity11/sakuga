@@ -41,7 +41,7 @@ export function LibraryEditor({
     });
   }
   return (
-    <section className="editor">
+    <section className="editor" id="list-entry">
       <h2>{exists ? "Your list entry" : "Add to library"}</h2>
       <form
         onSubmit={(e) => {

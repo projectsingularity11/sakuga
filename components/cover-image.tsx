@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { ImageOff } from "lucide-react";
 import { artworkFor } from "@/lib/home-artwork";
 import { ArtPicture } from "./art-picture";
 import { useState } from "react";
@@ -8,11 +9,13 @@ export function CoverImage({
   id,
   title,
   priority = false,
+  compact = false,
 }: {
   src: string | null;
   id?: number;
   title: string;
   priority?: boolean;
+  compact?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
   const cached = src && id ? artworkFor(id)?.cover : undefined;
@@ -39,6 +42,14 @@ export function CoverImage({
       )}
       onError={() => setFailed(true)}
     />
+  ) : compact ? (
+    <span
+      className="cover-unavailable"
+      role="img"
+      aria-label={`${title} cover unavailable`}
+    >
+      <ImageOff size={16} />
+    </span>
   ) : (
     <div className="cover-fallback">
       <Image

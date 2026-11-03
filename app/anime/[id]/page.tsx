@@ -59,6 +59,10 @@ export default async function AnimeDetail({
               selected={a.id}
               language={language}
             />
+            <Link className="button detail-primary" href={`/app/anime/${a.id}`}>
+              <Bookmark size={17} />
+              Add to my library
+            </Link>
             <p className="alternate">
               {alternateTitles(a, language).join(" / ")}
             </p>
@@ -85,10 +89,7 @@ export default async function AnimeDetail({
               {a.studios.join(" · ")}
               {a.duration && ` · ${a.duration} minutes per episode`}
             </p>
-            <Link className="button" href={`/app/anime/${a.id}`}>
-              <Bookmark size={17} />
-              Add to my library
-            </Link>
+
             <h2>From the sources</h2>
             <div className="ratings">
               {a.ratings

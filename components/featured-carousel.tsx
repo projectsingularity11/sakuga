@@ -11,7 +11,6 @@ import {
   Plus,
 } from "lucide-react";
 import type { FeatureSlide } from "@/lib/home-feature";
-import { CoverImage } from "./cover-image";
 import { ArtPicture } from "./art-picture";
 const subscribe = (cb: () => void) => {
   const mq = matchMedia("(prefers-reduced-motion: reduce)");
@@ -72,7 +71,7 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
   if (!a)
     return (
       <section className="discovery-feature feature-empty">
-        <h1>Explore anime</h1>
+        <h2>Explore anime</h2>
         <Link className="button" href="/discover">
           Open catalog <ArrowUpRight size={18} />
         </Link>
@@ -115,7 +114,7 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
           />
         )}
         <div className="featured-content">
-          <h1 title={title}>{title}</h1>
+          <h2 title={title}>{title}</h2>
           <p className="featured-meta">
             <span>{a.format}</span>
             <span>{a.year}</span>
@@ -142,25 +141,6 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
               </span>
             </a>
           </div>
-        </div>
-        <div className="hero-gallery">
-          <Link
-            className="gallery-main"
-            href={a.href}
-            aria-label={`View ${title}`}
-          >
-            <CoverImage
-              key={a.id}
-              src={a.cover}
-              id={a.id}
-              title={title}
-              priority={index === 0}
-            />
-            <span className="poster-open">
-              <ArrowUpRight size={23} />
-              <span>View anime</span>
-            </span>
-          </Link>
         </div>
       </div>
       {titles.length > 1 && (
