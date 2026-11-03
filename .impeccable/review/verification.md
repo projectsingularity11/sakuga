@@ -18,4 +18,6 @@ The shared Midnight foundations replace the old visual world. Removed implementa
 
 Existing source-backed artwork, cached AVIF/WebP derivatives, source URLs and measured dimensions remain intact. This is not evidence of universal high-resolution artwork or catalog coverage. Authentication, list persistence, original season IDs/editor keys, appearance preferences, integrations and attribution retain their existing contracts.
 
-Vercel deployment is pending. Local fixture tests and saved captures do not verify deployed authentication, production catalog coverage, live integrations, credentials or provider permissions. No current production performance benchmark is claimed.
+Production deployment `dpl_5bUvQC5u8z5cvMyRHKPMaNpbuuqz` for commit `cec9bb20bc45f14ac7dd7e1414909bc157217d2e` reached **READY**. Vercel's scoped API confirmed `sakuga-anime.vercel.app` and the existing aliases on this release. The post-deployment runtime-error scan returned no errors in its queried window.
+
+Direct live HTTP checks could not be completed: Vercel's fetch connector could not resolve the team deployment, and public curl through the workspace network proxy returned CONNECT 403. No live homepage, discovery, health, redirect or artwork-response assertion is made from those failed attempts. Deployment status and local fixture evidence do not establish deployed authentication, production catalog coverage, live integrations or provider permissions. No current production performance benchmark is claimed.
