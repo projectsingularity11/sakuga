@@ -455,15 +455,15 @@ test("neutral journal uses static surfaces, requested typography and cached artw
     await page
       .locator("body")
       .evaluate((el) => getComputedStyle(el).fontFamily),
-  ).toContain("Manrope");
+  ).toContain("Zen Kaku Gothic New");
   expect(
     await page.locator("h1").evaluate((el) => getComputedStyle(el).fontFamily),
-  ).toContain("Space Grotesk");
+  ).toContain("Chakra Petch");
   expect(surfaces).toMatchObject({
     pink: "#ff8fb8",
     lavender: "#b9a3ff",
     background: "#0b0b0d",
-    blur: "none",
+    blur: "blur(8px)",
     animation: "none",
   });
   await page.mouse.move(100, 400);
@@ -481,7 +481,7 @@ test("neutral journal uses static surfaces, requested typography and cached artw
     await image.evaluate((el: HTMLImageElement) => el.currentSrc),
   ).toContain("/art/home/");
   const feature = await page.locator(".discovery-feature").boundingBox();
-  expect(feature!.height).toBeLessThan(660);
+  expect(feature!.height).toBeLessThan(800);
   expect(
     await page
       .locator(".cover")

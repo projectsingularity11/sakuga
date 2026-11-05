@@ -1,6 +1,6 @@
 ---
 name: Sakuga journal
-description: Neutral, artwork-led anime discovery and a personal media library.
+description: A broad, artwork-led anime journal with Japanese editorial and technical character.
 colors:
   bg: "#0b0b0d"
   surface: "#141416"
@@ -39,35 +39,35 @@ colors:
   light-danger: "#a52742"
 typography:
   wordmark:
-    fontFamily: "Space Grotesk, sans-serif"
-    fontSize: "1.8rem"
+    fontFamily: "Chakra Petch, sans-serif"
+    fontSize: "2rem"
     fontWeight: 700
     lineHeight: 1
-    letterSpacing: "-0.04em"
+    letterSpacing: "-0.03em"
   headline:
-    fontFamily: 'Space Grotesk, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontFamily: 'Chakra Petch, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "clamp(1.8rem, 3.3vw, 2.6rem)"
     fontWeight: 500
     lineHeight: 1.25
     letterSpacing: "-0.03em"
   title:
-    fontFamily: 'Space Grotesk, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontFamily: 'Chakra Petch, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "1.35rem"
     fontWeight: 500
     lineHeight: 1.25
     letterSpacing: "-0.02em"
   card-title:
-    fontFamily: 'Manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontFamily: 'Zen Kaku Gothic New, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "0.875rem"
     fontWeight: 600
     lineHeight: 1.45
   body:
-    fontFamily: 'Manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-    fontSize: "14px"
+    fontFamily: 'Zen Kaku Gothic New, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontSize: "15px"
     fontWeight: 400
     lineHeight: 1.65
   label:
-    fontFamily: 'Manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontFamily: 'Zen Kaku Gothic New, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "0.875rem"
     fontWeight: 600
   metadata:
@@ -121,15 +121,15 @@ components:
 
 ## Overview
 
-**Creative North Star: "The personal anime journal"**
+**Creative North Star: "The luminous anime journal"**
 
-Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. Neutral black and charcoal, fine rules and deliberate typography provide the structure; existing anime artwork provides the strongest color. Personality comes from the typographic wordmark, one offset frame corner, artwork proportions and concise language.
+Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. A broad black-and-charcoal canvas, Japanese editorial body typography and angular technical headings support real anime artwork. Pink/lavender atmosphere, luminous gradient rules and lightly translucent controls give the journal more expression without adding moving scenery. The typographic wordmark, one offset frame corner and concise language keep its identity coherent.
 
 **Key Characteristics:**
 
 - Early source artwork and compact introductions.
 - Contrasting browsing and list compositions with quiet metadata.
-- Neutral surfaces, restrained pink/lavender and visible interaction states.
+- A broad canvas, vibrant pink/lavender gradients and selective translucency.
 
 ## Colors
 
@@ -137,15 +137,15 @@ The frontmatter records the canonical CSS values in `app/globals.css`. Each unpr
 
 ### Primary
 
-Sakura pink (`primary`) marks the strongest action and selected feature controls. Its hover and readable foreground roles are `primary-hover` and `on-primary`; avoid filling every action pink.
+Sakura pink (`primary`) marks the strongest action and selected feature controls. Primary buttons blend pink toward lavender; gradient rules connect pink, neutral borders and lavender across sections. The solid fallback and readable foreground roles remain `primary`, `primary-hover` and `on-primary`; keep supporting actions quieter.
 
 ### Secondary
 
-Lavender (`secondary`) supports links and keyboard focus. Light appearance uses the deeper equivalent.
+Lavender (`secondary`) supports links, keyboard focus, the second intro line and the cool end of gradient accents. Light appearance uses the deeper equivalent. Static pink/lavender atmosphere sits over the neutral base in both appearances.
 
 ### Neutral
 
-`bg` is the page ground. `surface`, `surface-raised` and `surface-hover` distinguish controls and temporary layers. `border` and `border-strong` supply quiet rules and stronger boundaries. `text` and `text-muted` establish reading hierarchy. Light appearance is neutral off-white, white and gray, without a blue or purple cast.
+`bg` is the page ground. `surface`, `surface-raised` and `surface-hover` distinguish controls and temporary layers. `border` and `border-strong` supply quiet rules and stronger boundaries. `text` and `text-muted` establish reading hierarchy. Light appearance retains off-white, white and gray base tokens while sharing the accent atmosphere.
 
 Status colors retain watching, completed, planned, on-hold and dropped roles, with rating and danger kept distinct in meaning. Pair every status with text. The data key remains `on_hold`, rendered “On hold” and mapped to `--on-hold`.
 
@@ -155,27 +155,27 @@ Saved appearance fields remain intact. The backward-compatible stored preset `Mi
 
 ## Typography
 
-Self-host Space Grotesk at 500/700 and Manrope at 400/600 only. Space Grotesk supplies headings and the wordmark; Manrope supplies interface text, titles beneath posters and metadata. Preserve system fallbacks. The wordmark mixes 700 with a lighter 500 ending and carries one small frame corner; its mobile size is 1.65rem.
+Self-host Chakra Petch Latin at 500/700 and Zen Kaku Gothic New Latin at 400/700. Chakra Petch supplies angular headings and the wordmark; Zen Kaku Gothic New supplies a Japanese editorial character to interface text, poster titles and metadata. The current English interface imports Latin subsets; this is not evidence of bundled Japanese glyph coverage. Preserve system fallbacks. The wordmark mixes 700 with a lighter 500 ending and carries one small frame corner; its mobile size is 1.65rem. Current CSS also requests 600 for compact title/control emphasis; the imported body assets are 400/700.
 
-The headline and title roles govern page and section hierarchy. The compact home introduction uses `clamp(1.8rem, 3.1vw, 2.75rem)` with 1.13 line height, becoming 1.85rem on phones. Body copy stays within 72ch. Poster titles reserve two readable lines; compact metadata can use 0.75rem. Use tabular numerals for progress, scores and counts. Do not synthesize additional font weights or uppercase every label.
+The headline and title roles govern page and section hierarchy. The compact home introduction uses `clamp(2rem, 3.5vw, 3.2rem)` with 1.08 line height, becoming 1.85rem on phones. Body copy stays within 72ch. Poster titles reserve two readable lines; compact metadata can use 0.75rem. Use tabular numerals for progress, scores and counts. Keep uppercase labels selective and retain the two-family hierarchy.
 
 ## Layout
 
-Use the frontmatter spacing rhythm. Public content is centered within 1360px, with 32px side padding and 36px top padding; tablet uses 24px sides/28px top, phones 16px sides/24px top. The workspace retains its shared sidebar/header grid, 242px expanded and 82px collapsed, with a mobile drawer at 600px. Reserve header space for the existing audio control.
+Use the frontmatter spacing rhythm. Public and workspace content no longer have a maximum canvas width. Public content uses 30px top padding and `clamp(16px, 2vw, 40px)` horizontal gutters; the existing tablet/phone overrides retain 24px/16px sides and 28px/24px top. Public navigation and its reserved audio slot follow the same fluid gutter. Workspace content uses `clamp(20px, 3vw, 48px)` horizontal padding and retains the shared sidebar/header grid, 242px expanded and 82px collapsed, with a mobile drawer at 600px. Let content use lateral space while retaining readable paragraph widths.
 
-The home introduction is compact and followed by ruled genre navigation. A wide scene/title/actions feature sits beside a denser popular poster shelf, rather than inside a hero panel. Its content height remains intrinsic. Tablet pairs scene and text; phones stack them, retaining early artwork. Popular posters adapt to available width. Recent releases use a native horizontal poster rail; upcoming releases use cover-led rows. Retain honest general-feed labels and native page scrolling.
+The home introduction is compact and followed by ruled genre navigation. A wide scene/title/actions feature sits beside a denser popular poster shelf, rather than inside a hero panel. Its content height remains intrinsic. Tablet pairs scene and text; phones stack them, retaining early artwork. Popular posters adapt to available width. At 1700px and above the popular shelf gains five columns, the release rail eight visible poster widths and the full catalog seven columns. Recent releases use a native horizontal poster rail; upcoming releases use cover-led rows. Retain honest general-feed labels and native page scrolling.
 
 Discovery keeps compact, collapsible filtering and sorting. The personal library defaults to the existing list mode: small covers, textual status, selected-season progress numerals/bar and score. Keep shelf, board and genre representations, season selection and bulk actions available. Detail pages put a list action near the title/season choice and retain the full editor below. Settings, forms, statistics and collections use fine section rules where a panel adds no hierarchy.
 
-Main adaptation breakpoints are 1100px, 800px and 600px. Choose usable poster widths, preserve visible focus and reachable controls, and prevent document overflow. Small-screen library rows retain score below progress rather than losing it.
+Main adaptation breakpoints are 1700px, 1100px, 800px and 600px. Choose usable poster widths, preserve visible focus and reachable controls, and prevent document overflow. Small-screen library rows retain score below progress rather than losing it.
 
 ## Elevation & Depth
 
-Depth comes primarily from opaque neutral tones, borders and alignment. The optional ambient preference controls barely perceptible, static neutral shading: text color mixed into a single upper-right radial gradient, capped at 3%. There is no pink/purple haze or animated background.
+Depth combines charcoal surfaces, fine gradient rules and selective translucency. Static radial atmosphere mixes primary pink at 11% near the upper left and lavender at 10% near the upper right. The public header uses 88% background opacity with 8px blur; the workspace header uses 92% background opacity. Search surfaces use 92% surface opacity, supporting controls 86% raised-surface opacity, and the sidebar has a faint lavender-to-surface gradient. These effects are static. Reduced transparency makes the public/workspace headers and search surfaces opaque and removes header blur. The stored ambient preference remains compatible, but the current radial CSS uses fixed mixes.
 
 Search popovers use `0 14px 30px #0003`; hovered/focused posters use `0 8px 18px #0004`; the mobile drawer uses `12px 0 30px #0005`. Resting content does not acquire a shadow cloud. Interaction transitions use 160ms and `cubic-bezier(0.22, 1, 0.36, 1)`; popovers enter by 5px. Loading skeletons reserve geometry and pulse opacity. Reduced motion removes movement/scaling; manual carousel control remains.
 
-**The Quiet Ground Rule.** Artwork supplies atmosphere; the page field stays neutral and still.
+**The Still Atmosphere Rule.** Gradients and translucency add color and depth; the page field never tracks the cursor or animates.
 
 ## Shapes
 
@@ -185,11 +185,11 @@ Use 8px controls, stable 2:3 posters with 10px corners, 5px small thumbnails and
 
 ### Buttons, fields and filters
 
-Primary buttons use primary/on-primary; secondary buttons use raised neutral surfaces and a fine border. Standard controls have a 44px minimum height, with existing compact variants used deliberately. Fields use neutral fills, readable labels and lavender focus rings. Preserve search shortcuts, suggestions and filter submission contracts. Collapsible filters expose an ordinary labeled summary.
+Primary buttons use readable on-primary text over a 115-degree pink gradient with a lavender-mixed end. Secondary buttons and icon controls use lightly translucent raised surfaces and a fine border. Standard controls have a 44px minimum height, with existing compact variants used deliberately. Fields use neutral fills, readable labels and lavender focus rings. Preserve search shortcuts, suggestions and filter submission contracts. Collapsible filters expose an ordinary labeled summary.
 
 ### Navigation and feedback
 
-Keep search visible and active routes identifiable through text and the small frame corner. Mobile navigation preserves its menu state and keyboard access. Audio occupies its reserved header slot and retains the existing opt-in sound behavior. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
+Keep search visible and active routes identifiable through text and the small frame corner. The translucent public header ends in a fine pink-to-lavender rule; preserve its opaque reduced-transparency alternative. Mobile navigation preserves its menu state and keyboard access. Audio occupies its reserved header slot and retains the existing opt-in sound behavior. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
 
 ### Posters and source artwork
 
@@ -206,6 +206,7 @@ Preserve selected season IDs, progress/status/score fields, collection membershi
 ### Do:
 
 - **Do** keep search, real anime artwork and useful actions early.
+- **Do** use the broader canvas, static accent gradients and selective translucency with readable text and opaque fallbacks.
 - **Do** distinguish general catalog feeds from the signed-in user’s list.
 - **Do** preserve source provenance, selected-season behavior and existing preference fields.
 - **Do** use labels alongside color and keep secondary actions available to touch and keyboard.
@@ -213,6 +214,6 @@ Preserve selected season IDs, progress/status/score fields, collection membershi
 ### Don't:
 
 - **Don't** invent creator profiles, favorites, recommendations, ratings or personal bylines.
-- **Don't** add glass, ripple, visual pointer loops, parallax, tilt, particles, glow or background animation.
-- **Don't** add pink haze, decorative Japanese text, mascots or a frame corner on every card.
+- **Don't** restore ripple, refraction, visual pointer loops, parallax, tilt, particles or background animation.
+- **Don't** use decorative Japanese text, mascots or a frame corner on every card.
 - **Don't** replace each route with the same panel dashboard or an oversized welcome hero.

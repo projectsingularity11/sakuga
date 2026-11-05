@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-02T19:06:06-06:00",
+  "generatedAt": "2026-11-05T01:50:40+00:00",
   "title": "Design System: Sakuga journal",
   "extensions": {
     "colorMeta": {
@@ -502,11 +502,11 @@
       },
       "headline": {
         "displayName": "Page heading",
-        "purpose": "Confident, compact page hierarchy."
+        "purpose": "Angular technical headings using Chakra Petch 500."
       },
       "body": {
         "displayName": "Interface body",
-        "purpose": "Reading and interface copy."
+        "purpose": "Japanese editorial character for reading and interface copy; Latin 400/700 assets are imported."
       }
     },
     "shadows": [
@@ -550,6 +550,10 @@
     ],
     "breakpoints": [
       {
+        "name": "wide-canvas",
+        "value": "1700px"
+      },
+      {
         "name": "compact-desktop",
         "value": "1100px"
       },
@@ -561,6 +565,28 @@
         "name": "phone",
         "value": "600px"
       }
+    ],
+    "materials": [
+      {
+        "name": "page-atmosphere",
+        "value": "radial-gradient(ellipse 75% 600px at 0 0, color-mix(in srgb, var(--primary) 11%, transparent), transparent 80%), radial-gradient(ellipse 65% 650px at 100% 8%, color-mix(in srgb, var(--secondary) 10%, transparent), transparent 85%)",
+        "purpose": "Static pink/lavender atmosphere over the neutral page."
+      },
+      {
+        "name": "public-header",
+        "value": "background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px)",
+        "purpose": "Selective header translucency; opaque background and no blur with reduced transparency."
+      },
+      {
+        "name": "section-rule",
+        "value": "linear-gradient(90deg, var(--primary), var(--border) 25%, var(--secondary))",
+        "purpose": "Fine luminous boundary for release and upcoming sections."
+      },
+      {
+        "name": "public-gutter",
+        "value": "clamp(16px, 2vw, 40px)",
+        "purpose": "Fluid public canvas, navigation and audio alignment."
+      }
     ]
   },
   "components": [
@@ -568,17 +594,17 @@
       "name": "Primary button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The strongest task action.",
+      "description": "The strongest task action with a static pink/lavender gradient.",
       "html": "<button class=\"ds-primary\">Save changes</button>",
-      "css": ".ds-primary{background:var(--primary);color:var(--on-primary);border:1px solid transparent;border-radius:8px;min-height:44px;padding:10px 18px;font:600 14px/1.4 Manrope,sans-serif;cursor:pointer;transition:background 160ms cubic-bezier(.22,1,.36,1),transform 160ms cubic-bezier(.22,1,.36,1)}.ds-primary:hover{background:var(--primary-hover)}.ds-primary:active{transform:scale(.98)}.ds-primary:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}.ds-primary:active{transform:none}}"
+      "css": ".ds-primary{background:var(--primary);background-image:linear-gradient(115deg,color-mix(in srgb,var(--primary) 92%,white),var(--primary) 55%,color-mix(in srgb,var(--primary) 75%,var(--secondary)));color:var(--on-primary);border:1px solid transparent;border-radius:8px;min-height:44px;padding:10px 18px;font:600 14px/1.4 \"Zen Kaku Gothic New\",sans-serif;cursor:pointer;transition:background 160ms cubic-bezier(.22,1,.36,1),transform 160ms cubic-bezier(.22,1,.36,1)}.ds-primary:hover{background-color:var(--primary-hover)}.ds-primary:active{transform:scale(.98)}.ds-primary:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}.ds-primary:active{transform:none}}"
     },
     {
       "name": "Secondary button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "A supporting action on a neutral surface.",
+      "description": "A supporting action on a lightly translucent raised surface.",
       "html": "<button class=\"ds-secondary\">View details</button>",
-      "css": ".ds-secondary{background:var(--surface-raised);color:var(--text);border:1px solid var(--border);border-radius:8px;min-height:44px;padding:10px 18px;font:600 14px/1.4 Manrope,sans-serif;cursor:pointer;transition:background 160ms cubic-bezier(.22,1,.36,1)}.ds-secondary:hover{background:var(--surface-raised)}.ds-secondary:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
+      "css": ".ds-secondary{background:color-mix(in srgb,var(--surface-raised) 86%,transparent);color:var(--text);border:1px solid var(--border);border-radius:8px;min-height:44px;padding:10px 18px;font:600 14px/1.4 \"Zen Kaku Gothic New\",sans-serif;cursor:pointer;transition:background 160ms cubic-bezier(.22,1,.36,1)}.ds-secondary:hover{background:var(--surface-raised)}.ds-secondary:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     },
     {
       "name": "Text field",
@@ -586,7 +612,7 @@
       "refersTo": "input",
       "description": "An explicitly labeled neutral form field.",
       "html": "<label class=\"ds-field\">Collection name<input placeholder=\"Name your collection\" /></label>",
-      "css": ".ds-field{display:grid;gap:6px;color:var(--text);font:400 14px/1.65 Manrope,sans-serif}.ds-field input{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;min-height:44px;padding:10px 12px;font:inherit}.ds-field input:hover{border-color:var(--border-strong)}.ds-field input:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
+      "css": ".ds-field{display:grid;gap:6px;color:var(--text);font:400 14px/1.65 \"Zen Kaku Gothic New\",sans-serif}.ds-field input{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;min-height:44px;padding:10px 12px;font:inherit}.ds-field input:hover{border-color:var(--border-strong)}.ds-field input:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     },
     {
       "name": "Active navigation",
@@ -594,14 +620,14 @@
       "refersTo": "navigation-active",
       "description": "Active route with the shared frame-corner motif.",
       "html": "<nav class=\"ds-nav\"><a href=\"#discover\" aria-current=\"page\">Discover</a><a href=\"#library\">Your list</a></nav>",
-      "css": ".ds-nav{display:flex;gap:6px;font:400 14px/1.65 Manrope,sans-serif}.ds-nav a{position:relative;padding:10px 12px;color:var(--text-muted);border-radius:8px;text-decoration:none}.ds-nav a:hover,.ds-nav a[aria-current]{color:var(--text)}.ds-nav a[aria-current]:after{content:\"\";position:absolute;right:7px;bottom:6px;width:7px;height:7px;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-nav a:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
+      "css": ".ds-nav{display:flex;gap:6px;font:400 14px/1.65 \"Zen Kaku Gothic New\",sans-serif}.ds-nav a{position:relative;padding:10px 12px;color:var(--text-muted);border-radius:8px;text-decoration:none}.ds-nav a:hover,.ds-nav a[aria-current]{color:var(--text)}.ds-nav a[aria-current]:after{content:\"\";position:absolute;right:7px;bottom:6px;width:7px;height:7px;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-nav a:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     },
     {
       "name": "Status label",
       "kind": "chip",
       "description": "Status is named in text; its small dot is supporting information.",
       "html": "<span class=\"ds-status\">Watching</span>",
-      "css": ".ds-status{display:inline-flex;align-items:center;gap:7px;color:var(--text);font:400 12px/1.65 Manrope,sans-serif}.ds-status:before{content:\"\";width:6px;height:6px;border-radius:50%;background:var(--watching)}"
+      "css": ".ds-status{display:inline-flex;align-items:center;gap:7px;color:var(--text);font:400 12px/1.65 \"Zen Kaku Gothic New\",sans-serif}.ds-status:before{content:\"\";width:6px;height:6px;border-radius:50%;background:var(--watching)}"
     },
     {
       "name": "Unavailable poster",
@@ -609,23 +635,23 @@
       "refersTo": "poster",
       "description": "Stable artwork geometry with a truthful unavailable state.",
       "html": "<a class=\"ds-poster\" href=\"#title\"><span class=\"ds-cover\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"m3 3 18 18M10 3h8a3 3 0 0 1 3 3v12M21 21H6a3 3 0 0 1-3-3V6m1 11 4-4 4 4\"/></svg><small>Cover artwork unavailable</small></span><strong>Anime title</strong></a>",
-      "css": ".ds-poster{display:block;max-width:160px;color:var(--text);text-decoration:none;font:600 14px/1.45 Manrope,sans-serif}.ds-cover{aspect-ratio:2/3;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:12px;color:var(--text-muted)}.ds-cover small{font:400 12px/1.5 Manrope,sans-serif;text-align:center}.ds-poster strong{display:block;margin-top:11px;min-height:2.9em;font-weight:600}.ds-poster:hover strong{text-decoration:underline}.ds-poster:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
+      "css": ".ds-poster{display:block;max-width:160px;color:var(--text);text-decoration:none;font:600 14px/1.45 \"Zen Kaku Gothic New\",sans-serif}.ds-cover{aspect-ratio:2/3;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:12px;color:var(--text-muted)}.ds-cover small{font:400 12px/1.5 \"Zen Kaku Gothic New\",sans-serif;text-align:center}.ds-poster strong{display:block;margin-top:11px;min-height:2.9em;font-weight:600}.ds-poster:hover strong{text-decoration:underline}.ds-poster:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     },
     {
       "name": "Sakuga wordmark",
       "kind": "custom",
       "description": "Typographic identity with one offset frame corner.",
       "html": "<a class=\"ds-brand\" href=\"#home\" aria-label=\"Sakuga home\">saku<span>ga</span><i aria-hidden=\"true\"></i></a>",
-      "css": ".ds-brand{position:relative;display:inline-block;padding:0 10px 3px 0;color:var(--text);font:700 1.8rem/1 \"Space Grotesk\",sans-serif;letter-spacing:-.04em;text-decoration:none}.ds-brand span{font-weight:500}.ds-brand i{position:absolute;width:9px;height:9px;right:0;bottom:0;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-brand:hover{text-decoration:none}.ds-brand:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
+      "css": ".ds-brand{position:relative;display:inline-block;padding:0 10px 3px 0;color:var(--text);font:700 2rem/1 \"Chakra Petch\",sans-serif;letter-spacing:-.03em;text-decoration:none}.ds-brand span{font-weight:500}.ds-brand i{position:absolute;width:12px;height:10px;right:0;bottom:0;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-brand:hover{text-decoration:none}.ds-brand:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     }
   ],
   "narrative": {
-    "northStar": "The personal anime journal",
-    "overview": "Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. Neutral black and charcoal, fine rules and deliberate typography provide the structure; existing anime artwork provides the strongest color. Personality comes from the typographic wordmark, one offset frame corner, artwork proportions and concise language.",
+    "northStar": "The luminous anime journal",
+    "overview": "Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. A broad black-and-charcoal canvas, Japanese editorial body typography and angular technical headings support real anime artwork. Pink/lavender atmosphere, luminous gradient rules and lightly translucent controls give the journal more expression without adding moving scenery. The typographic wordmark, one offset frame corner and concise language keep its identity coherent.",
     "keyCharacteristics": [
       "Early source artwork and compact introductions.",
       "Contrasting browsing and list compositions with quiet metadata.",
-      "Neutral surfaces, restrained pink/lavender and visible interaction states."
+      "A broad canvas, vibrant pink/lavender gradients and selective translucency."
     ],
     "rules": [
       {
@@ -634,21 +660,22 @@
         "section": "colors"
       },
       {
-        "name": "The Quiet Ground Rule",
-        "body": "Artwork supplies atmosphere; the page field stays neutral and still.",
+        "name": "The Still Atmosphere Rule",
+        "body": "Gradients and translucency add color and depth; the page field never tracks the cursor or animates.",
         "section": "elevation"
       }
     ],
     "dos": [
       "Do keep search, real anime artwork and useful actions early.",
+      "Do use the broader canvas, static accent gradients and selective translucency with readable text and opaque fallbacks.",
       "Do distinguish general catalog feeds from the signed-in user\u2019s list.",
       "Do preserve source provenance, selected-season behavior and existing preference fields.",
       "Do use labels alongside color and keep secondary actions available to touch and keyboard."
     ],
     "donts": [
       "Don't invent creator profiles, favorites, recommendations, ratings or personal bylines.",
-      "Don't add glass, ripple, visual pointer loops, parallax, tilt, particles, glow or background animation.",
-      "Don't add pink haze, decorative Japanese text, mascots or a frame corner on every card.",
+      "Don't restore ripple, refraction, visual pointer loops, parallax, tilt, particles or background animation.",
+      "Don't use decorative Japanese text, mascots or a frame corner on every card.",
       "Don't replace each route with the same panel dashboard or an oversized welcome hero."
     ]
   }
