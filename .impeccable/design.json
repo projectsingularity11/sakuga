@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-05T01:50:40+00:00",
+  "generatedAt": "2026-11-05T02:01:30+00:00",
   "title": "Design System: Sakuga journal",
   "extensions": {
     "colorMeta": {
@@ -493,6 +493,34 @@
           "#ecacba",
           "#faeaee"
         ]
+      },
+      "spectrum-cool": {
+        "role": "secondary",
+        "displayName": "Spectrum cool blue",
+        "tonalRamp": [
+          "oklch(15% 0.05 235)",
+          "oklch(26% 0.05 235)",
+          "oklch(38% 0.05 235)",
+          "oklch(49% 0.05 235)",
+          "oklch(61% 0.05 235)",
+          "oklch(72% 0.05 235)",
+          "oklch(84% 0.05 235)",
+          "oklch(95% 0.02 235)"
+        ]
+      },
+      "spectrum-violet": {
+        "role": "secondary",
+        "displayName": "Spectrum violet",
+        "tonalRamp": [
+          "oklch(15% 0.05 295)",
+          "oklch(26% 0.05 295)",
+          "oklch(38% 0.05 295)",
+          "oklch(49% 0.05 295)",
+          "oklch(61% 0.05 295)",
+          "oklch(72% 0.05 295)",
+          "oklch(84% 0.05 295)",
+          "oklch(95% 0.02 295)"
+        ]
       }
     },
     "typographyMeta": {
@@ -569,8 +597,8 @@
     "materials": [
       {
         "name": "page-atmosphere",
-        "value": "radial-gradient(ellipse 75% 600px at 0 0, color-mix(in srgb, var(--primary) 11%, transparent), transparent 80%), radial-gradient(ellipse 65% 650px at 100% 8%, color-mix(in srgb, var(--secondary) 10%, transparent), transparent 85%)",
-        "purpose": "Static pink/lavender atmosphere over the neutral page."
+        "value": "radial-gradient(ellipse 75% 600px at 0 0, color-mix(in srgb, var(--primary) 22%, transparent), transparent 80%), radial-gradient(ellipse 65% 650px at 100% 8%, color-mix(in srgb, var(--secondary) 20%, transparent), transparent 85%)",
+        "purpose": "Fuller static pink/lavender atmosphere over the neutral page."
       },
       {
         "name": "public-header",
@@ -578,14 +606,24 @@
         "purpose": "Selective header translucency; opaque background and no blur with reduced transparency."
       },
       {
-        "name": "section-rule",
-        "value": "linear-gradient(90deg, var(--primary), var(--border) 25%, var(--secondary))",
-        "purpose": "Fine luminous boundary for release and upcoming sections."
+        "name": "shared-spectrum",
+        "value": "linear-gradient(115deg, var(--primary), var(--spectrum-violet) 52%, var(--spectrum-cool))",
+        "purpose": "Shared navigation/footer accent; section surfaces vary related hues."
       },
       {
         "name": "public-gutter",
         "value": "clamp(16px, 2vw, 40px)",
         "purpose": "Fluid public canvas, navigation and audio alignment."
+      },
+      {
+        "name": "intro-surface",
+        "value": "linear-gradient(115deg, color-mix(in srgb, var(--primary) 15%, var(--surface)), color-mix(in srgb, var(--secondary) 12%, var(--surface)) 50%, color-mix(in srgb, var(--spectrum-cool) 12%, var(--surface)))",
+        "purpose": "Compact, expressive intro panel with solid readable text."
+      },
+      {
+        "name": "list-header",
+        "value": "linear-gradient(95deg, color-mix(in srgb, var(--secondary) 14%, var(--surface)), color-mix(in srgb, var(--spectrum-cool) 9%, var(--surface)))",
+        "purpose": "Workspace list hierarchy using the same coordinated hues."
       }
     ]
   },
@@ -594,9 +632,9 @@
       "name": "Primary button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The strongest task action with a static pink/lavender gradient.",
+      "description": "The strongest task action with the coordinated pink/violet gradient.",
       "html": "<button class=\"ds-primary\">Save changes</button>",
-      "css": ".ds-primary{background:var(--primary);background-image:linear-gradient(115deg,color-mix(in srgb,var(--primary) 92%,white),var(--primary) 55%,color-mix(in srgb,var(--primary) 75%,var(--secondary)));color:var(--on-primary);border:1px solid transparent;border-radius:8px;min-height:44px;padding:10px 18px;font:600 14px/1.4 \"Zen Kaku Gothic New\",sans-serif;cursor:pointer;transition:background 160ms cubic-bezier(.22,1,.36,1),transform 160ms cubic-bezier(.22,1,.36,1)}.ds-primary:hover{background-color:var(--primary-hover)}.ds-primary:active{transform:scale(.98)}.ds-primary:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}.ds-primary:active{transform:none}}"
+      "css": ".ds-primary{background:var(--primary);background-image:linear-gradient(110deg,var(--primary),color-mix(in srgb,var(--primary) 78%,var(--spectrum-violet)));color:var(--on-primary);border:1px solid transparent;border-radius:8px;min-height:44px;padding:10px 18px;font:600 14px/1.4 \"Zen Kaku Gothic New\",sans-serif;cursor:pointer;transition:background 160ms cubic-bezier(.22,1,.36,1),transform 160ms cubic-bezier(.22,1,.36,1)}.ds-primary:hover{background-color:var(--primary-hover)}.ds-primary:active{transform:scale(.98)}.ds-primary:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}.ds-primary:active{transform:none}}"
     },
     {
       "name": "Secondary button",
@@ -620,7 +658,7 @@
       "refersTo": "navigation-active",
       "description": "Active route with the shared frame-corner motif.",
       "html": "<nav class=\"ds-nav\"><a href=\"#discover\" aria-current=\"page\">Discover</a><a href=\"#library\">Your list</a></nav>",
-      "css": ".ds-nav{display:flex;gap:6px;font:400 14px/1.65 \"Zen Kaku Gothic New\",sans-serif}.ds-nav a{position:relative;padding:10px 12px;color:var(--text-muted);border-radius:8px;text-decoration:none}.ds-nav a:hover,.ds-nav a[aria-current]{color:var(--text)}.ds-nav a[aria-current]:after{content:\"\";position:absolute;right:7px;bottom:6px;width:7px;height:7px;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-nav a:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
+      "css": ".ds-nav{display:flex;gap:6px;font:400 14px/1.65 \"Zen Kaku Gothic New\",sans-serif}.ds-nav a{position:relative;padding:10px 12px;color:var(--text-muted);border-radius:8px;text-decoration:none}.ds-nav a:hover,.ds-nav a[aria-current]{color:var(--text)}.ds-nav a[aria-current]:after{content:\"\";position:absolute;right:7px;bottom:6px;width:7px;height:7px;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-nav a:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}.ds-nav a[aria-current]{background:linear-gradient(100deg,color-mix(in srgb,var(--primary) 15%,var(--surface)),color-mix(in srgb,var(--secondary) 12%,var(--surface)))}"
     },
     {
       "name": "Status label",
@@ -643,15 +681,22 @@
       "description": "Typographic identity with one offset frame corner.",
       "html": "<a class=\"ds-brand\" href=\"#home\" aria-label=\"Sakuga home\">saku<span>ga</span><i aria-hidden=\"true\"></i></a>",
       "css": ".ds-brand{position:relative;display:inline-block;padding:0 10px 3px 0;color:var(--text);font:700 2rem/1 \"Chakra Petch\",sans-serif;letter-spacing:-.03em;text-decoration:none}.ds-brand span{font-weight:500}.ds-brand i{position:absolute;width:12px;height:10px;right:0;bottom:0;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary)}.ds-brand:hover{text-decoration:none}.ds-brand:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
+    },
+    {
+      "name": "Spectrum section",
+      "kind": "custom",
+      "description": "Coordinated section surface with a strong heading and quiet supporting text.",
+      "html": "<section class=\"ds-spectrum-section\"><h2>Series airing now</h2><p>Catalog titles and source metadata appear here.</p><a href=\"#discover\">Explore the catalog</a></section>",
+      "css": ".ds-spectrum-section{padding:24px 18px 12px;border:1px solid var(--border);border-top:2px solid color-mix(in srgb,var(--secondary) 65%,var(--border));border-radius:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--secondary) 8%,var(--surface)),var(--surface) 60%,color-mix(in srgb,var(--spectrum-cool) 7%,var(--surface)));color:var(--text);font:400 15px/1.65 \"Zen Kaku Gothic New\",sans-serif}.ds-spectrum-section h2{margin:0 0 16px;font:500 20px/1.25 \"Chakra Petch\",sans-serif}.ds-spectrum-section p{color:var(--text-muted)}.ds-spectrum-section a{color:var(--secondary);text-underline-offset:4px}.ds-spectrum-section a:hover{text-decoration-thickness:2px}.ds-spectrum-section a:focus-visible{outline:2px solid var(--secondary);outline-offset:4px}"
     }
   ],
   "narrative": {
-    "northStar": "The luminous anime journal",
-    "overview": "Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. A broad black-and-charcoal canvas, Japanese editorial body typography and angular technical headings support real anime artwork. Pink/lavender atmosphere, luminous gradient rules and lightly translucent controls give the journal more expression without adding moving scenery. The typographic wordmark, one offset frame corner and concise language keep its identity coherent.",
+    "northStar": "The spectrum anime journal",
+    "overview": "Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. A broad black-and-charcoal canvas, Japanese editorial body typography and angular technical headings support real anime artwork. Full pink, violet and cool-blue gradients coordinate the introduction, feature, browsing sections, navigation and workspace forms. Static atmosphere and selective translucency give the product a vivid identity while solid text and readable controls keep it useful. The typographic wordmark, one offset frame corner and concise language hold the varied hues together.",
     "keyCharacteristics": [
       "Early source artwork and compact introductions.",
       "Contrasting browsing and list compositions with quiet metadata.",
-      "A broad canvas, vibrant pink/lavender gradients and selective translucency."
+      "A broad canvas, coordinated spectrum surfaces and selective translucency."
     ],
     "rules": [
       {
@@ -667,7 +712,7 @@
     ],
     "dos": [
       "Do keep search, real anime artwork and useful actions early.",
-      "Do use the broader canvas, static accent gradients and selective translucency with readable text and opaque fallbacks.",
+      "Do use the broader canvas and coordinated spectrum gradients across discovery and workspace controls, with readable text and opaque fallbacks.",
       "Do distinguish general catalog feeds from the signed-in user\u2019s list.",
       "Do preserve source provenance, selected-season behavior and existing preference fields.",
       "Do use labels alongside color and keep secondary actions available to touch and keyboard."

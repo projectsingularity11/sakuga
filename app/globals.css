@@ -11,6 +11,8 @@
   --primary-hover: #ffa8c8;
   --on-primary: #0b0b0d;
   --secondary: #b9a3ff;
+  --spectrum-cool: #91d9ff;
+  --spectrum-violet: #b5a2ff;
   --text: #f5f5f7;
   --text-muted: #a6a6af;
   --watching: #7dcfff;
@@ -94,12 +96,12 @@ body {
   background-image:
     radial-gradient(
       ellipse 75% 600px at 0 0,
-      color-mix(in srgb, var(--primary) 11%, transparent),
+      color-mix(in srgb, var(--primary) 22%, transparent),
       transparent 80%
     ),
     radial-gradient(
       ellipse 65% 650px at 100% 8%,
-      color-mix(in srgb, var(--secondary) 10%, transparent),
+      color-mix(in srgb, var(--secondary) 20%, transparent),
       transparent 85%
     );
   background-repeat: no-repeat;

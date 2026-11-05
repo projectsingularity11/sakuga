@@ -13,6 +13,7 @@ export function AnimeRow({
   language: string;
 }) {
   const title = resolveTitle(anime, language);
+  const matchedPart = anime.matched_id && anime.matched_id !== anime.id;
   return (
     <article className="anime-row">
       <Link
@@ -33,8 +34,15 @@ export function AnimeRow({
         </h3>
         <p>
           {formatLabel(anime.format)} <span aria-hidden="true">·</span>{" "}
-          {anime.year || "Year unannounced"}
+          {matchedPart ? "Multi-part series" : anime.year || "Year unannounced"}
+          {!matchedPart && anime.episodes ? (
+            <>
+              {" "}
+              <span aria-hidden="true">·</span> {anime.episodes} episodes
+            </>
+          ) : null}
         </p>
+        <p className="row-release">{anime.genres?.slice(0, 2).join(" / ")}</p>
       </div>
       <Link
         className="row-list"

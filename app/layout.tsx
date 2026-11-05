@@ -4,6 +4,7 @@ import "@fontsource/chakra-petch/latin-700.css";
 import "@fontsource/zen-kaku-gothic-new/latin-400.css";
 import "@fontsource/zen-kaku-gothic-new/latin-700.css";
 import "./globals.css";
+import "./spectrum.css";
 import { Experience } from "@/components/experience";
 import { viewer } from "@/lib/viewer";
 import { polishTheme, customAccentTokens } from "@/lib/appearance";

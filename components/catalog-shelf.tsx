@@ -25,7 +25,7 @@ export async function CatalogShelf({
   const feed = await result;
   const titles =
     feed.status === "fulfilled"
-      ? feed.value.titles.slice(0, variant === "popular" || rail ? 8 : 4)
+      ? feed.value.titles.slice(0, variant === "popular" ? 8 : rail ? 12 : 8)
       : [];
   const cards = titles.map((a) => (
     <AnimeCard

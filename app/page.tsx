@@ -22,7 +22,8 @@ export default async function Home() {
   const year = new Date().getUTCFullYear();
   const popular = settle(catalog({})),
     current = settle(catalog({ year: String(year), sort: "newest" })),
-    upcoming = settle(catalog({ airing: "NOT_YET_RELEASED", sort: "popular" }));
+    upcoming = settle(catalog({ airing: "NOT_YET_RELEASED", sort: "popular" })),
+    airing = settle(catalog({ airing: "RELEASING", sort: "popular" }));
   const [language, main] = await Promise.all([viewerLanguage(), popular]);
   const features = featuredSelection(
     main.status === "fulfilled" ? main.value.titles : [],
@@ -68,6 +69,15 @@ export default async function Home() {
             />
           </Suspense>
         </div>
+        <Suspense fallback={<ShelfPlaceholder />}>
+          <CatalogShelf
+            result={airing}
+            title="Series airing now"
+            href="/discover?airing=RELEASING"
+            language={language}
+            rail
+          />
+        </Suspense>
         <Suspense fallback={<ShelfPlaceholder />}>
           <CatalogShelf
             result={current}

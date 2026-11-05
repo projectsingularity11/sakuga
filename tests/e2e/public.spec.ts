@@ -128,6 +128,13 @@ test("database and trailer searches are explicit and every card has visual artwo
   const images = page.locator(".anime-card").first().locator("img");
   await expect(images).toHaveCount(1);
   await expect(images.first()).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Series airing now", exact: true }),
+  ).toBeVisible();
+  const upcoming = page.locator(".catalog-rows .anime-row").first();
+  await expect(upcoming).toContainText("Multi-part series");
+  await expect(upcoming).not.toContainText("Finished");
+  await expect(upcoming).not.toContainText("12 episodes");
 });
 test("light appearance keeps shared surfaces and source controls readable", async ({
   page,

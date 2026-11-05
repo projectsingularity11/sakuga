@@ -1,6 +1,6 @@
 ---
 name: Sakuga journal
-description: A broad, artwork-led anime journal with Japanese editorial and technical character.
+description: A colorful spectrum anime journal with Japanese editorial and technical character.
 colors:
   bg: "#0b0b0d"
   surface: "#141416"
@@ -12,6 +12,8 @@ colors:
   primary-hover: "#ffa8c8"
   on-primary: "#0b0b0d"
   secondary: "#b9a3ff"
+  spectrum-cool: "#91d9ff"
+  spectrum-violet: "#b5a2ff"
   text: "#f5f5f7"
   text-muted: "#a6a6af"
   watching: "#7dcfff"
@@ -76,6 +78,8 @@ rounded:
   tag: "3px"
   thumbnail: "5px"
   control: "8px"
+  genre: "6px"
+  feature: "14px"
   poster: "10px"
   panel: "12px"
   dialog: "16px"
@@ -121,27 +125,27 @@ components:
 
 ## Overview
 
-**Creative North Star: "The luminous anime journal"**
+**Creative North Star: "The spectrum anime journal"**
 
-Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. A broad black-and-charcoal canvas, Japanese editorial body typography and angular technical headings support real anime artwork. Pink/lavender atmosphere, luminous gradient rules and lightly translucent controls give the journal more expression without adding moving scenery. The typographic wordmark, one offset frame corner and concise language keep its identity coherent.
+Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. A broad black-and-charcoal canvas, Japanese editorial body typography and angular technical headings support real anime artwork. Full pink, violet and cool-blue gradients coordinate the introduction, feature, browsing sections, navigation and workspace forms. Static atmosphere and selective translucency give the product a vivid identity while solid text and readable controls keep it useful. The typographic wordmark, one offset frame corner and concise language hold the varied hues together.
 
 **Key Characteristics:**
 
 - Early source artwork and compact introductions.
 - Contrasting browsing and list compositions with quiet metadata.
-- A broad canvas, vibrant pink/lavender gradients and selective translucency.
+- A broad canvas, coordinated spectrum surfaces and selective translucency.
 
 ## Colors
 
-The frontmatter records the canonical CSS values in `app/globals.css`. Each unprefixed key maps directly to the same CSS custom property, such as `bg` → `--bg`. `light-*` records the actual light/system-light overrides; primary, primary-hover and on-primary inherit the default values in light appearance.
+The frontmatter records the canonical CSS values in `app/globals.css`. The cohesive `app/spectrum.css` layer is imported afterward by `app/layout.tsx` and owns the coordinated component treatments; preserve that order rather than extending globals with competing overrides. Each unprefixed key maps directly to the same CSS custom property, such as `bg` → `--bg`. `light-*` records the actual light/system-light overrides; primary, primary-hover and on-primary inherit the default values in light appearance.
 
 ### Primary
 
-Sakura pink (`primary`) marks the strongest action and selected feature controls. Primary buttons blend pink toward lavender; gradient rules connect pink, neutral borders and lavender across sections. The solid fallback and readable foreground roles remain `primary`, `primary-hover` and `on-primary`; keep supporting actions quieter.
+Sakura pink (`primary`) marks the strongest action and selected feature controls. Primary buttons blend pink toward spectrum violet; the navigation/footer spectrum connects pink, violet and cool blue. Section surfaces vary their leading hue while retaining the same palette. The solid fallback and readable foreground roles remain `primary`, `primary-hover` and `on-primary`; keep supporting actions quieter.
 
 ### Secondary
 
-Lavender (`secondary`) supports links, keyboard focus, the second intro line and the cool end of gradient accents. Light appearance uses the deeper equivalent. Static pink/lavender atmosphere sits over the neutral base in both appearances.
+Lavender (`secondary`) supports links, keyboard focus and layered surfaces; light appearance uses the deeper equivalent. Spectrum violet (`spectrum-violet`) and cool blue (`spectrum-cool`) widen the accent range without introducing unrelated colors. Both spectrum tokens inherit their default values in light appearance. The shared `--spectrum` gradient runs at 115 degrees from primary through spectrum violet at 52% to cool blue. Static pink/lavender atmosphere sits over the base in both appearances.
 
 ### Neutral
 
@@ -157,21 +161,21 @@ Saved appearance fields remain intact. The backward-compatible stored preset `Mi
 
 Self-host Chakra Petch Latin at 500/700 and Zen Kaku Gothic New Latin at 400/700. Chakra Petch supplies angular headings and the wordmark; Zen Kaku Gothic New supplies a Japanese editorial character to interface text, poster titles and metadata. The current English interface imports Latin subsets; this is not evidence of bundled Japanese glyph coverage. Preserve system fallbacks. The wordmark mixes 700 with a lighter 500 ending and carries one small frame corner; its mobile size is 1.65rem. Current CSS also requests 600 for compact title/control emphasis; the imported body assets are 400/700.
 
-The headline and title roles govern page and section hierarchy. The compact home introduction uses `clamp(2rem, 3.5vw, 3.2rem)` with 1.08 line height, becoming 1.85rem on phones. Body copy stays within 72ch. Poster titles reserve two readable lines; compact metadata can use 0.75rem. Use tabular numerals for progress, scores and counts. Keep uppercase labels selective and retain the two-family hierarchy.
+The headline and title roles govern page and section hierarchy. The home introduction uses `clamp(2rem, 3vw, 3rem)` with 1.08 line height, becoming 1.65rem on phones. Both intro lines retain solid text; feature titles use 700 for stronger hierarchy. Body copy stays within 72ch. Poster titles reserve two readable lines; compact metadata can use 0.75rem. Use tabular numerals for progress, scores and counts. Keep uppercase labels selective and retain the two-family hierarchy.
 
 ## Layout
 
 Use the frontmatter spacing rhythm. Public and workspace content no longer have a maximum canvas width. Public content uses 30px top padding and `clamp(16px, 2vw, 40px)` horizontal gutters; the existing tablet/phone overrides retain 24px/16px sides and 28px/24px top. Public navigation and its reserved audio slot follow the same fluid gutter. Workspace content uses `clamp(20px, 3vw, 48px)` horizontal padding and retains the shared sidebar/header grid, 242px expanded and 82px collapsed, with a mobile drawer at 600px. Let content use lateral space while retaining readable paragraph widths.
 
-The home introduction is compact and followed by ruled genre navigation. A wide scene/title/actions feature sits beside a denser popular poster shelf, rather than inside a hero panel. Its content height remains intrinsic. Tablet pairs scene and text; phones stack them, retaining early artwork. Popular posters adapt to available width. At 1700px and above the popular shelf gains five columns, the release rail eight visible poster widths and the full catalog seven columns. Recent releases use a native horizontal poster rail; upcoming releases use cover-led rows. Retain honest general-feed labels and native page scrolling.
+The home introduction sits in a compact spectrum panel followed by useful genre chips. A wide scene/title/actions feature sits in its own gradient frame beside a denser popular poster shelf with a colored heading. Its content height remains intrinsic. Tablet pairs scene and text; phones stack them, retaining early artwork. Popular posters adapt to available width. At 1700px and above the popular shelf gains five columns, the release rail eight visible poster widths and the full catalog seven columns. Series airing now and recent releases use native horizontal poster rails, with up to 12 real catalog records each; upcoming releases use up to eight cover-led rows. The home route starts its existing catalog queries concurrently, settles failures independently and streams each secondary feed through its own Suspense boundary. “Series airing now” uses `airing=RELEASING`; it is a general catalog feed, not a personal selection. Rows show up to two source genres and available episode/year metadata. When a filter matches a different season or part, rows identify a multi-part series and suppress the root release’s year/episode count; a finished root is not presented as an upcoming release. Retain honest feed labels, section-specific unavailable/empty states and native page scrolling.
 
-Discovery keeps compact, collapsible filtering and sorting. The personal library defaults to the existing list mode: small covers, textual status, selected-season progress numerals/bar and score. Keep shelf, board and genre representations, season selection and bulk actions available. Detail pages put a list action near the title/season choice and retain the full editor below. Settings, forms, statistics and collections use fine section rules where a panel adds no hierarchy.
+Discovery keeps compact, collapsible filtering and sorting. The personal library defaults to the existing list mode: small covers, textual status, selected-season progress numerals/bar and score. Keep shelf, board and genre representations, season selection and bulk actions available. Detail pages put a list action near the title/season choice and retain the full editor below. Editors and billing use coordinated gradient panels; filters and list headers carry related tones. Settings, statistics and collections retain task-specific grouping and useful information density.
 
 Main adaptation breakpoints are 1700px, 1100px, 800px and 600px. Choose usable poster widths, preserve visible focus and reachable controls, and prevent document overflow. Small-screen library rows retain score below progress rather than losing it.
 
 ## Elevation & Depth
 
-Depth combines charcoal surfaces, fine gradient rules and selective translucency. Static radial atmosphere mixes primary pink at 11% near the upper left and lavender at 10% near the upper right. The public header uses 88% background opacity with 8px blur; the workspace header uses 92% background opacity. Search surfaces use 92% surface opacity, supporting controls 86% raised-surface opacity, and the sidebar has a faint lavender-to-surface gradient. These effects are static. Reduced transparency makes the public/workspace headers and search surfaces opaque and removes header blur. The stored ambient preference remains compatible, but the current radial CSS uses fixed mixes.
+Depth combines fuller gradient surfaces, tinted borders, charcoal foundations and selective translucency. Static radial atmosphere mixes primary pink at 22% near the upper left and lavender at 20% near the upper right. The intro blends pink 15%, secondary 12% and cool blue 12% into its surface; the feature uses pink 9% and cool blue 8%. Release/upcoming panels vary the same hues, while form and table-header gradients carry the system into the workspace. The public header uses 88% background opacity with 8px blur; the workspace header uses 92% background opacity. Search surfaces use 92% surface opacity, supporting controls 86% raised-surface opacity, and the sidebar has a faint lavender-to-surface gradient. These effects are static. Reduced transparency makes the public/workspace headers and search surfaces opaque and removes header blur. The stored ambient preference remains compatible, but the current radial CSS uses fixed mixes.
 
 Search popovers use `0 14px 30px #0003`; hovered/focused posters use `0 8px 18px #0004`; the mobile drawer uses `12px 0 30px #0005`. Resting content does not acquire a shadow cloud. Interaction transitions use 160ms and `cubic-bezier(0.22, 1, 0.36, 1)`; popovers enter by 5px. Loading skeletons reserve geometry and pulse opacity. Reduced motion removes movement/scaling; manual carousel control remains.
 
@@ -179,17 +183,17 @@ Search popovers use `0 14px 30px #0003`; hovered/focused posters use `0 8px 18px
 
 ## Shapes
 
-Use 8px controls, stable 2:3 posters with 10px corners, 5px small thumbnails and 16px dialogs. Ordinary panels may use the established 12px radius, but sections do not automatically need containers. Fine rules and aligned edges do most of the grouping. The offset frame corner belongs to the wordmark and active routes; do not repeat it on every card.
+Use 8px controls, stable 2:3 posters with 10px corners, 5px small thumbnails and 16px dialogs. Intro, release sections and editor panels use 12px corners; the feature frame uses 14px and genre chips 6px. Coordinated tinted borders, gradients and aligned edges group content without obscuring its hierarchy. The offset frame corner belongs to the wordmark and active routes; do not repeat it on every card.
 
 ## Components
 
 ### Buttons, fields and filters
 
-Primary buttons use readable on-primary text over a 115-degree pink gradient with a lavender-mixed end. Secondary buttons and icon controls use lightly translucent raised surfaces and a fine border. Standard controls have a 44px minimum height, with existing compact variants used deliberately. Fields use neutral fills, readable labels and lavender focus rings. Preserve search shortcuts, suggestions and filter submission contracts. Collapsible filters expose an ordinary labeled summary.
+Primary buttons use readable on-primary text over a 110-degree gradient from primary pink toward a 78% pink/spectrum-violet mix. Secondary buttons and icon controls use lightly translucent raised surfaces and a fine border. Standard controls have a 44px minimum height, with existing compact variants used deliberately. Fields retain readable fills, labels and lavender focus rings; editors use a 6% lavender-to-surface gradient, while collapsible filter shells use 95% surface opacity. Preserve search shortcuts, suggestions and filter submission contracts. Collapsible filters expose an ordinary labeled summary.
 
 ### Navigation and feedback
 
-Keep search visible and active routes identifiable through text and the small frame corner. The translucent public header ends in a fine pink-to-lavender rule; preserve its opaque reduced-transparency alternative. Mobile navigation preserves its menu state and keyboard access. Audio occupies its reserved header slot and retains the existing opt-in sound behavior. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
+Keep search visible and active routes identifiable through text and the small frame corner. The translucent public header ends in a 2px spectrum rule; active public/sidebar routes gain a matching pink/lavender surface. Preserve the opaque reduced-transparency alternative. Mobile navigation preserves its menu state and keyboard access. Audio occupies its reserved header slot and retains the existing opt-in sound behavior. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
 
 ### Posters and source artwork
 
@@ -199,14 +203,14 @@ Retain trusted source URLs, cached AVIF/WebP derivatives, source attribution and
 
 ### Library and detail actions
 
-Preserve selected season IDs, progress/status/score fields, collection membership IDs, save actions and the `LibraryEditor` key tied to `anime.id`. Presentation must not change session refresh, authentication, data or integration contracts. Concise confirmations describe the actual action completed.
+List headers blend lavender 14% and cool blue 9% into the surface; hovered rows use a 6% lavender tint. Keep solid status, progress and score text readable over these treatments. Preserve selected season IDs, progress/status/score fields, collection membership IDs, save actions and the `LibraryEditor` key tied to `anime.id`. Presentation must not change session refresh, authentication, data or integration contracts. Concise confirmations describe the actual action completed.
 
 ## Do's and Don'ts
 
 ### Do:
 
 - **Do** keep search, real anime artwork and useful actions early.
-- **Do** use the broader canvas, static accent gradients and selective translucency with readable text and opaque fallbacks.
+- **Do** use the broader canvas and coordinated spectrum gradients across discovery and workspace controls, with readable text and opaque fallbacks.
 - **Do** distinguish general catalog feeds from the signed-in user’s list.
 - **Do** preserve source provenance, selected-season behavior and existing preference fields.
 - **Do** use labels alongside color and keep secondary actions available to touch and keyboard.
