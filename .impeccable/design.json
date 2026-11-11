@@ -632,7 +632,7 @@
     "materials": [
       {
         "name": "page-atmosphere",
-        "value": "Fixed body:before; rose 36%, secondary 36%, cool blue 29% fields over a diagonal foundation. Light fields 16%,16%,19%.",
+        "value": "Charcoal #131316, surfaces #1b1b20/#24242b; rose/violet corner fields 18%, blue 15%; subdued 5/8/5% diagonal foundation.",
         "purpose": "A full-viewport static atmosphere that stays colorful throughout long pages."
       },
       {
@@ -652,7 +652,7 @@
       },
       {
         "name": "intro-surface",
-        "value": "linear-gradient(115deg, color-mix(in srgb, var(--primary) 52%, var(--surface)), color-mix(in srgb, var(--secondary) 46%, var(--surface)) 50%, color-mix(in srgb, var(--spectrum-cool) 40%, var(--surface)))",
+        "value": "Pink 36%, secondary 32%, cool blue 28% mixed into the charcoal surface.",
         "purpose": "Compact, expressive intro panel with solid readable text."
       },
       {
@@ -732,7 +732,7 @@
   ],
   "narrative": {
     "northStar": "The spectrum anime journal",
-    "overview": "Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. A broad black-and-charcoal canvas, Japanese editorial body typography and angular technical headings support real anime artwork. Full pink, violet and cool-blue gradients coordinate the introduction, feature, browsing sections, navigation and workspace forms. A still gradient atmosphere, selective translucency and kinetic artwork, border lights and interaction feedback give the product a vivid identity while solid text and readable controls keep it useful. The typographic wordmark, one offset frame corner and concise language hold the varied hues together.",
+    "overview": "Sakuga is a practical, independently voiced space for discovering anime and keeping a personal list. A broad black-and-charcoal canvas, Japanese editorial body typography and angular technical headings support real anime artwork. Full pink, violet and cool-blue gradients coordinate the introduction, feature, browsing sections, navigation and workspace forms. A still gradient atmosphere, selective translucency and kinetic artwork, border lights and interaction feedback give the product a vivid identity while solid text and readable controls keep it useful. The typographic wordmark, one offset frame corner and concise language hold the varied hues together. Final shipping refinement keeps a stronger charcoal foundation, softer accents and no interface audio. Login has no generated illustration.",
     "keyCharacteristics": [
       "Early source artwork and compact introductions.",
       "Contrasting browsing and list compositions with quiet metadata.",

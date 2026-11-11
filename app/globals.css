@@ -1471,16 +1471,7 @@ progress::-moz-progress-bar {
   background: var(--surface);
   border-right: 1px solid var(--border);
 }
-.auth-layout > aside:after {
-  content: "";
-  display: block;
-  position: absolute;
-  inset: 140px 40px 40px;
-  border-radius: 16px;
-  background:
-    linear-gradient(transparent 45%, var(--surface)),
-    url("/art/sakuga-city.png") center/cover;
-}
+
 .auth-content {
   align-self: center;
   width: min(440px, calc(100% - 48px));
@@ -1559,16 +1550,7 @@ footer nav {
   margin-left: auto;
   flex-wrap: wrap;
 }
-.audio-dock {
-  position: fixed;
-  top: 16px;
-  right: clamp(16px, 2vw, 40px);
-  z-index: 45;
-}
-.audio-toggle {
-  width: 40px;
-  height: 40px;
-}
+
 @keyframes popover-in {
   from {
     opacity: 0.5;
@@ -2735,21 +2717,7 @@ footer nav {
 }
 
 /* A real header slot keeps the optional audio control off list content. */
-.public-nav:after {
-  content: "";
-  width: 40px;
-  height: 40px;
-  order: 4;
-  flex-shrink: 0;
-}
-.workspace-header:after {
-  content: "";
-  width: 40px;
-  height: 40px;
-  margin-left: auto;
-  order: 2;
-  flex-shrink: 0;
-}
+
 .library-filters {
   border-block: 1px solid var(--border);
   margin-bottom: 24px;
@@ -2774,17 +2742,11 @@ footer nav {
   .public-nav .brand {
     margin-right: auto;
   }
-  .audio-dock {
-    top: 12px;
-    right: 16px;
-  }
+
   .sidebar-toggle {
     right: 68px;
   }
-  .workspace-header:after {
-    width: 88px;
-    height: 30px;
-  }
+
   .workspace-location {
     padding-right: 0;
   }

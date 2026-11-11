@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import {
   Home,
   Compass,
+  Search,
   Library,
   Layers,
   ChartNoAxesCombined,
@@ -13,7 +14,8 @@ import {
 import { SearchBox } from "./search-box";
 const items = [
   { icon: Home, href: "/app", label: "Home" },
-  { icon: Compass, href: "/app/discover", label: "Discover" },
+  { icon: Compass, href: "/discover", label: "Discover" },
+  { icon: Search, href: "/app/search", label: "Search" },
   { icon: Library, href: "/app/library", label: "My library" },
   { icon: Layers, href: "/app/collections", label: "Collections" },
   { icon: ChartNoAxesCombined, href: "/app/statistics", label: "Statistics" },

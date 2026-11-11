@@ -95,10 +95,10 @@ export function SearchBox({
       }}
     >
       <form
-        action="/discover"
+        action="/search"
         onSubmit={(e) => {
           e.preventDefault();
-          navigate("/discover?q=" + encodeURIComponent(value));
+          navigate("/search?q=" + encodeURIComponent(value));
         }}
       >
         <Search size={18} />
@@ -208,7 +208,7 @@ export function SearchBox({
           </div>
           <button
             className="all-results"
-            onClick={() => navigate("/discover?q=" + encodeURIComponent(value))}
+            onClick={() => navigate("/search?q=" + encodeURIComponent(value))}
           >
             See all results for “{value}”
           </button>

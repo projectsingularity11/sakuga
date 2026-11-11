@@ -1,3 +1,5 @@
+> Historical research: all interface audio and bundled samples were removed in the final shipping refinement.
+
 # Sakuga interface audio
 
 Selected [Kenney UI Audio](https://github.com/Calinou/kenney-ui-audio), a GitHub package of Kenney Vleugels' UI SFX Set. The README and `LICENSE.txt` were read before use; they identify CC0 1.0 and explicitly permit personal and commercial use. The source commit is `8c3d81b9159d058c444f89d12d518276b0b09345`.

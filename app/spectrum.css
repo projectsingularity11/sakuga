@@ -1,10 +1,13 @@
 /* Spectrum: full-viewport color fields, artwork atmospheres and readable surfaces. */
 :root {
+  --bg: #131316;
+  --surface: #1b1b20;
+  --surface-raised: #24242b;
   --secondary: #d0b9ff;
   --text-muted: #c4bfd1;
-  --field-rose: color-mix(in srgb, var(--primary) 36%, var(--bg));
-  --field-violet: color-mix(in srgb, var(--secondary) 36%, var(--bg));
-  --field-blue: color-mix(in srgb, var(--spectrum-cool) 29%, var(--bg));
+  --field-rose: color-mix(in srgb, var(--primary) 18%, var(--bg));
+  --field-violet: color-mix(in srgb, var(--secondary) 18%, var(--bg));
+  --field-blue: color-mix(in srgb, var(--spectrum-cool) 15%, var(--bg));
   --art-veil: 74%;
   --spectrum: linear-gradient(
     115deg,
@@ -42,9 +45,9 @@ body:before {
     ),
     linear-gradient(
       145deg,
-      color-mix(in srgb, var(--primary) 13%, var(--bg)),
-      color-mix(in srgb, var(--secondary) 23%, var(--bg)) 50%,
-      color-mix(in srgb, var(--spectrum-cool) 15%, var(--bg))
+      color-mix(in srgb, var(--primary) 5%, var(--bg)),
+      color-mix(in srgb, var(--secondary) 8%, var(--bg)) 50%,
+      color-mix(in srgb, var(--spectrum-cool) 5%, var(--bg))
     );
 }
 .anime-atmosphere {
@@ -73,16 +76,16 @@ body:before {
   background: color-mix(in srgb, var(--bg) var(--art-veil), transparent);
 }
 :root[data-appearance="light"] {
-  --field-rose: color-mix(in srgb, var(--primary) 16%, var(--bg));
-  --field-violet: color-mix(in srgb, var(--spectrum-violet) 16%, var(--bg));
-  --field-blue: color-mix(in srgb, var(--spectrum-cool) 19%, var(--bg));
+  --field-rose: color-mix(in srgb, var(--primary) 11%, var(--bg));
+  --field-violet: color-mix(in srgb, var(--spectrum-violet) 11%, var(--bg));
+  --field-blue: color-mix(in srgb, var(--spectrum-cool) 13%, var(--bg));
   --art-veil: 92%;
 }
 @media (prefers-color-scheme: light) {
   :root[data-appearance="system"] {
-    --field-rose: color-mix(in srgb, var(--primary) 16%, var(--bg));
-    --field-violet: color-mix(in srgb, var(--spectrum-violet) 16%, var(--bg));
-    --field-blue: color-mix(in srgb, var(--spectrum-cool) 19%, var(--bg));
+    --field-rose: color-mix(in srgb, var(--primary) 11%, var(--bg));
+    --field-violet: color-mix(in srgb, var(--spectrum-violet) 11%, var(--bg));
+    --field-blue: color-mix(in srgb, var(--spectrum-cool) 13%, var(--bg));
     --art-veil: 92%;
   }
 }
@@ -98,9 +101,9 @@ body:before {
   border-radius: 12px;
   background: linear-gradient(
     115deg,
-    color-mix(in srgb, var(--primary) 52%, var(--surface)),
-    color-mix(in srgb, var(--secondary) 46%, var(--surface)) 50%,
-    color-mix(in srgb, var(--spectrum-cool) 40%, var(--surface))
+    color-mix(in srgb, var(--primary) 36%, var(--surface)),
+    color-mix(in srgb, var(--secondary) 32%, var(--surface)) 50%,
+    color-mix(in srgb, var(--spectrum-cool) 28%, var(--surface))
   );
 }
 .journal-intro h1 {
@@ -128,7 +131,7 @@ body:before {
 }
 .browse-shortcuts .shortcut-all {
   border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
-  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface));
   color: var(--text);
 }
 .discovery-feature {
@@ -137,9 +140,9 @@ body:before {
   border-radius: 14px;
   background: linear-gradient(
     155deg,
-    color-mix(in srgb, var(--primary) 19%, var(--surface)),
-    color-mix(in srgb, var(--secondary) 9%, var(--surface)) 48%,
-    color-mix(in srgb, var(--spectrum-cool) 17%, var(--surface))
+    color-mix(in srgb, var(--primary) 13%, var(--surface)),
+    color-mix(in srgb, var(--secondary) 6%, var(--surface)) 48%,
+    color-mix(in srgb, var(--spectrum-cool) 12%, var(--surface))
   );
 }
 .featured-content h2 {
@@ -150,8 +153,8 @@ body:before {
   border-radius: 8px;
   background: linear-gradient(
     105deg,
-    color-mix(in srgb, var(--secondary) 28%, var(--surface)),
-    color-mix(in srgb, var(--spectrum-cool) 33%, var(--surface))
+    color-mix(in srgb, var(--secondary) 20%, var(--surface)),
+    color-mix(in srgb, var(--spectrum-cool) 23%, var(--surface))
   );
 }
 .catalog-strip,
@@ -163,18 +166,18 @@ body:before {
   border-radius: 12px;
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--secondary) 17%, var(--surface)),
-    color-mix(in srgb, var(--secondary) 6%, var(--surface)) 60%,
-    color-mix(in srgb, var(--spectrum-cool) 16%, var(--surface))
+    color-mix(in srgb, var(--secondary) 12%, var(--surface)),
+    color-mix(in srgb, var(--secondary) 4%, var(--surface)) 60%,
+    color-mix(in srgb, var(--spectrum-cool) 11%, var(--surface))
   );
 }
 .catalog-strip:nth-of-type(even) {
   border-top-color: var(--primary);
   background: linear-gradient(
     120deg,
-    color-mix(in srgb, var(--primary) 18%, var(--surface)),
-    color-mix(in srgb, var(--primary) 6%, var(--surface)) 55%,
-    color-mix(in srgb, var(--secondary) 17%, var(--surface))
+    color-mix(in srgb, var(--primary) 13%, var(--surface)),
+    color-mix(in srgb, var(--primary) 4%, var(--surface)) 55%,
+    color-mix(in srgb, var(--secondary) 12%, var(--surface))
   );
 }
 .catalog-rows {
@@ -189,7 +192,7 @@ body:before {
 }
 .row-list {
   border-radius: 8px;
-  background: color-mix(in srgb, var(--secondary) 10%, var(--surface));
+  background: color-mix(in srgb, var(--secondary) 7%, var(--surface));
 }
 .button:not(.outline) {
   background-image: linear-gradient(
@@ -202,8 +205,8 @@ body:before {
 .sidebar nav a[aria-current="page"] {
   background: linear-gradient(
     100deg,
-    color-mix(in srgb, var(--primary) 32%, var(--surface)),
-    color-mix(in srgb, var(--secondary) 28%, var(--surface))
+    color-mix(in srgb, var(--primary) 22%, var(--surface)),
+    color-mix(in srgb, var(--secondary) 20%, var(--surface))
   );
 }
 .editor,
@@ -213,8 +216,8 @@ body:before {
   border-radius: 12px;
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--secondary) 15%, var(--surface)),
-    color-mix(in srgb, var(--spectrum-cool) 5%, var(--surface)) 65%
+    color-mix(in srgb, var(--secondary) 10%, var(--surface)),
+    color-mix(in srgb, var(--spectrum-cool) 4%, var(--surface)) 65%
   );
 }
 .library-filters,
@@ -227,12 +230,12 @@ body:before {
 .library-table thead {
   background: linear-gradient(
     95deg,
-    color-mix(in srgb, var(--secondary) 14%, var(--surface)),
-    color-mix(in srgb, var(--spectrum-cool) 9%, var(--surface))
+    color-mix(in srgb, var(--secondary) 10%, var(--surface)),
+    color-mix(in srgb, var(--spectrum-cool) 6%, var(--surface))
   );
 }
 .library-table tbody tr:hover {
-  background: color-mix(in srgb, var(--secondary) 6%, var(--surface));
+  background: color-mix(in srgb, var(--secondary) 4%, var(--surface));
 }
 footer {
   border-image: var(--spectrum) 1;
@@ -297,8 +300,8 @@ input[type="radio"] {
 .sidebar {
   background: linear-gradient(
     165deg,
-    color-mix(in srgb, var(--secondary) 16%, var(--surface)),
-    color-mix(in srgb, var(--spectrum-cool) 7%, var(--surface)) 70%
+    color-mix(in srgb, var(--secondary) 11%, var(--surface)),
+    color-mix(in srgb, var(--spectrum-cool) 5%, var(--surface)) 70%
   );
 }
 .search-combo form:focus-within {
@@ -308,7 +311,7 @@ input[type="radio"] {
 }
 .browse-shortcuts a:hover,
 .browse-shortcuts a:focus-visible {
-  background: color-mix(in srgb, var(--secondary) 22%, var(--surface));
+  background: color-mix(in srgb, var(--secondary) 15%, var(--surface));
   border-color: var(--secondary);
   text-decoration: none;
 }
@@ -318,7 +321,7 @@ input[type="radio"] {
 .season-picker select {
   background: linear-gradient(
     115deg,
-    color-mix(in srgb, var(--secondary) 15%, var(--surface)),
+    color-mix(in srgb, var(--secondary) 10%, var(--surface)),
     var(--surface)
   );
   border-color: color-mix(in srgb, var(--secondary) 45%, var(--border));
@@ -333,7 +336,7 @@ input[type="radio"] {
 .media-links > a:hover,
 .media-links > a:focus-visible {
   border-color: var(--secondary);
-  background: color-mix(in srgb, var(--secondary) 17%, var(--surface));
+  background: color-mix(in srgb, var(--secondary) 12%, var(--surface));
   text-decoration: none;
 }
 .feature-pages button span {
@@ -411,4 +414,43 @@ input[type="radio"] {
 .card-list-action {
   opacity: 1;
   color: var(--secondary);
+}
+
+/* The silent header uses its full width; no reserved audio slot. */
+.public-nav:after,
+.workspace-header:after {
+  content: none;
+}
+@media (max-width: 600px) {
+  .sidebar-toggle {
+    right: 16px;
+  }
+}
+.discover-assortment {
+  display: grid;
+  gap: 28px;
+}
+.discover-scene .feature-scene {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+}
+.discover-scene .featured-backdrop {
+  height: clamp(260px, 30vw, 460px) !important;
+}
+.discover-scene .featured-content {
+  padding: 20px 24px 20px 0;
+}
+.discover-assortment .catalog-section {
+  min-width: 0;
+}
+@media (max-width: 800px) {
+  .discover-scene .feature-scene {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .discover-scene .featured-content {
+    padding: 0 6px 12px;
+  }
 }

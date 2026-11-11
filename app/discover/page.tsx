@@ -1,201 +1,113 @@
-import { viewerLanguage } from "@/lib/viewer";
+import { Suspense } from "react";
 import Link from "next/link";
-import { scalarParams } from "@/lib/search";
+import { ArrowUpRight } from "lucide-react";
+import { redirect } from "next/navigation";
 import { PublicNav } from "@/components/public-nav";
-import { AnimeCard } from "@/components/anime-card";
+import { FeaturedCarousel } from "@/components/featured-carousel";
+import {
+  CatalogShelf,
+  ShelfPlaceholder,
+  type FeedResult,
+} from "@/components/catalog-shelf";
 import { catalog } from "@/lib/catalog";
-import { configured } from "@/lib/supabase";
+import { viewerLanguage } from "@/lib/viewer";
+import { featuredSelection } from "@/lib/feature-selection";
+import { projectFeature } from "@/lib/home-feature";
+import { scalarParams } from "@/lib/search";
 export const metadata = { title: "Discover anime" };
+const settle = (promise: ReturnType<typeof catalog>): Promise<FeedResult> =>
+  promise.then(
+    (value) => ({ status: "fulfilled", value }),
+    (reason) => ({ status: "rejected", reason }),
+  );
 export default async function Discover({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
-  const language = await viewerLanguage();
-  const p = scalarParams(await searchParams);
-  let result: Awaited<ReturnType<typeof catalog>> | null = null;
-  let unavailable = false;
-  if (configured()) {
-    try {
-      result = await catalog(p);
-    } catch {
-      unavailable = true;
-    }
-  }
-  const href = (n: number) => {
-    const q = new URLSearchParams(
-      Object.entries(p).filter(([, v]) => v !== undefined) as [
-        string,
-        string,
-      ][],
+  const params = scalarParams(await searchParams);
+  if (Object.keys(params).length) {
+    const query = new URLSearchParams(
+      Object.entries(params).filter(
+        (entry): entry is [string, string] => entry[1] !== undefined,
+      ),
     );
-    q.set("page", String(n));
-    return `/discover?${q}`;
-  };
+    redirect(`/search?${query}`);
+  }
+  const popular = settle(catalog({ sort: "popular" })),
+    airing = settle(catalog({ airing: "RELEASING", sort: "popular" })),
+    recent = settle(catalog({ sort: "newest" })),
+    upcoming = settle(catalog({ airing: "NOT_YET_RELEASED", sort: "popular" }));
+  const [language, featured] = await Promise.all([viewerLanguage(), popular]);
+  const slides = featuredSelection(
+    featured.status === "fulfilled" ? featured.value.titles : [],
+  ).map((anime) => projectFeature(anime, language));
   return (
     <>
       <PublicNav />
-      <main id="main" className="public-catalog">
+      <main id="main" className="public-catalog discover-assortment">
         <div className="catalog-top">
-          <div>
-            <h1>Discover anime</h1>
-          </div>
-          {result && (
-            <span>{result.count.toLocaleString()} matching shows & films</span>
-          )}
+          <h1>Discover anime</h1>
+          <Link className="text-link" href="/search">
+            Search the catalog <ArrowUpRight size={16} />
+          </Link>
         </div>
-        <details
-          className="catalog-filters"
-          open={Object.keys(p).some((k) => k !== "page")}
-        >
-          <summary>Filters & sorting</summary>
-          <form className="filter-bar">
-            <label className="search-field">
-              Search anime
-              <input
-                name="q"
-                defaultValue={p.q}
-                placeholder="English, romaji, or native title…"
-                maxLength={100}
-              />
-            </label>
-            <label>
-              Format
-              <select name="format" defaultValue={p.format || ""}>
-                <option value="">All formats</option>
-                {[
-                  "TV",
-                  "MOVIE",
-                  "OVA",
-                  "ONA",
-                  "SPECIAL",
-                  "TV_SHORT",
-                  "MUSIC",
-                ].map((f) => (
-                  <option key={f}>{f}</option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Genre
-              <select name="genre" defaultValue={p.genre || ""}>
-                <option value="">All genres</option>
-                {[
-                  "Action",
-                  "Adventure",
-                  "Comedy",
-                  "Drama",
-                  "Fantasy",
-                  "Horror",
-                  "Mystery",
-                  "Romance",
-                  "Sci-Fi",
-                  "Slice of Life",
-                  "Sports",
-                  "Thriller",
-                ].map((g) => (
-                  <option key={g}>{g}</option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Release status
-              <select name="airing" defaultValue={p.airing || ""}>
-                <option value="">All releases</option>
-                <option value="RELEASING">Airing</option>
-                <option value="NOT_YET_RELEASED">Upcoming</option>
-                <option value="FINISHED">Finished</option>
-              </select>
-            </label>
-            <label>
-              Season
-              <select name="season" defaultValue={p.season || ""}>
-                <option value="">All seasons</option>
-                {["WINTER", "SPRING", "SUMMER", "FALL"].map((s) => (
-                  <option key={s}>{s}</option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Year
-              <input
-                type="number"
-                name="year"
-                min="1900"
-                max="2100"
-                defaultValue={p.year}
-              />
-            </label>
-            <label className="check-label">
-              <input
-                type="checkbox"
-                name="short"
-                value="true"
-                defaultChecked={p.short === "true"}
-              />
-              13 episodes or fewer
-            </label>
-            <label>
-              Sort
-              <select name="sort" defaultValue={p.sort || "popular"}>
-                <option value="popular">Popular</option>
-                <option value="newest">Newest</option>
-                <option value="rating">Source rating</option>
-              </select>
-            </label>
-            <button className="button">Search</button>
-            <Link href="/discover" className="text-link">
-              Reset
+        <div className="discover-scene">
+          <FeaturedCarousel titles={slides} />
+        </div>
+        <nav className="browse-shortcuts" aria-label="Browse genres">
+          {[
+            "Action",
+            "Adventure",
+            "Fantasy",
+            "Romance",
+            "Sci-Fi",
+            "Slice of Life",
+          ].map((genre) => (
+            <Link
+              key={genre}
+              href={`/search?genre=${encodeURIComponent(genre)}`}
+            >
+              {genre}
             </Link>
-          </form>
-        </details>
-        {result?.titles.length ? (
-          <>
-            <div className="anime-grid">
-              {result.titles.map((a) => (
-                <AnimeCard
-                  key={a.id}
-                  anime={a}
-                  language={language}
-                  publicPage
-                />
-              ))}
-            </div>
-            <nav className="pagination" aria-label="Pagination">
-              {result.page > 1 && (
-                <Link href={href(result.page - 1)}>← Previous</Link>
-              )}
-              <span>
-                Page {result.page} of{" "}
-                {Math.max(1, Math.ceil(result.count / 24))}
-              </span>
-              {result.page * 24 < result.count && (
-                <Link href={href(result.page + 1)}>Next →</Link>
-              )}
-            </nav>
-          </>
-        ) : (
-          <div className="catalog-message" role="status">
-            <h2>
-              {unavailable
-                ? "The catalog is taking a moment."
-                : "No stories found."}
-            </h2>
-            <p>
-              {unavailable
-                ? "Please try again shortly."
-                : "Try another title or broaden your filters."}
-            </p>
-            <Link className="button outline" href="/discover">
-              Try again
-            </Link>
-          </div>
-        )}
-        <p className="art-attribution">
-          Metadata: anime-offline-database (ODbL), with source attribution on
-          each title. Provider refreshes add synopses and original ratings.{" "}
-          <Link href="/content-policy">Content & sources</Link>
-        </p>
+          ))}
+        </nav>
+        <Suspense fallback={<ShelfPlaceholder />}>
+          <CatalogShelf
+            result={recent}
+            title="Recent releases"
+            href="/search?sort=newest"
+            language={language}
+            rail
+          />
+        </Suspense>
+        <Suspense fallback={<ShelfPlaceholder />}>
+          <CatalogShelf
+            result={airing}
+            title="Top airing"
+            href="/search?airing=RELEASING"
+            language={language}
+            rail
+          />
+        </Suspense>
+        <Suspense fallback={<ShelfPlaceholder />}>
+          <CatalogShelf
+            result={popular}
+            title="Popular anime"
+            href="/search?sort=popular"
+            language={language}
+            rail
+          />
+        </Suspense>
+        <Suspense fallback={<ShelfPlaceholder />}>
+          <CatalogShelf
+            result={upcoming}
+            title="Upcoming"
+            href="/search?airing=NOT_YET_RELEASED"
+            language={language}
+            variant="rows"
+          />
+        </Suspense>
       </main>
     </>
   );

@@ -8,7 +8,6 @@ import "./spectrum.css";
 import "lenis/dist/lenis.css";
 import "./kinetic.css";
 import { MotionExperience } from "@/components/motion-experience";
-import { Experience } from "@/components/experience";
 import { viewer } from "@/lib/viewer";
 import { polishTheme, customAccentTokens } from "@/lib/appearance";
 import { themeSchema } from "@/lib/domain";
@@ -55,7 +54,6 @@ export default async function RootLayout({
         <a className="skip" href="#main">
           Skip to content
         </a>
-        <Experience />
         <MotionExperience />
         {children}
       </body>

@@ -2,9 +2,9 @@
 name: Sakuga journal
 description: A colorful spectrum anime journal with Japanese editorial and technical character.
 colors:
-  bg: "#0b0b0d"
-  surface: "#141416"
-  surface-raised: "#1d1d20"
+  bg: "#131316"
+  surface: "#1b1b20"
+  surface-raised: "#24242b"
   surface-hover: "#252528"
   border: "#2e2e33"
   border-strong: "#424249"
@@ -205,7 +205,7 @@ Primary buttons use readable on-primary text over a 110-degree gradient from pri
 
 ### Navigation and feedback
 
-Keep search visible and active routes identifiable through text and the small frame corner. The translucent public header ends in a 2px spectrum rule; active public/sidebar routes gain a matching pink/lavender surface. Preserve the opaque reduced-transparency alternative. Mobile navigation preserves its menu state and keyboard access. Audio occupies its reserved header slot and retains opt-in/mute behavior and the version-2 stored preference. Three unmodified CC0 Kenney samples distinguish activation, navigation and switches; load/decode only after audio is enabled, bound concurrent playback and cancel it on mute or hidden tabs. No hover chatter, synthesized oscillators or music remain. Attribution and hashes are bundled under `public/audio/kenney/v1/` and documented in `docs/research/interface-audio.md`. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
+Keep search visible and active routes identifiable through text and the small frame corner. The translucent public header ends in a 2px spectrum rule; active public/sidebar routes gain a matching pink/lavender surface. Preserve the opaque reduced-transparency alternative. Mobile navigation preserves its menu state and keyboard access. The site is silent. No audio toggle, playback code or sound assets ship; headers use the full available width. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
 
 ### Posters and source artwork
 
@@ -233,3 +233,12 @@ List headers blend secondary 14% and cool blue 9% into the surface; hovered rows
 - **Don't** add a permanent render loop, full-screen pointer field, scroll trapping or layout shifts to deliver animation.
 - **Don't** use decorative Japanese text, mascots or a frame corner on every card.
 - **Don't** replace each route with the same panel dashboard or an oversized welcome hero.
+
+
+## Final restraint pass
+
+The approved spectrum is softened to 70% of its previous color mixes against base/surface tokens. The full-viewport field, artwork fade, typography and interaction behavior remain. Authentication pages no longer render the generated city-image decoration; the existing brand and form layout stay intact.
+
+The final shipping direction uses a stronger #131316 charcoal base, #1b1b20 surfaces and restrained corner accents. All interface audio, its toggle, runtime and bundled files are removed. The header reserves no sound-control space. This supersedes the earlier sampled-audio direction.
+
+Discover now presents a featured anime and separate recent/popular/airing/upcoming shelves. Search owns text queries, filtering and pagination on /search and /app/search. Legacy filtered discover links redirect to their search equivalents; signed-in search preserves QuickAdd. Miruro page text was accessible, but its current Discover visual layout was not exposed, so literal visual parity is not verified.

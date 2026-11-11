@@ -377,42 +377,26 @@ test("seasons share one index and selector follows legacy links", async ({
   await expect(page).toHaveURL(/season=16498/);
   await expect(page.getByLabel("Season / part")).toHaveValue("16498");
 });
-test("click sounds migrate safely and lo-fi is removed", async ({ page }) => {
-  await page.addInitScript(() => {
-    if (!localStorage.getItem("sakuga-audio"))
-      localStorage.setItem(
-        "sakuga-audio",
-        JSON.stringify({ effects: false, music: true }),
-      );
+test("the site stays silent even with a previously enabled sound preference", async ({
+  page,
+}) => {
+  await page.addInitScript(() =>
+    localStorage.setItem(
+      "sakuga-audio",
+      JSON.stringify({ version: 2, effects: true }),
+    ),
+  );
+  const audioRequests: string[] = [];
+  page.on("request", (request) => {
+    if (/\.(wav|mp3|ogg)(?:\?|$)/.test(request.url()))
+      audioRequests.push(request.url());
   });
   await page.goto("/");
-  await expect(
-    page.getByRole("button", { name: "Enable click sounds", exact: true }),
-  ).toHaveAttribute("aria-pressed", "false");
-  await expect(page.getByRole("button", { name: /lo.fi/i })).toHaveCount(0);
-  await expect
-    .poll(() =>
-      page.evaluate(() =>
-        JSON.parse(localStorage.getItem("sakuga-audio") || "{}"),
-      ),
-    )
-    .toEqual({ version: 2, effects: false });
+  await expect(page.locator(".audio-dock,.audio-toggle,audio")).toHaveCount(0);
   await page
-    .getByRole("button", { name: "Enable click sounds", exact: true })
+    .getByRole("button", { name: "Next featured anime", exact: true })
     .click();
-  await expect(
-    page.getByRole("button", { name: "Mute click sounds", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page.goto("/discover");
-  await expect(
-    page.getByRole("button", { name: "Mute click sounds", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page
-    .getByRole("button", { name: "Mute click sounds", exact: true })
-    .click();
-  await expect(
-    page.getByRole("button", { name: "Enable click sounds", exact: true }),
-  ).toHaveAttribute("aria-pressed", "false");
+  expect(audioRequests).toEqual([]);
 });
 test("featured carousel changes slides, pauses safely and respects reduced motion", async ({
   page,
@@ -502,7 +486,7 @@ test("reduced motion retains static surfaces, requested typography and cached ar
   expect(surfaces).toMatchObject({
     pink: "#ff8fb8",
     lavender: "#d0b9ff",
-    background: "#0b0b0d",
+    background: "#131316",
     blur: "blur(12px)",
     animation: "none",
   });
@@ -647,9 +631,10 @@ test("film strip provides working horizontal navigation without page overflow", 
 test("catalog filters preserve submitted values and keyboard operation", async ({
   page,
 }) => {
-  await page.goto("/discover");
+  await page.goto("/search");
   const filters = page.locator(".catalog-filters");
-  await filters.getByText("Filters & sorting", { exact: true }).click();
+  if (!(await filters.evaluate((element) => element.hasAttribute("open"))))
+    await filters.getByText("Filters & sorting", { exact: true }).click();
   await filters.getByLabel("Search anime", { exact: true }).fill("Attack");
   await filters
     .getByRole("combobox", { name: "Genre", exact: true })
@@ -666,7 +651,7 @@ test("catalog filters preserve submitted values and keyboard operation", async (
   await expect(filters.getByLabel("Year", { exact: true })).toHaveValue("2013");
   await expect(page.locator(".anime-card")).toHaveCount(1);
   await filters.getByRole("link", { name: "Reset", exact: true }).click();
-  await expect(page).toHaveURL(/\/discover$/);
+  await expect(page).toHaveURL(/\/search$/);
 });
 
 test("anime artwork fills the background, fades on scroll and clears on navigation", async ({
@@ -709,91 +694,33 @@ test("anime artwork fills the background, fades on scroll and clears on navigati
   await expect(backdrop).toHaveCount(0); // The fixture deliberately has no source cover for this title.
 });
 
-declare global {
-  interface Window {
-    sakugaAudioStats: { samples: number; oscillators: number };
-  }
-}
-test("licensed samples load only after enabling audio and muting stops further playback", async ({
+test("Discover browses assortments while Search owns queries and filters", async ({
   page,
-}) => {
-  await page.addInitScript(() => {
-    window.sakugaAudioStats = { samples: 0, oscillators: 0 };
-    const start = AudioBufferSourceNode.prototype.start;
-    AudioBufferSourceNode.prototype.start = function (
-      this: AudioBufferSourceNode,
-      ...args: Parameters<AudioBufferSourceNode["start"]>
-    ) {
-      window.sakugaAudioStats.samples++;
-      return start.apply(this, args);
-    };
-    const oscillator = AudioContext.prototype.createOscillator;
-    AudioContext.prototype.createOscillator = function (this: AudioContext) {
-      window.sakugaAudioStats.oscillators++;
-      return oscillator.call(this);
-    };
-  });
-  const files = new Map<string, number>();
-  page.on("response", (response) => {
-    if (/\/audio\/kenney\/v1\/.*\.wav$/.test(response.url()))
-      files.set(new URL(response.url()).pathname, response.status());
-  });
-  await page.goto("/");
-  await settleMotion(page);
-  expect(files.size).toBe(0);
-  await page
-    .getByRole("button", { name: "Enable click sounds", exact: true })
-    .click();
-  await expect
-    .poll(() => page.evaluate(() => window.sakugaAudioStats.samples))
-    .toBeGreaterThan(0);
-  await expect.poll(() => files.size).toBe(3);
-  expect([...files.values()]).toEqual([200, 200, 200]);
-  const before = await page.evaluate(() => window.sakugaAudioStats.samples);
-  await page.waitForTimeout(90);
-  await page
-    .getByRole("button", { name: "Next featured anime", exact: true })
-    .click();
-  await expect
-    .poll(() => page.evaluate(() => window.sakugaAudioStats.samples))
-    .toBeGreaterThan(before);
-  await page
-    .getByRole("button", { name: "Mute click sounds", exact: true })
-    .click();
-  const muted = await page.evaluate(() => window.sakugaAudioStats.samples);
-  await page
-    .getByRole("button", { name: "Next featured anime", exact: true })
-    .click();
-  await page.waitForTimeout(150);
-  expect(await page.evaluate(() => window.sakugaAudioStats)).toEqual({
-    samples: muted,
-    oscillators: 0,
-  });
-});
-test("unavailable audio leaves navigation and sound preferences usable", async ({
-  page,
-}) => {
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  await page.route("**/audio/kenney/v1/*.wav", (route) =>
-    route.fulfill({ status: 503, body: "Unavailable" }),
-  );
-  await page.goto("/");
-  await page
-    .getByRole("button", { name: "Enable click sounds", exact: true })
-    .click();
-  await page
-    .getByRole("link", { name: "Discover", exact: true })
-    .first()
-    .click();
+}, info) => {
+  await page.goto("/discover");
   await expect(
-    page.getByRole("heading", { name: "Discover anime", exact: true }),
+    page.getByRole("heading", { name: "Top airing", exact: true }),
   ).toBeVisible();
+  await expect(page.locator(".catalog-filters")).toHaveCount(0);
+  await settleMotion(page);
+  await page.screenshot({
+    path: `.impeccable/review/${info.project.name}-discover-final.png`,
+  });
+  const field = page.getByRole("combobox", {
+    name: "Search anime",
+    exact: true,
+  });
+  await field.fill("Attack");
+  await field.press("Enter");
+  await expect(page).toHaveURL(/\/search\?q=Attack/);
+  await expect(page.locator(".catalog-filters input[name=q]")).toHaveValue(
+    "Attack",
+  );
+  await page.goto("/search");
   await expect(
-    page.getByRole("button", { name: "Mute click sounds", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page
-    .getByRole("button", { name: "Mute click sounds", exact: true })
-    .click();
-  expect(errors).toEqual([]);
+    page.getByRole("heading", { name: "Search the catalog.", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".anime-card")).toHaveCount(0);
+  await page.goto("/discover?genre=Action");
+  await expect(page).toHaveURL(/\/search\?genre=Action/);
 });

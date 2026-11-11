@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X, Compass, Library, UserRound } from "lucide-react";
+import { Menu, X, Compass, Library, UserRound, Search } from "lucide-react";
 import { Brand } from "./brand";
 import { SearchBox } from "./search-box";
 export function PublicNavContent({
@@ -28,6 +28,13 @@ export function PublicNavContent({
           onClick={() => setOpen(false)}
         >
           <Compass size={16} /> Discover
+        </Link>
+        <Link
+          href="/search"
+          aria-current={path === "/search" ? "page" : undefined}
+          onClick={() => setOpen(false)}
+        >
+          <Search size={16} /> Search
         </Link>
         <Link
           href="/app/library"

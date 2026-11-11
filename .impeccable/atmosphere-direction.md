@@ -1,3 +1,5 @@
+> Superseded by the final silent charcoal direction and Discover/Search split in review/final-shipping.md.
+
 # Sakuga — brighter atmosphere refinement
 
 Current brief: preserve the approved kinetic design, two self-hosted font families, useful content and working flows. Make the existing pink/violet/blue gradient much more present; replace synthesized sounds with a licensed premade collection; use the selected anime cover as a blurred detail backdrop that fades into the brighter gradient as the visitor scrolls. This is amplification of the shipped world, not a replacement layout or new typography system.

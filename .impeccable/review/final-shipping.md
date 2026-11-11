@@ -1,0 +1,9 @@
+# Final shipping refinement
+
+November 10, 2026 (America/Chicago). Charcoal base strengthened to #131316 with #1b1b20 surfaces and restrained corner fields. Surface gradients softened by roughly 30%. Login's generated illustration is removed, with its absence and zero image requests checked at 375/1440px. All audio runtime, toggle, bundled assets and cache configuration are removed; an enabled legacy preference cannot reactivate sound.
+
+Discover now contains a featured carousel, genre navigation and recent/airing/popular/upcoming shelves. Public Search and signed-in Search own queries, filters and pagination. Signed-in Search retains QuickAdd and authentication; legacy filtered Discover URLs redirect to the appropriate search route. Header and sidebar navigation expose the separate destinations.
+
+Reference: Miruro's homepage/search text was accessible via the web reader. Its Discover route exposed only a domain notice; the execution network also denied direct access. Literal visual parity could not be verified. This implementation uses the available browsing hierarchy and Sakuga's approved components; a current screenshot is needed for an exact visual match.
+
+Verification: 32 mobile/desktop scenarios passed for the silent charcoal refinement. After the page split, 30 broad scenarios passed; two assertions assumed closed filters on Search and were corrected to account for the intentionally open form. Nine focused checks then passed across mobile, tablet and desktop, including query submission, filtered redirects, empty Search and header spacing. Type checking and lint passed. The existing 45 unit/database tests passed. Production build and deployment are checked before publication is reported. Saved captures are fixtures, not evidence of live account or catalog completeness.
