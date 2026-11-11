@@ -1,0 +1,31 @@
+{
+  "artist": "Kenney Vleugels (Kenney.nl)",
+  "license": "CC0-1.0",
+  "repository": "https://github.com/Calinou/kenney-ui-audio",
+  "commit": "8c3d81b9159d058c444f89d12d518276b0b09345",
+  "path": "addons/kenney_ui_audio",
+  "processing": "Unmodified WAV files",
+  "assets": [
+    {
+      "file": "click3.wav",
+      "action": "click",
+      "bytes": 15694,
+      "seconds": 0.08852607709750566,
+      "sha256": "8d0676a5bcbfedad3e65b7b73e93a044216d7f192c99a3a05caf21e2aa4a8dda"
+    },
+    {
+      "file": "click1.wav",
+      "action": "navigate",
+      "bytes": 18254,
+      "seconds": 0.10303854875283447,
+      "sha256": "dd90b97f38b0ec7d52161d7c3bf8d61a66655766fd0af06439963351b4853a83"
+    },
+    {
+      "file": "switch7.wav",
+      "action": "switch",
+      "bytes": 37710,
+      "seconds": 0.21333333333333335,
+      "sha256": "7da9853cf7ca16b5b136026d77cccfc667994d38c8c23af9ef0089e90bbf9fe0"
+    }
+  ]
+}

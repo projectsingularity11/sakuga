@@ -11,11 +11,11 @@ colors:
   primary: "#ff8fb8"
   primary-hover: "#ffa8c8"
   on-primary: "#0b0b0d"
-  secondary: "#b9a3ff"
+  secondary: "#d0b9ff"
   spectrum-cool: "#91d9ff"
   spectrum-violet: "#b5a2ff"
   text: "#f5f5f7"
-  text-muted: "#a6a6af"
+  text-muted: "#c4bfd1"
   watching: "#7dcfff"
   completed: "#7ee0b8"
   planned: "#b9a3ff"
@@ -137,7 +137,7 @@ Sakuga is a practical, independently voiced space for discovering anime and keep
 
 ## Colors
 
-The frontmatter records the canonical CSS values in `app/globals.css`. The cohesive `app/spectrum.css` layer is imported afterward by `app/layout.tsx` and owns the coordinated component treatments. The following `app/kinetic.css` layer owns motion and full-width detail text; preserve the explicit import order. Each unprefixed key maps directly to the same CSS custom property, such as `bg` → `--bg`. `light-*` records the actual light/system-light overrides; primary, primary-hover and on-primary inherit the default values in light appearance.
+The frontmatter records canonical CSS values. `app/globals.css` owns the base roles; `app/spectrum.css` brightens dark secondary to #d0b9ff and muted text to #c4bfd1 for readable atmosphere surfaces. The cohesive `app/spectrum.css` layer is imported afterward by `app/layout.tsx` and owns the coordinated component treatments. The following `app/kinetic.css` layer owns motion and full-width detail text; preserve the explicit import order. Each unprefixed key maps directly to the same CSS custom property, such as `bg` → `--bg`. `light-*` records the actual light/system-light overrides; primary, primary-hover and on-primary inherit the default values in light appearance.
 
 ### Primary
 
@@ -175,11 +175,11 @@ Main adaptation breakpoints are 1700px, 1100px, 800px and 600px. Choose usable p
 
 ## Elevation & Depth
 
-Depth combines fuller gradient surfaces, tinted borders, charcoal foundations and selective translucency. Static radial atmosphere mixes primary pink at 22% near the upper left and lavender at 20% near the upper right. The intro blends pink 15%, secondary 12% and cool blue 12% into its surface; the feature uses pink 9% and cool blue 8%. Release/upcoming panels vary the same hues, while form and table-header gradients carry the system into the workspace. The public header uses 88% background opacity with 8px blur; the workspace header uses 92% background opacity. Search surfaces use 92% surface opacity, supporting controls 86% raised-surface opacity, and the sidebar has a faint lavender-to-surface gradient. These effects are static. Reduced transparency makes the public/workspace headers and search surfaces opaque and removes header blur. The stored ambient preference remains compatible, but the current radial CSS uses fixed mixes.
+Depth combines full-viewport pink, violet and blue fields, brighter section gradients, tinted borders and selective translucency. `body:before` is a fixed, static field behind the page, so color remains present below the introduction. The field mixes primary 36%, secondary 36% and cool blue 29% into the base, over a related diagonal foundation. Light/system-light fields use 16%, 16% and 19% respectively. Dark secondary and muted text are lighter for contrast. The intro uses 52% pink, 46% secondary and 40% cool blue; the feature uses 19% pink, 9% secondary and 17% cool blue. Release panels and editors use related stronger tints. Public and workspace headers use 84% base opacity with 12px blur. Search surfaces stay readable and turn solid on focus; the sidebar blends 16% secondary and 7% cool blue into the surface. Reduced transparency makes headers and synopsis surfaces opaque and hides the artwork backdrop. Saved appearance/custom-accent preferences remain compatible.
 
 Search popovers use `0 14px 30px #0003`; hovered posters use `0 14px 28px #0005`; the mobile drawer uses `12px 0 30px #0005`. Resting content does not acquire a shadow cloud. Interaction transitions use 160ms and `cubic-bezier(0.22, 1, 0.36, 1)`; popovers enter by 5px. Loading skeletons reserve geometry and pulse opacity. Reduced motion removes movement/scaling; manual carousel control remains.
 
-**The Still Atmosphere Rule.** Gradients and translucency add color and depth; the page field stays still. Motion belongs to artwork, visible border lights and controls.
+**The Still Atmosphere Rule.** The full-viewport color field stays still. Detail artwork fades with scroll; motion belongs to artwork, visible border lights and controls.
 
 ## Motion
 
@@ -189,7 +189,7 @@ The latest request adds expressive motion while keeping the current typography, 
 
 One shared IntersectionObserver triggers 460–520ms WAAPI card/section reveals with a capped 160ms stagger, then releases each observed target. Child-list observation handles streamed and newly filtered results by scanning only added subtrees. Content is visible before enhancement and if loading the runtime fails. Keyboard focus cancels an active reveal on its target. Pointer reflections are local to hovered covers/rows/buttons and coalesce into one requested frame without React state.
 
-The introduction and feature frame carry a five-second masked border light adapted from Magic UI's MIT pattern. Hydrated client observers run it only while the parent is visible; hidden tabs pause it, and reduced motion hides it. Carousel artwork enters over 650ms, captions over 450ms, rows over 350ms, drawers over 250ms and save feedback over 300ms. Buttons have a short sheen, hover lift and press feedback. Preserve carousel pause/focus/manual controls and the opt-in click audio.
+The introduction and feature frame carry a five-second masked border light adapted from Magic UI's MIT pattern. Hydrated client observers run it only while the parent is visible; hidden tabs pause it, and reduced motion hides it. Carousel artwork enters over 650ms, captions over 450ms, rows over 350ms, drawers over 250ms and save feedback over 300ms. Buttons have a short sheen, hover lift and press feedback. Preserve carousel pause/focus/manual controls. The active feature marker fills over the same 7.5-second autoplay interval; pausing or focusing stops the timer treatment. Opt-in interface audio uses the licensed samples below.
 
 A thin scroll progress rule and a back-to-top control appear without moving page content. Show detail grids reserve a responsive 190–290px poster column on desktop, a 150px column on tablet and one column on phones. The remaining column, including synopsis and title, has no reading-width cap. Editors fill their assigned lower grid columns.
 
@@ -201,11 +201,11 @@ Use 8px controls, stable 2:3 posters with 10px corners, 5px small thumbnails and
 
 ### Buttons, fields and filters
 
-Primary buttons use readable on-primary text over a 110-degree gradient from primary pink toward a 78% pink/spectrum-violet mix. Secondary buttons and icon controls use lightly translucent raised surfaces and a fine border. Standard controls have a 44px minimum height, with existing compact variants used deliberately. Fields retain readable fills, labels and lavender focus rings; editors use a 6% lavender-to-surface gradient, while collapsible filter shells use 95% surface opacity. Preserve search shortcuts, suggestions and filter submission contracts. Collapsible filters expose an ordinary labeled summary.
+Primary buttons use readable on-primary text over a 110-degree gradient from primary pink toward a 78% pink/spectrum-violet mix. Secondary buttons and icon controls use lightly translucent raised surfaces and a fine border. Standard controls have a 44px minimum height, with existing compact variants used deliberately. Fields retain readable fills, labels and lavender focus rings; editors use a 15% secondary-to-surface gradient, while collapsible filter shells use 95% surface opacity. Preserve search shortcuts, suggestions and filter submission contracts. Collapsible filters expose an ordinary labeled summary.
 
 ### Navigation and feedback
 
-Keep search visible and active routes identifiable through text and the small frame corner. The translucent public header ends in a 2px spectrum rule; active public/sidebar routes gain a matching pink/lavender surface. Preserve the opaque reduced-transparency alternative. Mobile navigation preserves its menu state and keyboard access. Audio occupies its reserved header slot and retains the existing opt-in sound behavior. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
+Keep search visible and active routes identifiable through text and the small frame corner. The translucent public header ends in a 2px spectrum rule; active public/sidebar routes gain a matching pink/lavender surface. Preserve the opaque reduced-transparency alternative. Mobile navigation preserves its menu state and keyboard access. Audio occupies its reserved header slot and retains opt-in/mute behavior and the version-2 stored preference. Three unmodified CC0 Kenney samples distinguish activation, navigation and switches; load/decode only after audio is enabled, bound concurrent playback and cancel it on mute or hidden tabs. No hover chatter, synthesized oscillators or music remain. Attribution and hashes are bundled under `public/audio/kenney/v1/` and documented in `docs/research/interface-audio.md`. Empty/error states use a concise explanation and useful action, without large decorative artwork or unsupported promises. Native destructive confirmation remains.
 
 ### Posters and source artwork
 
@@ -215,7 +215,7 @@ Retain trusted source URLs, cached AVIF/WebP derivatives, source attribution and
 
 ### Library and detail actions
 
-List headers blend lavender 14% and cool blue 9% into the surface; hovered rows use a 6% lavender tint. Keep solid status, progress and score text readable over these treatments. Preserve selected season IDs, progress/status/score fields, collection membership IDs, save actions and the `LibraryEditor` key tied to `anime.id`. Presentation must not change session refresh, authentication, data or integration contracts. Concise confirmations describe the actual action completed.
+List headers blend secondary 14% and cool blue 9% into the surface; hovered rows use a 6% lavender tint. Keep solid status, progress and score text readable over these treatments. Preserve selected season IDs, progress/status/score fields, collection membership IDs, save actions and the `LibraryEditor` key tied to `anime.id`. A selected-season `AnimeBackdrop` uses trusted source cover art (and existing cached derivatives) behind both public and signed-in details. The foreground and backdrop share image selection/sizing. Static 18px blur and 1.3 saturation sit under a 74% base veil, or 92% in light appearance. Scroll opacity falls to zero over 400–850px based on viewport height, capped by the available scroll range on shorter pages, and returns when scrolling up. Broken, missing or hidden covers leave the gradient; unrelated fallback art is not substituted. Synopsis text has a translucent reading surface that retains the full text-column width. Presentation must not change session refresh, authentication, data or integration contracts. Concise confirmations describe the actual action completed.
 
 ## Do's and Don'ts
 

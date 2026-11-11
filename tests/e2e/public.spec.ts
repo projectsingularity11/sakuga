@@ -7,12 +7,18 @@ async function settleMotion(page: Page) {
   );
   await page.evaluate(async () => {
     await document.fonts.ready;
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
     await Promise.all(
       document
         .getAnimations()
         .filter(
           (animation) =>
-            animation.effect?.getComputedTiming().iterations !== Infinity,
+            animation.effect?.getComputedTiming().iterations !== Infinity &&
+            !(
+              animation instanceof CSSAnimation &&
+              animation.animationName === "feature-countdown"
+            ),
         )
         .map((animation) => animation.finished.catch(() => {})),
     );
@@ -495,9 +501,9 @@ test("reduced motion retains static surfaces, requested typography and cached ar
   ).toContain("Chakra Petch");
   expect(surfaces).toMatchObject({
     pink: "#ff8fb8",
-    lavender: "#b9a3ff",
+    lavender: "#d0b9ff",
     background: "#0b0b0d",
-    blur: "blur(8px)",
+    blur: "blur(12px)",
     animation: "none",
   });
   await page.mouse.move(100, 400);
@@ -661,4 +667,133 @@ test("catalog filters preserve submitted values and keyboard operation", async (
   await expect(page.locator(".anime-card")).toHaveCount(1);
   await filters.getByRole("link", { name: "Reset", exact: true }).click();
   await expect(page).toHaveURL(/\/discover$/);
+});
+
+test("anime artwork fills the background, fades on scroll and clears on navigation", async ({
+  page,
+}, info) => {
+  await page.goto("/anime/154587");
+  const backdrop = page.locator(".anime-atmosphere");
+  await expect(backdrop).toHaveAttribute("data-anime-id", "154587");
+  await expect(backdrop.locator("img")).toHaveJSProperty("complete", true);
+  expect(
+    await backdrop
+      .locator("img")
+      .evaluate((img: HTMLImageElement) => img.naturalWidth),
+  ).toBeGreaterThan(0);
+  await settleMotion(page);
+  await expect(backdrop).toHaveCSS("opacity", "1");
+  await expect(backdrop.locator("img")).toHaveCSS(
+    "filter",
+    "blur(18px) saturate(1.3)",
+  );
+  await page.screenshot({
+    path: `.impeccable/review/${info.project.name}-artwork-detail.png`,
+    fullPage: false,
+  });
+  await page.evaluate(() =>
+    window.scrollTo({ top: innerHeight, behavior: "instant" }),
+  );
+  await expect(backdrop).toHaveCSS("opacity", "0");
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect(backdrop).toHaveCSS("opacity", "1");
+  await page
+    .getByRole("link", { name: "Back to discovery", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/discover$/);
+  await expect(backdrop).toHaveCount(0);
+  await page.goto("/anime/16498");
+  await expect(
+    page.getByRole("heading", { name: "Attack on Titan", exact: true }).first(),
+  ).toBeVisible();
+  await expect(backdrop).toHaveCount(0); // The fixture deliberately has no source cover for this title.
+});
+
+declare global {
+  interface Window {
+    sakugaAudioStats: { samples: number; oscillators: number };
+  }
+}
+test("licensed samples load only after enabling audio and muting stops further playback", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    window.sakugaAudioStats = { samples: 0, oscillators: 0 };
+    const start = AudioBufferSourceNode.prototype.start;
+    AudioBufferSourceNode.prototype.start = function (
+      this: AudioBufferSourceNode,
+      ...args: Parameters<AudioBufferSourceNode["start"]>
+    ) {
+      window.sakugaAudioStats.samples++;
+      return start.apply(this, args);
+    };
+    const oscillator = AudioContext.prototype.createOscillator;
+    AudioContext.prototype.createOscillator = function (this: AudioContext) {
+      window.sakugaAudioStats.oscillators++;
+      return oscillator.call(this);
+    };
+  });
+  const files = new Map<string, number>();
+  page.on("response", (response) => {
+    if (/\/audio\/kenney\/v1\/.*\.wav$/.test(response.url()))
+      files.set(new URL(response.url()).pathname, response.status());
+  });
+  await page.goto("/");
+  await settleMotion(page);
+  expect(files.size).toBe(0);
+  await page
+    .getByRole("button", { name: "Enable click sounds", exact: true })
+    .click();
+  await expect
+    .poll(() => page.evaluate(() => window.sakugaAudioStats.samples))
+    .toBeGreaterThan(0);
+  await expect.poll(() => files.size).toBe(3);
+  expect([...files.values()]).toEqual([200, 200, 200]);
+  const before = await page.evaluate(() => window.sakugaAudioStats.samples);
+  await page.waitForTimeout(90);
+  await page
+    .getByRole("button", { name: "Next featured anime", exact: true })
+    .click();
+  await expect
+    .poll(() => page.evaluate(() => window.sakugaAudioStats.samples))
+    .toBeGreaterThan(before);
+  await page
+    .getByRole("button", { name: "Mute click sounds", exact: true })
+    .click();
+  const muted = await page.evaluate(() => window.sakugaAudioStats.samples);
+  await page
+    .getByRole("button", { name: "Next featured anime", exact: true })
+    .click();
+  await page.waitForTimeout(150);
+  expect(await page.evaluate(() => window.sakugaAudioStats)).toEqual({
+    samples: muted,
+    oscillators: 0,
+  });
+});
+test("unavailable audio leaves navigation and sound preferences usable", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.route("**/audio/kenney/v1/*.wav", (route) =>
+    route.fulfill({ status: 503, body: "Unavailable" }),
+  );
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Enable click sounds", exact: true })
+    .click();
+  await page
+    .getByRole("link", { name: "Discover", exact: true })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Discover anime", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Mute click sounds", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await page
+    .getByRole("button", { name: "Mute click sounds", exact: true })
+    .click();
+  expect(errors).toEqual([]);
 });

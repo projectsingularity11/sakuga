@@ -46,12 +46,16 @@ describe("public-page session continuity", () => {
       "refreshed",
     );
   });
-  it("matches homepage and discovery while excluding static artwork", () => {
+  it("matches public and protected pages while excluding static artwork and audio", () => {
     const matcher = new RegExp(`^${config.matcher[0]}$`);
     expect(matcher.test("/")).toBe(true);
     expect(matcher.test("/discover")).toBe(true);
     expect(matcher.test("/anime/16498")).toBe(true);
     expect(matcher.test("/art/poster.jpg")).toBe(false);
+    expect(matcher.test("/audio/kenney/v1/click3.wav")).toBe(false);
+    expect(matcher.test("/app/library")).toBe(true);
+    expect(matcher.test("/app/audio/private.wav")).toBe(true);
+    expect(matcher.test("/audio-settings")).toBe(true);
   });
   it("preserves refresh cookie writes on a protected-page redirect", async () => {
     mocks.refresh = true;

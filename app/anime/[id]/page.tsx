@@ -1,4 +1,5 @@
 import { MediaLinks } from "@/components/media-links";
+import { AnimeBackdrop } from "@/components/anime-backdrop";
 import { englishSynopsis, releaseDescription } from "@/lib/media";
 import { CoverImage } from "@/components/cover-image";
 import { viewerLanguage } from "@/lib/viewer";
@@ -39,13 +40,19 @@ export default async function AnimeDetail({
     <>
       <PublicNav />
       <main id="main" className="public-dossier">
+        <AnimeBackdrop key={a.id} id={a.id} src={image} />
         <Link className="text-link" href="/discover">
           <ArrowLeft size={15} />
           Back to discovery
         </Link>
         <div className="dossier">
           <div className="dossier-cover">
-            <CoverImage src={image} title={resolveTitle(a)} priority />
+            <CoverImage
+              src={image}
+              id={a.id}
+              title={resolveTitle(a)}
+              priority
+            />
           </div>
           <div>
             <p className="muted">

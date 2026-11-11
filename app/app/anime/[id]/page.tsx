@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MediaLinks } from "@/components/media-links";
+import { AnimeBackdrop } from "@/components/anime-backdrop";
 import { englishSynopsis, releaseDescription } from "@/lib/media";
 import { CoverImage } from "@/components/cover-image";
 import { resolveTitle, alternateTitles, qualifiedCover } from "@/lib/metadata";
@@ -47,10 +48,12 @@ export default async function Page({
       : trustedImage(qualifiedCover(anime));
   return (
     <>
+      <AnimeBackdrop key={anime.id} id={anime.id} src={image} />
       <div className="dossier">
         <div className="dossier-cover">
           <CoverImage
             src={image}
+            id={anime.id}
             title={resolveTitle(anime, profile?.preferences?.language)}
             priority
           />

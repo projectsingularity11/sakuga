@@ -77,6 +77,7 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
   return (
     <section
       className="discovery-feature"
+      data-auto={auto}
       aria-roledescription="carousel"
       aria-label="Featured anime"
       onMouseEnter={() => setHovered(true)}

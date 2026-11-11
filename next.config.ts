@@ -15,6 +15,15 @@ const config: NextConfig = {
   async headers() {
     return [
       {
+        source: "/audio/kenney/v1/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
         source: "/art/home/:path*",
         headers: [
           {

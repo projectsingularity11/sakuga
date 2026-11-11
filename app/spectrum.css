@@ -1,11 +1,90 @@
-/* Spectrum: shared, static color fields with readable product surfaces. */
+/* Spectrum: full-viewport color fields, artwork atmospheres and readable surfaces. */
 :root {
+  --secondary: #d0b9ff;
+  --text-muted: #c4bfd1;
+  --field-rose: color-mix(in srgb, var(--primary) 36%, var(--bg));
+  --field-violet: color-mix(in srgb, var(--secondary) 36%, var(--bg));
+  --field-blue: color-mix(in srgb, var(--spectrum-cool) 29%, var(--bg));
+  --art-veil: 74%;
   --spectrum: linear-gradient(
     115deg,
     var(--primary),
     var(--spectrum-violet) 52%,
     var(--spectrum-cool)
   );
+}
+body {
+  min-height: 100dvh;
+  isolation: isolate;
+  background-image: none;
+}
+body:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 95% 95% at 0 12%,
+      var(--field-rose),
+      transparent 76%
+    ),
+    radial-gradient(
+      ellipse 100% 110% at 100% 0,
+      var(--field-violet),
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 90% 90% at 70% 100%,
+      var(--field-blue),
+      transparent 80%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--primary) 13%, var(--bg)),
+      color-mix(in srgb, var(--secondary) 23%, var(--bg)) 50%,
+      color-mix(in srgb, var(--spectrum-cool) 15%, var(--bg))
+    );
+}
+.anime-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: linear-gradient(#000 60%, transparent 100%);
+}
+.anime-atmosphere img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  filter: blur(18px) saturate(1.3);
+  transform: scale(1.12);
+  opacity: 0.88;
+}
+.anime-atmosphere:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg) var(--art-veil), transparent);
+}
+:root[data-appearance="light"] {
+  --field-rose: color-mix(in srgb, var(--primary) 16%, var(--bg));
+  --field-violet: color-mix(in srgb, var(--spectrum-violet) 16%, var(--bg));
+  --field-blue: color-mix(in srgb, var(--spectrum-cool) 19%, var(--bg));
+  --art-veil: 92%;
+}
+@media (prefers-color-scheme: light) {
+  :root[data-appearance="system"] {
+    --field-rose: color-mix(in srgb, var(--primary) 16%, var(--bg));
+    --field-violet: color-mix(in srgb, var(--spectrum-violet) 16%, var(--bg));
+    --field-blue: color-mix(in srgb, var(--spectrum-cool) 19%, var(--bg));
+    --art-veil: 92%;
+  }
 }
 .public-nav:before {
   height: 2px;
@@ -19,9 +98,9 @@
   border-radius: 12px;
   background: linear-gradient(
     115deg,
-    color-mix(in srgb, var(--primary) 32%, var(--surface)),
-    color-mix(in srgb, var(--secondary) 28%, var(--surface)) 50%,
-    color-mix(in srgb, var(--spectrum-cool) 26%, var(--surface))
+    color-mix(in srgb, var(--primary) 52%, var(--surface)),
+    color-mix(in srgb, var(--secondary) 46%, var(--surface)) 50%,
+    color-mix(in srgb, var(--spectrum-cool) 40%, var(--surface))
   );
 }
 .journal-intro h1 {
@@ -58,9 +137,9 @@
   border-radius: 14px;
   background: linear-gradient(
     155deg,
-    color-mix(in srgb, var(--primary) 9%, var(--surface)),
-    var(--surface) 48%,
-    color-mix(in srgb, var(--spectrum-cool) 8%, var(--surface))
+    color-mix(in srgb, var(--primary) 19%, var(--surface)),
+    color-mix(in srgb, var(--secondary) 9%, var(--surface)) 48%,
+    color-mix(in srgb, var(--spectrum-cool) 17%, var(--surface))
   );
 }
 .featured-content h2 {
@@ -71,8 +150,8 @@
   border-radius: 8px;
   background: linear-gradient(
     105deg,
-    color-mix(in srgb, var(--secondary) 20%, var(--surface)),
-    color-mix(in srgb, var(--spectrum-cool) 26%, var(--surface))
+    color-mix(in srgb, var(--secondary) 28%, var(--surface)),
+    color-mix(in srgb, var(--spectrum-cool) 33%, var(--surface))
   );
 }
 .catalog-strip,
@@ -84,18 +163,18 @@
   border-radius: 12px;
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--secondary) 8%, var(--surface)),
-    var(--surface) 60%,
-    color-mix(in srgb, var(--spectrum-cool) 7%, var(--surface))
+    color-mix(in srgb, var(--secondary) 17%, var(--surface)),
+    color-mix(in srgb, var(--secondary) 6%, var(--surface)) 60%,
+    color-mix(in srgb, var(--spectrum-cool) 16%, var(--surface))
   );
 }
 .catalog-strip:nth-of-type(even) {
   border-top-color: var(--primary);
   background: linear-gradient(
     120deg,
-    color-mix(in srgb, var(--primary) 9%, var(--surface)),
-    var(--surface) 55%,
-    color-mix(in srgb, var(--secondary) 8%, var(--surface))
+    color-mix(in srgb, var(--primary) 18%, var(--surface)),
+    color-mix(in srgb, var(--primary) 6%, var(--surface)) 55%,
+    color-mix(in srgb, var(--secondary) 17%, var(--surface))
   );
 }
 .catalog-rows {
@@ -134,8 +213,8 @@
   border-radius: 12px;
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--secondary) 6%, var(--surface)),
-    var(--surface) 65%
+    color-mix(in srgb, var(--secondary) 15%, var(--surface)),
+    color-mix(in srgb, var(--spectrum-cool) 5%, var(--surface)) 65%
   );
 }
 .library-filters,
@@ -181,4 +260,155 @@ footer {
   .editor {
     padding: 20px 14px;
   }
+}
+/* Shared finishing details: readable color, precise focus, and stable geometry. */
+html {
+  scrollbar-color: var(--secondary) var(--bg);
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  border: 2px solid var(--bg);
+  border-radius: 6px;
+  background: linear-gradient(
+    var(--primary),
+    var(--secondary),
+    var(--spectrum-cool)
+  );
+}
+input,
+textarea {
+  caret-color: var(--primary);
+}
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--primary);
+}
+.public-nav,
+.workspace-header {
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(12px);
+}
+.sidebar {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--secondary) 16%, var(--surface)),
+    color-mix(in srgb, var(--spectrum-cool) 7%, var(--surface)) 70%
+  );
+}
+.search-combo form:focus-within {
+  border-color: var(--spectrum-cool);
+  background: var(--surface);
+  box-shadow: 0 10px 28px #0004;
+}
+.browse-shortcuts a:hover,
+.browse-shortcuts a:focus-visible {
+  background: color-mix(in srgb, var(--secondary) 22%, var(--surface));
+  border-color: var(--secondary);
+  text-decoration: none;
+}
+.catalog-popular .shelf-heading a {
+  color: var(--text);
+}
+.season-picker select {
+  background: linear-gradient(
+    115deg,
+    color-mix(in srgb, var(--secondary) 15%, var(--surface)),
+    var(--surface)
+  );
+  border-color: color-mix(in srgb, var(--secondary) 45%, var(--border));
+}
+.dossier .synopsis {
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--secondary) 22%, var(--border));
+  color: var(--text);
+}
+.media-links > a:hover,
+.media-links > a:focus-visible {
+  border-color: var(--secondary);
+  background: color-mix(in srgb, var(--secondary) 17%, var(--surface));
+  text-decoration: none;
+}
+.feature-pages button span {
+  position: relative;
+  width: 28px;
+  height: 3px;
+  overflow: hidden;
+}
+.feature-pages button[aria-current="true"] span {
+  background: var(--border-strong);
+}
+.feature-pages button[aria-current="true"] span:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .discovery-feature[data-auto="true"]
+    .feature-pages
+    button[aria-current="true"]
+    span:after {
+    animation: feature-countdown 7.5s linear both;
+  }
+  .icon-control,
+  .browse-shortcuts a {
+    transition:
+      transform 0.18s var(--ease),
+      background 0.18s,
+      border-color 0.18s;
+  }
+  .icon-control:enabled:hover {
+    transform: translateY(-2px);
+    border-color: var(--secondary);
+  }
+  .icon-control:enabled:active {
+    transform: scale(0.94);
+  }
+  .media-links > a {
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+  }
+}
+@keyframes feature-countdown {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@media (max-width: 600px) {
+  .dossier .synopsis {
+    padding: 14px 16px;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .anime-atmosphere {
+    display: none;
+  }
+  .public-nav,
+  .workspace-header {
+    background: var(--bg);
+    backdrop-filter: none;
+  }
+  .dossier .synopsis {
+    background: var(--surface);
+  }
+}
+/* A reachable list action stays fully readable over either appearance. */
+.card-compact .card-list-action,
+.card-list-action {
+  opacity: 1;
+  color: var(--secondary);
 }
