@@ -1,7 +1,9 @@
 "use client";
+import { BorderBeam } from "./border-beam";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
+import { useReducedMotion } from "./use-reduced-motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,12 +14,6 @@ import {
 } from "lucide-react";
 import type { FeatureSlide } from "@/lib/home-feature";
 import { ArtPicture } from "./art-picture";
-const subscribe = (cb: () => void) => {
-  const mq = matchMedia("(prefers-reduced-motion: reduce)");
-  mq.addEventListener("change", cb);
-  return () => mq.removeEventListener("change", cb);
-};
-const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
   const [index, setIndex] = useState(0),
     [paused, setPaused] = useState(false),
@@ -25,7 +21,7 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
     [focused, setFocused] = useState(false),
     [hidden, setHidden] = useState(false),
     [manual, setManual] = useState(false);
-  const reduce = useSyncExternalStore(subscribe, reduced, () => true);
+  const reduce = useReducedMotion();
   const auto =
     titles.length > 1 && !paused && !hovered && !focused && !hidden && !reduce;
   useEffect(() => {
@@ -90,6 +86,7 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
         if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false);
       }}
     >
+      <BorderBeam />
       <div
         className="feature-scene"
         key={a.id}

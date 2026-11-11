@@ -1,0 +1,335 @@
+/* Kinetic Sakuga: native scroll, WAAPI reveals, local interaction highlights. */
+html:not(.lenis) {
+  scroll-behavior: smooth;
+}
+.reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 90;
+  background: var(--spectrum);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+.back-to-top {
+  position: fixed;
+  right: clamp(16px, 2vw, 40px);
+  bottom: 22px;
+  z-index: 44;
+  background: var(--surface-raised);
+  box-shadow: 0 8px 24px #0005;
+}
+.back-to-top[hidden] {
+  display: none;
+}
+.journal-intro,
+.discovery-feature {
+  position: relative;
+  isolation: isolate;
+}
+/* MIT Magic UI border-beam geometry adapted to CSS, without the React animation runtime. */
+.border-beam {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 2px;
+  pointer-events: none;
+  z-index: 2;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+.border-beam > span {
+  position: absolute;
+  width: 160px;
+  aspect-ratio: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary),
+    var(--spectrum-cool),
+    transparent
+  );
+  offset-path: rect(0 auto auto 0 round 14px);
+  animation: border-circuit 5s linear infinite;
+  animation-play-state: paused;
+}
+[data-motion="full"] .border-beam[data-visible="true"] > span {
+  animation-play-state: running;
+}
+[data-motion-paused="true"] .border-beam > span {
+  animation-play-state: paused !important;
+}
+@keyframes border-circuit {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+@supports not (offset-path: rect(0 auto auto 0)) {
+  .border-beam {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .journal-intro h1 {
+    animation: title-arrive 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .feature-scene .featured-backdrop img {
+    animation: artwork-arrive 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .feature-scene .featured-content {
+    animation: caption-arrive 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .library-table tbody tr {
+    animation: row-arrive 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  details[open] > :not(summary) {
+    animation: drawer-arrive 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .editor > [role="status"]:not(:empty) {
+    animation: feedback-arrive 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .segmented button {
+    transition:
+      color 0.18s,
+      border-color 0.18s,
+      background 0.18s;
+  }
+  .poster-link .cover {
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.2s,
+      box-shadow 0.3s;
+  }
+  .poster-link .cover img {
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .poster-link:hover .cover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px #0005;
+    border-color: var(--secondary);
+  }
+  .poster-link:hover .cover img {
+    transform: scale(1.045);
+  }
+  .button {
+    transition:
+      transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+      background 0.18s,
+      border-color 0.18s;
+  }
+  .button:hover {
+    transform: translateY(-2px);
+  }
+  .button:active {
+    transform: translateY(0) scale(0.97);
+  }
+  .button:before {
+    content: "";
+    position: absolute;
+    inset: -50% auto -50% -80%;
+    width: 45%;
+    background: linear-gradient(90deg, transparent, #fff5, transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+  }
+  .button:hover:before,
+  .button:focus-visible:before {
+    animation: button-sweep 0.65s ease-out;
+  }
+  .hero-actions a:hover svg,
+  .shelf-heading a:hover svg,
+  .intro-list:hover svg,
+  .row-list:hover svg {
+    transform: translate(2px, -2px);
+  }
+  .hero-actions svg,
+  .shelf-heading svg,
+  .intro-list svg,
+  .row-list svg {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .brand:hover .brand-corner {
+    animation: corner-snap 0.45s ease-out;
+  }
+}
+.button {
+  position: relative;
+  overflow: hidden;
+}
+.poster-link {
+  position: relative;
+}
+.cover:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at var(--shine-x, 50%) var(--shine-y, 30%),
+    #fff3,
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+.poster-link:hover .cover:after {
+  opacity: 1;
+}
+.anime-row {
+  position: relative;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.anime-row:hover {
+  background: radial-gradient(
+    ellipse at var(--shine-x, 50%) var(--shine-y, 50%),
+    color-mix(in srgb, var(--secondary) 12%, transparent),
+    transparent 75%
+  );
+  border-color: var(--secondary);
+}
+@keyframes title-arrive {
+  from {
+    transform: translateY(16px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes artwork-arrive {
+  from {
+    transform: scale(1.065);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes caption-arrive {
+  from {
+    transform: translateX(18px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes row-arrive {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes drawer-arrive {
+  from {
+    transform: translateY(-6px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes feedback-arrive {
+  from {
+    transform: translateY(7px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes button-sweep {
+  from {
+    left: -80%;
+  }
+  to {
+    left: 150%;
+  }
+}
+@keyframes corner-snap {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  40% {
+    transform: translate(3px, 3px);
+  }
+}
+/* Detail pages deliberately use the full text column, not reading-width defaults. */
+.dossier > div:last-child {
+  min-width: 0;
+}
+.dossier h1,
+.dossier p,
+.dossier .season-picker {
+  max-width: none;
+  width: 100%;
+}
+.detail-lower .editor,
+.detail-lower .report {
+  max-width: none;
+}
+.dossier {
+  grid-template-columns: clamp(190px, 18vw, 290px) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+}
+.dossier .ratings {
+  width: 100%;
+}
+.dossier .ratings article {
+  flex: 1;
+}
+.dossier .synopsis {
+  text-wrap: pretty;
+}
+#list-entry {
+  scroll-margin-top: 150px;
+}
+@media (max-width: 800px) {
+  .dossier {
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+@media (max-width: 600px) {
+  .dossier {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .back-to-top {
+    width: 40px;
+    height: 40px;
+    bottom: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  .border-beam {
+    display: none;
+  }
+}
+[data-motion="reduced"] *,
+[data-motion="reduced"] *:before,
+[data-motion="reduced"] *:after {
+  animation: none !important;
+}
+@media (max-width: 600px) and (prefers-reduced-motion: no-preference) {
+  .app-shell:not(.sidebar-collapsed) .sidebar {
+    animation: nav-drawer 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+@keyframes nav-drawer {
+  from {
+    transform: translateX(-28px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

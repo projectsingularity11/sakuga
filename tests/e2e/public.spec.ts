@@ -1,4 +1,23 @@
 import { test, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
+async function settleMotion(page: Page) {
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-motion",
+    /full|reduced/,
+  );
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all(
+      document
+        .getAnimations()
+        .filter(
+          (animation) =>
+            animation.effect?.getComputedTiming().iterations !== Infinity,
+        )
+        .map((animation) => animation.finished.catch(() => {})),
+    );
+  });
+}
 test("homepage, auth configuration state and responsive navigation", async ({
   page,
 }, info) => {
@@ -11,7 +30,7 @@ test("homepage, auth configuration state and responsive navigation", async ({
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page.evaluate(() => document.fonts.ready);
+  await settleMotion(page);
   const nav = page.locator(".public-nav");
   const navBox = (await nav.boundingBox())!;
   for (const control of await nav.locator(":scope > *:visible").all()) {
@@ -230,6 +249,13 @@ test("home refreshes an expired session and preserves access after returning hom
   ).toBeVisible();
   await page.goto("/app/anime/16498");
   await expect(page.locator(".dossier-cover img")).toBeVisible();
+  const widths = await page
+    .locator(".dossier .synopsis")
+    .evaluate((element) => ({
+      text: element.getBoundingClientRect().width,
+      column: element.parentElement!.getBoundingClientRect().width,
+    }));
+  expect(widths.text).toBeGreaterThanOrEqual(widths.column - 2);
   expect(
     (await page.locator(".dossier-cover").boundingBox())!.height,
   ).toBeGreaterThan(100);
@@ -242,6 +268,7 @@ test("home refreshes an expired session and preserves access after returning hom
   await expect(progress).toHaveValue("7");
   await page.getByLabel("Season / part").selectOption("16498");
   await expect(progress).toHaveValue("3");
+  await settleMotion(page);
   await page.screenshot({
     path: `.impeccable/review/${info.project.name}-workspace.png`,
     fullPage: true,
@@ -436,7 +463,7 @@ test("search shortcut and mobile menu remain accessible", async ({ page }) => {
   await expect(page.locator(".brand").first()).not.toContainText(".");
 });
 
-test("neutral journal uses static surfaces, requested typography and cached artwork", async ({
+test("reduced motion retains static surfaces, requested typography and cached artwork", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -496,6 +523,91 @@ test("neutral journal uses static surfaces, requested typography and cached artw
       .evaluate((el) => getComputedStyle(el).animationName),
   ).toBe("none");
   expect(errors).toEqual([]);
+});
+test("smooth scrolling, pointer feedback and reduced-motion switching work without hydration errors", async ({
+  page,
+}) => {
+  const hydrationErrors: string[] = [];
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      /hydration|hydrated.*match|server rendered HTML/i.test(message.text())
+    )
+      hydrationErrors.push(message.text());
+  });
+  await page.goto("/");
+  await settleMotion(page);
+  const root = page.locator("html");
+  await expect(root).toHaveAttribute("data-smooth-scroll", "lenis");
+  const poster = page.locator(".poster-link").first();
+  await poster.hover();
+  await expect
+    .poll(() =>
+      poster.evaluate((element) => element.style.getPropertyValue("--shine-x")),
+    )
+    .not.toBe("");
+  await expect
+    .poll(() =>
+      poster
+        .locator(".cover")
+        .evaluate((element) => getComputedStyle(element).transform),
+    )
+    .not.toBe("none");
+  await page.mouse.move(2, 200);
+  // Let the driver become idle, then verify it eases rather than jumping on wake.
+  await page.waitForTimeout(1250);
+  await page.evaluate(() => {
+    const samples: number[] = [];
+    Object.assign(window, { scrollSamples: samples });
+    window.addEventListener(
+      "wheel",
+      () => {
+        function capture() {
+          samples.push(scrollY);
+          if (samples.length < 12) requestAnimationFrame(capture);
+        }
+        requestAnimationFrame(capture);
+      },
+      { once: true },
+    );
+  });
+  await page.mouse.wheel(0, 800);
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () =>
+          (window as Window & { scrollSamples?: number[] }).scrollSamples
+            ?.length,
+      ),
+    )
+    .toBe(12);
+  expect(
+    await page.evaluate(() =>
+      (window as Window & { scrollSamples?: number[] }).scrollSamples?.some(
+        (value) => value > 0 && value < 650,
+      ),
+    ),
+  ).toBe(true);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(500);
+  const back = page.getByRole("button", { name: "Back to top", exact: true });
+  await expect(back).toBeVisible();
+  await back.click();
+  await expect.poll(() => page.evaluate(() => Math.round(scrollY))).toBe(0);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(root).toHaveAttribute("data-motion", "reduced");
+  await expect(root).toHaveAttribute("data-smooth-scroll", "native");
+  await expect(root).not.toHaveClass(/lenis/);
+  await expect(page.locator(".border-beam").first()).toBeHidden();
+  await page
+    .getByRole("link", { name: "Discover", exact: true })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/discover$/);
+  await expect(
+    page.getByRole("heading", { name: "Discover anime", exact: true }),
+  ).toBeVisible();
+  await expect(root).toHaveAttribute("data-motion", "reduced");
+  expect(hydrationErrors).toEqual([]);
 });
 test("film strip provides working horizontal navigation without page overflow", async ({
   page,

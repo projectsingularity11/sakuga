@@ -5,6 +5,9 @@ import "@fontsource/zen-kaku-gothic-new/latin-400.css";
 import "@fontsource/zen-kaku-gothic-new/latin-700.css";
 import "./globals.css";
 import "./spectrum.css";
+import "lenis/dist/lenis.css";
+import "./kinetic.css";
+import { MotionExperience } from "@/components/motion-experience";
 import { Experience } from "@/components/experience";
 import { viewer } from "@/lib/viewer";
 import { polishTheme, customAccentTokens } from "@/lib/appearance";
@@ -53,6 +56,7 @@ export default async function RootLayout({
           Skip to content
         </a>
         <Experience />
+        <MotionExperience />
         {children}
       </body>
     </html>

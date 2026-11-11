@@ -1,3 +1,4 @@
+import { BorderBeam } from "@/components/border-beam";
 import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -33,6 +34,7 @@ export default async function Home() {
       <PublicNav />
       <main id="main">
         <div className="journal-intro">
+          <BorderBeam />
           <h1>
             Find anime.
             <br />

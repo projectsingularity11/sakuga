@@ -1,0 +1,87 @@
+[
+  {
+    "repository": "darkroomengineering/lenis",
+    "url": "https://github.com/darkroomengineering/lenis",
+    "readme_blob_sha": "79f155b0a3e34a30f8e8e827c7e0359458ad1099"
+  },
+  {
+    "repository": "motiondivision/motion",
+    "url": "https://github.com/motiondivision/motion",
+    "readme_blob_sha": "135269342568a3c3507accd14881c9bde2a7c090"
+  },
+  {
+    "repository": "DavidHDev/react-bits",
+    "url": "https://github.com/DavidHDev/react-bits",
+    "readme_blob_sha": "c19bf4af45a7217c0d1f77bcd183fb64f9594d64"
+  },
+  {
+    "repository": "magicuidesign/magicui",
+    "url": "https://github.com/magicuidesign/magicui",
+    "readme_blob_sha": "0f77a20463073877a6609f88483f1964e6d5cc9b"
+  },
+  {
+    "repository": "juliangarnier/anime",
+    "url": "https://github.com/juliangarnier/anime",
+    "readme_blob_sha": "14403f081e2ba79daaaa68b09fc4bcf04e0ee5f0"
+  },
+  {
+    "repository": "greensock/GSAP",
+    "url": "https://github.com/greensock/GSAP",
+    "readme_blob_sha": "9e79ffa4d9f19b38030f161c96c1a5f8b08acbc5"
+  },
+  {
+    "repository": "formkit/auto-animate",
+    "url": "https://github.com/formkit/auto-animate",
+    "readme_blob_sha": "b92e17e0ad086588b4fa461ec8149fe7593cdaed"
+  },
+  {
+    "repository": "michalsnik/aos",
+    "url": "https://github.com/michalsnik/aos",
+    "readme_blob_sha": "182d604226aab2d5b63cdbe6abb1f56ab87393ae"
+  },
+  {
+    "repository": "animate-css/animate.css",
+    "url": "https://github.com/animate-css/animate.css",
+    "readme_blob_sha": "c7ae5e378fed2c1981cd155f986e6428e1c3049f"
+  },
+  {
+    "repository": "pmndrs/react-spring",
+    "url": "https://github.com/pmndrs/react-spring",
+    "readme_blob_sha": "a6f7a6b801ae27e35cb65aa44a98a39dd31cea46"
+  },
+  {
+    "repository": "barbajs/barba",
+    "url": "https://github.com/barbajs/barba",
+    "readme_blob_sha": "f4f292384eee310ff737e7a0712f9ae862adc9b7"
+  },
+  {
+    "repository": "locomotivemtl/locomotive-scroll",
+    "url": "https://github.com/locomotivemtl/locomotive-scroll",
+    "readme_blob_sha": "f14f26c3f3fa1c215000f564912e0ae7099bbfb0"
+  },
+  {
+    "repository": "dixonandmoe/rellax",
+    "url": "https://github.com/dixonandmoe/rellax",
+    "readme_blob_sha": "f37e2975b6429b956b47e944ecc25d293b7a60fa"
+  },
+  {
+    "repository": "tsparticles/tsparticles",
+    "url": "https://github.com/tsparticles/tsparticles",
+    "readme_blob_sha": "3f0df13a3e496558d11bfb66ae02262e357cdc4f"
+  },
+  {
+    "repository": "codrops/ScrollBasedLayoutAnimations",
+    "url": "https://github.com/codrops/ScrollBasedLayoutAnimations",
+    "readme_blob_sha": "96917e32d2011bb6af9c195ebfe20f03d0f69b17"
+  },
+  {
+    "repository": "codrops/OnScrollTypographyAnimations",
+    "url": "https://github.com/codrops/OnScrollTypographyAnimations",
+    "readme_blob_sha": "484415e42626a956d9fdff38c7163ec97d3e9aa7"
+  },
+  {
+    "repository": "emilkowalski/vaul",
+    "url": "https://github.com/emilkowalski/vaul",
+    "readme_blob_sha": "459b7f3b8baf1168b6a273ac3e85c07766f5d456"
+  }
+]
