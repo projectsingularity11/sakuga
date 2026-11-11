@@ -632,8 +632,8 @@
     "materials": [
       {
         "name": "page-atmosphere",
-        "value": "Charcoal #131316, surfaces #1b1b20/#24242b; rose/violet corner fields 18%, blue 15%; subdued 5/8/5% diagonal foundation.",
-        "purpose": "A full-viewport static atmosphere that stays colorful throughout long pages."
+        "value": "Solid charcoal #131316; neutral #1b1b20 surfaces; no page-wide gradient layer.",
+        "purpose": "Charcoal dominates, with spectrum gradients reserved for compact controls and thin edges."
       },
       {
         "name": "public-header",
@@ -652,7 +652,7 @@
       },
       {
         "name": "intro-surface",
-        "value": "Pink 36%, secondary 32%, cool blue 28% mixed into the charcoal surface.",
+        "value": "var(--surface), with a thin tinted border and the existing border-light accent.",
         "purpose": "Compact, expressive intro panel with solid readable text."
       },
       {

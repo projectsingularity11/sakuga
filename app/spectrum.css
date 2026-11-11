@@ -5,9 +5,6 @@
   --surface-raised: #24242b;
   --secondary: #d0b9ff;
   --text-muted: #c4bfd1;
-  --field-rose: color-mix(in srgb, var(--primary) 18%, var(--bg));
-  --field-violet: color-mix(in srgb, var(--secondary) 18%, var(--bg));
-  --field-blue: color-mix(in srgb, var(--spectrum-cool) 15%, var(--bg));
   --art-veil: 74%;
   --spectrum: linear-gradient(
     115deg,
@@ -21,35 +18,7 @@ body {
   isolation: isolate;
   background-image: none;
 }
-body:before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse 95% 95% at 0 12%,
-      var(--field-rose),
-      transparent 76%
-    ),
-    radial-gradient(
-      ellipse 100% 110% at 100% 0,
-      var(--field-violet),
-      transparent 78%
-    ),
-    radial-gradient(
-      ellipse 90% 90% at 70% 100%,
-      var(--field-blue),
-      transparent 80%
-    ),
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--primary) 5%, var(--bg)),
-      color-mix(in srgb, var(--secondary) 8%, var(--bg)) 50%,
-      color-mix(in srgb, var(--spectrum-cool) 5%, var(--bg))
-    );
-}
+
 .anime-atmosphere {
   position: fixed;
   inset: 0;
@@ -76,16 +45,10 @@ body:before {
   background: color-mix(in srgb, var(--bg) var(--art-veil), transparent);
 }
 :root[data-appearance="light"] {
-  --field-rose: color-mix(in srgb, var(--primary) 11%, var(--bg));
-  --field-violet: color-mix(in srgb, var(--spectrum-violet) 11%, var(--bg));
-  --field-blue: color-mix(in srgb, var(--spectrum-cool) 13%, var(--bg));
   --art-veil: 92%;
 }
 @media (prefers-color-scheme: light) {
   :root[data-appearance="system"] {
-    --field-rose: color-mix(in srgb, var(--primary) 11%, var(--bg));
-    --field-violet: color-mix(in srgb, var(--spectrum-violet) 11%, var(--bg));
-    --field-blue: color-mix(in srgb, var(--spectrum-cool) 13%, var(--bg));
     --art-veil: 92%;
   }
 }
@@ -453,4 +416,19 @@ input[type="radio"] {
   .discover-scene .featured-content {
     padding: 0 6px 12px;
   }
+}
+
+/* Charcoal is the canvas; spectrum color is confined to compact accents. */
+.journal-intro,
+.discovery-feature,
+.catalog-popular .shelf-heading,
+.catalog-strip,
+.catalog-strip:nth-of-type(even),
+.catalog-rows,
+.editor,
+.billing-panel,
+.sidebar,
+.season-picker select,
+.library-table thead {
+  background: var(--surface);
 }

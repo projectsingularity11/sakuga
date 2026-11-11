@@ -175,7 +175,7 @@ Main adaptation breakpoints are 1700px, 1100px, 800px and 600px. Choose usable p
 
 ## Elevation & Depth
 
-Depth combines full-viewport pink, violet and blue fields, brighter section gradients, tinted borders and selective translucency. `body:before` is a fixed, static field behind the page, so color remains present below the introduction. The field mixes primary 36%, secondary 36% and cool blue 29% into the base, over a related diagonal foundation. Light/system-light fields use 16%, 16% and 19% respectively. Dark secondary and muted text are lighter for contrast. The intro uses 52% pink, 46% secondary and 40% cool blue; the feature uses 19% pink, 9% secondary and 17% cool blue. Release panels and editors use related stronger tints. Public and workspace headers use 84% base opacity with 12px blur. Search surfaces stay readable and turn solid on focus; the sidebar blends 16% secondary and 7% cool blue into the surface. Reduced transparency makes headers and synopsis surfaces opaque and hides the artwork backdrop. Saved appearance/custom-accent preferences remain compatible.
+Depth uses solid charcoal #131316 with neutral #1b1b20 surfaces and #24242b raised controls. There is no body atmosphere pseudo-element or full-page gradient. Large introductions, shelves, editors, sidebar and table headers stay neutral. Saturated spectrum gradients appear on compact primary buttons, thin navigation rules, scroll progress and the existing border lights. The selected-anime artwork backdrop still fades into plain charcoal. Header translucency and opaque reduced-transparency fallbacks remain.
 
 Search popovers use `0 14px 30px #0003`; hovered posters use `0 14px 28px #0005`; the mobile drawer uses `12px 0 30px #0005`. Resting content does not acquire a shadow cloud. Interaction transitions use 160ms and `cubic-bezier(0.22, 1, 0.36, 1)`; popovers enter by 5px. Loading skeletons reserve geometry and pulse opacity. Reduced motion removes movement/scaling; manual carousel control remains.
 
@@ -242,3 +242,8 @@ The approved spectrum is softened to 70% of its previous color mixes against bas
 The final shipping direction uses a stronger #131316 charcoal base, #1b1b20 surfaces and restrained corner accents. All interface audio, its toggle, runtime and bundled files are removed. The header reserves no sound-control space. This supersedes the earlier sampled-audio direction.
 
 Discover now presents a featured anime and separate recent/popular/airing/upcoming shelves. Search owns text queries, filtering and pagination on /search and /app/search. Legacy filtered discover links redirect to their search equivalents; signed-in search preserves QuickAdd. Miruro page text was accessible, but its current Discover visual layout was not exposed, so literal visual parity is not verified.
+
+
+## Charcoal canvas correction
+
+The page-wide atmosphere layer is removed. The canvas is solid charcoal (#131316), with neutral #1b1b20 panels. Large introductions, shelves, editors, sidebar and table headers use flat neutral surfaces. Vivid gradients remain only on compact primary buttons, thin navigation/section edges, scroll indicators and border lights. Selected-anime artwork still fades back to the plain charcoal base.
