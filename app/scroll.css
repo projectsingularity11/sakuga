@@ -1019,15 +1019,7 @@ textarea,
     var(--bg) 100%
   );
 }
-.poster-flow {
-  position: fixed;
-  z-index: 43;
-  opacity: 0;
-  pointer-events: none;
-  border: 1px solid var(--seal);
-  border-radius: 21px;
-  box-shadow: 0 0 26px color-mix(in srgb, var(--seal) 12%, transparent);
-}
+
 .feature-scene {
   isolation: isolate;
 }
@@ -1148,8 +1140,7 @@ textarea,
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .carousel-previous-art,
-  .poster-flow {
+  .carousel-previous-art {
     display: none;
   }
 }
@@ -1161,4 +1152,90 @@ textarea,
 .trailer-link,
 .table-wrap {
   border-radius: 16px;
+}
+
+/* Quiet cover emphasis, smooth upcoming rows, and a cover that stays in document flow. */
+.anime-card .cover,
+.dossier-cover {
+  border-radius: 24px;
+}
+.dossier-cover {
+  position: relative;
+  top: auto;
+  justify-self: center;
+  align-self: start;
+}
+.row-art {
+  border-radius: 12px;
+}
+.anime-row {
+  position: relative;
+  isolation: isolate;
+  background: none;
+  border-radius: 16px;
+}
+.anime-row:hover {
+  background: none;
+}
+.anime-row:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 30% 50%,
+    color-mix(in srgb, var(--secondary) 12%, transparent),
+    transparent 80%
+  );
+  opacity: 0;
+}
+.anime-row:hover:before,
+.anime-row:focus-within:before {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .poster-link .cover {
+    transition:
+      transform 550ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 450ms,
+      box-shadow 550ms;
+  }
+  [data-motion="full"] .poster-link:hover .cover {
+    transform: perspective(900px) translateY(-3px) rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg)) scale(1.035);
+    box-shadow: 0 16px 36px #0004;
+  }
+  .poster-link:hover .cover img {
+    transform: scale(1.015);
+  }
+  .anime-row:before {
+    transition: opacity 550ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .anime-row {
+    transition: border-color 550ms;
+  }
+  .row-art,
+  .row-art img,
+  .row-copy,
+  .row-list svg {
+    transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .anime-row:hover .row-art {
+    transform: translateY(-2px) scale(1.025);
+  }
+  .anime-row:hover .row-art img {
+    transform: scale(1.015);
+  }
+  .anime-row:hover .row-copy {
+    transform: translateX(3px);
+  }
+  .anime-row:hover .row-list svg {
+    transform: translate(2px, -2px);
+  }
+}
+.anime-card .poster-link:hover .cover,
+.anime-card .poster-link:focus-visible .cover {
+  border-radius: 24px;
 }

@@ -8,10 +8,6 @@ const InkFeedback = dynamic(
   () => import("./ink-feedback").then((m) => m.InkFeedback),
   { ssr: false },
 );
-const PosterFlow = dynamic(
-  () => import("./poster-flow").then((m) => m.PosterFlow),
-  { ssr: false },
-);
 export function MotionExperience() {
   const pathname = usePathname();
   const reducedMotion = useReducedMotion();
@@ -41,7 +37,6 @@ export function MotionExperience() {
       {!reducedMotion && (
         <>
           <InkFeedback />
-          <PosterFlow />
         </>
       )}
       <div ref={progress} className="reading-progress" aria-hidden="true" />

@@ -1,0 +1,11 @@
+# Final cover behavior and identity
+
+- Removed the shared sliding hover-border component, lazy import, listeners and CSS. Cover emphasis is now a bounded 3.5% enlargement, a 3px lift, smoother 550ms easing and slightly more visible pointer tilt (maximum 4–4.5 degrees). Inner image zoom is limited to 1.5%. Native CSS focus/hover remains usable; reduced motion keeps static images.
+- Cover and detail artwork corners are 24px. Testing found an older, more specific hover rule was reverting the corners to 10px; the new radius now applies during hover/focus too.
+- “Coming next”/“Upcoming” rows now fade a separate gradient layer over 550ms instead of abruptly switching background images. Thumbnail, copy and arrow movement share the softer timing. Row viewport reveals use a 680ms fade/translation with a capped stagger.
+- Detail cover art is relative-positioned, centered within its column, aligned to the top of the content and no longer sticky. Removed its entry-translation reveal as well, keeping it a stable focal point. Browser checks measure its movement against document scroll, confirming it leaves the viewport naturally rather than following the description. Client-side navigation is also checked to open at the page top.
+- Replaced both legacy SVG icons with the same calligraphic 作 seal used by the wordmark. The vector glyph comes from the existing licensed Yuji Mai subset; it has no runtime font dependency. Added a 32px ICO and 180px Apple icon. Read the installed Next metadata icon documentation and visually inspected the generated seal.
+
+Verification: ten existing desktop/mobile layout, keyboard accessibility, light appearance, smooth-scroll/hydration and reduced-motion cases passed. Both new end-to-end cover cases passed after correcting the legacy hover radius and testing relative-position movement rather than the browser's resolved `top` value. The checks bound hover scale below 1.06, verify 24px corners, cover document movement, page-top navigation and gradual upcoming-row highlights. Lint passed. Production build and live icon/page checks follow before release.
+
+Final production webpack/TypeScript build passed, including favicon and Apple icon metadata routes.

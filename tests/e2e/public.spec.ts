@@ -865,52 +865,71 @@ test("rounded cover frames align in open rows and glass navigation keeps ink fee
   await expect(page.locator(".ink-feedback")).toHaveCount(0);
 });
 
-test("cover focus glides between posters and detail pages leave room around content", async ({
+test("covers grow subtly with tilt, upcoming rows fade and detail art scrolls naturally", async ({
   page,
 }, info) => {
   await page.goto("/");
   await settleMotion(page);
+  await expect(page.locator(".poster-flow")).toHaveCount(0);
   const links = page.locator(".catalog-popular .poster-link");
   await links.first().scrollIntoViewIfNeeded();
-  await expect(links.first()).toHaveAttribute("data-pointer-ready", "true");
-  const flow = page.locator(".poster-flow");
-  await expect(flow).toHaveAttribute("data-ready", "true");
   await links.first().hover();
-  await expect
-    .poll(() => flow.evaluate((el) => Number(getComputedStyle(el).opacity)))
-    .toBeGreaterThan(0.9);
-  const start = await flow.boundingBox();
-  await expect(links.nth(1)).toHaveAttribute("data-pointer-ready", "true");
-  await links.nth(1).hover();
-  await expect
-    .poll(() => flow.evaluate((el) => el.getAnimations().length))
-    .toBeGreaterThan(0);
-  await expect
-    .poll(async () => Math.abs((await flow.boundingBox())!.x - start!.x))
-    .toBeGreaterThan(20);
+  await expect(links.first()).toHaveAttribute("data-pointer-ready", "true");
+  const box = (await links.first().boundingBox())!;
+  await page.mouse.move(box.x + box.width * 0.8, box.y + box.height * 0.35);
   const cover = links.first().locator(".cover");
+  await expect
+    .poll(() =>
+      cover.evaluate((el) => {
+        const m = new DOMMatrix(getComputedStyle(el).transform);
+        return Math.hypot(m.m11, m.m12, m.m13);
+      }),
+    )
+    .toBeGreaterThan(1.025);
+  const scale = await cover.evaluate((el) => {
+    const m = new DOMMatrix(getComputedStyle(el).transform);
+    return Math.hypot(m.m11, m.m12, m.m13);
+  });
+  expect(scale).toBeLessThan(1.06);
   expect(
     await cover.evaluate((el) => parseFloat(getComputedStyle(el).borderRadius)),
-  ).toBeGreaterThanOrEqual(14);
+  ).toBeGreaterThanOrEqual(24);
   await links.nth(1).click();
   await expect(page).toHaveURL(/\/anime\/154587$/);
-  await expect(flow).toHaveCSS("opacity", "0");
-  await expect(page.locator(".anime-atmosphere img")).toBeVisible();
-  const content = page.locator(".dossier>div:last-child");
+  await settleMotion(page);
+  const artwork = page.locator(".dossier-cover");
+  await expect(artwork).toHaveCSS("position", "relative");
+  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  const before = (await artwork.boundingBox())!.y;
+  await page.evaluate(() => window.scrollTo({ top: 360, behavior: "instant" }));
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(300);
+  const delta = await page.evaluate(() => scrollY);
   expect(
-    await content.evaluate((el) => parseFloat(getComputedStyle(el).rowGap)),
-  ).toBeGreaterThanOrEqual(24);
-  const image = await page.locator(".dossier-cover").boundingBox();
-  const text = await content.boundingBox();
-  expect(
-    info.project.name === "mobile"
-      ? text!.y - (image!.y + image!.height)
-      : text!.x - (image!.x + image!.width),
-  ).toBeGreaterThanOrEqual(30);
+    Math.abs((await artwork.boundingBox())!.y - before + delta),
+  ).toBeLessThan(3);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   await page.screenshot({
-    path: `.impeccable/review/${info.project.name}-spaced-detail.png`,
+    path: `.impeccable/review/${info.project.name}-natural-cover.png`,
     fullPage: false,
   });
+  await page.goto("/");
+  await page
+    .getByRole("heading", { name: "Coming next", exact: true })
+    .scrollIntoViewIfNeeded();
+  const row = page.locator(".catalog-rows .anime-row").first();
+  await row.hover();
+  expect(
+    await row.evaluate((el) =>
+      parseFloat(getComputedStyle(el, "::before").transitionDuration),
+    ),
+  ).toBeGreaterThanOrEqual(0.5);
+  await expect
+    .poll(() =>
+      row.evaluate((el) =>
+        parseFloat(getComputedStyle(el, "::before").opacity),
+      ),
+    )
+    .toBeGreaterThan(0.9);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator(".poster-flow")).toHaveCount(0);
 });

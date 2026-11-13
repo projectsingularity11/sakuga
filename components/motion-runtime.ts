@@ -29,7 +29,7 @@ export function startMotion(
   const active = new Map<HTMLElement, ReturnType<typeof animate>>();
   const watched = new WeakSet<Element>();
   const revealSelector =
-    ".journal-intro,.catalog-section,.shelf-heading,.anime-card,.anime-row,.dossier-cover,.dossier>div:last-child,.page-heading,.editor";
+    ".journal-intro,.catalog-section,.shelf-heading,.anime-card,.anime-row,.dossier>div:last-child,.page-heading,.editor";
   function finishAnimations() {
     active.forEach((control, element) => {
       control.stop();
@@ -97,15 +97,19 @@ export function startMotion(
         observer.unobserve(element);
         if (reducedMotion || saveData) continue;
         const card = element.matches(".anime-card,.anime-row");
+        const row = element.matches(".anime-row");
         const control = animate(
           element,
           {
-            opacity: [0.96, 1],
-            transform: [`translateY(${card ? 22 : 16}px)`, "translateY(0px)"],
+            opacity: [row ? 0.65 : 0.96, 1],
+            transform: [
+              `translateY(${row ? 14 : card ? 22 : 16}px)`,
+              "translateY(0px)",
+            ],
           },
           {
-            duration: card ? 0.46 : 0.52,
-            delay: Math.min(order++ * 0.024, 0.16),
+            duration: row ? 0.68 : card ? 0.46 : 0.52,
+            delay: Math.min(order++ * (row ? 0.04 : 0.024), 0.16),
             ease: [0.16, 1, 0.3, 1],
           },
         );
@@ -178,8 +182,8 @@ export function startMotion(
             -1,
             Math.min(1, ((pointer.y - rect.top) / rect.height) * 2 - 1),
           );
-          tilted.style.setProperty("--tilt-x", `${-y * 2.5}deg`);
-          tilted.style.setProperty("--tilt-y", `${x * 3}deg`);
+          tilted.style.setProperty("--tilt-x", `${-y * 4}deg`);
+          tilted.style.setProperty("--tilt-y", `${x * 4.5}deg`);
         }
       });
   }
