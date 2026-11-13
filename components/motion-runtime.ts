@@ -19,6 +19,13 @@ export function startMotion(
     previousFrame = 0;
   let pointerFrame = 0,
     pointer: { element: HTMLElement; x: number; y: number } | undefined;
+  let tilted: HTMLElement | undefined;
+  function resetTilt() {
+    tilted?.style.removeProperty("--tilt-x");
+    tilted?.style.removeProperty("--tilt-y");
+    tilted = undefined;
+    pointer = undefined;
+  }
   const active = new Map<HTMLElement, ReturnType<typeof animate>>();
   const watched = new WeakSet<Element>();
   const revealSelector =
@@ -141,7 +148,12 @@ export function startMotion(
     const element = event.target.closest<HTMLElement>(
       ".poster-link,.button,.anime-row",
     );
-    if (!element) return;
+    if (!element) {
+      resetTilt();
+      pointer = undefined;
+      return;
+    }
+    if (tilted && tilted !== element) resetTilt();
     pointer = { element, x: event.clientX, y: event.clientY };
     if (!pointerFrame)
       pointerFrame = requestAnimationFrame(() => {
@@ -156,6 +168,19 @@ export function startMotion(
           "--shine-y",
           `${pointer.y - rect.top}px`,
         );
+        if (pointer.element.matches(".poster-link")) {
+          tilted = pointer.element;
+          const x = Math.max(
+            -1,
+            Math.min(1, ((pointer.x - rect.left) / rect.width) * 2 - 1),
+          );
+          const y = Math.max(
+            -1,
+            Math.min(1, ((pointer.y - rect.top) / rect.height) * 2 - 1),
+          );
+          tilted.style.setProperty("--tilt-x", `${-y * 2.5}deg`);
+          tilted.style.setProperty("--tilt-y", `${x * 3}deg`);
+        }
       });
   }
   function focus(event: FocusEvent) {
@@ -172,6 +197,7 @@ export function startMotion(
   function visibility() {
     root.dataset.motionPaused = String(document.hidden);
     if (document.hidden) {
+      resetTilt();
       cancelAnimationFrame(frame);
       frame = 0;
       lenis?.stop();
@@ -190,6 +216,7 @@ export function startMotion(
   window.addEventListener("keydown", wake);
   document.addEventListener("click", wake);
   document.addEventListener("pointermove", pointerMove, { passive: true });
+  document.documentElement.addEventListener("pointerleave", resetTilt);
   document.addEventListener("focusin", focus);
   document.addEventListener("visibilitychange", visibility);
   window.addEventListener("sakuga:scroll-top", scrollTop);
@@ -201,6 +228,7 @@ export function startMotion(
     destroyed = true;
     cancelAnimationFrame(frame);
     cancelAnimationFrame(pointerFrame);
+    resetTilt();
     mutation.disconnect();
     observer.disconnect();
     finishAnimations();
@@ -210,6 +238,7 @@ export function startMotion(
     window.removeEventListener("keydown", wake);
     document.removeEventListener("click", wake);
     document.removeEventListener("pointermove", pointerMove);
+    document.documentElement.removeEventListener("pointerleave", resetTilt);
     document.removeEventListener("focusin", focus);
     document.removeEventListener("visibilitychange", visibility);
     window.removeEventListener("sakuga:scroll-top", scrollTop);

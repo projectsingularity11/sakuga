@@ -529,6 +529,19 @@ test("smooth scrolling, pointer feedback and reduced-motion switching work witho
   await settleMotion(page);
   const root = page.locator("html");
   await expect(root).toHaveAttribute("data-smooth-scroll", "lenis");
+  await expect
+    .poll(() =>
+      page
+        .locator(".ambient-pool")
+        .first()
+        .evaluate((el) => el.style.backgroundImage),
+    )
+    .toContain("url(");
+  expect(
+    await page
+      .locator(".ambient-background")
+      .evaluate((el) => getComputedStyle(el).pointerEvents),
+  ).toBe("none");
   const poster = page.locator(".poster-link").first();
   await poster.hover();
   await expect
@@ -544,6 +557,9 @@ test("smooth scrolling, pointer feedback and reduced-motion switching work witho
     )
     .not.toBe("none");
   await page.mouse.move(2, 200);
+  await expect
+    .poll(() => poster.evaluate((el) => el.style.getPropertyValue("--tilt-x")))
+    .toBe("");
   // Let the driver become idle, then verify it eases rather than jumping on wake.
   await page.waitForTimeout(1250);
   await page.evaluate(() => {

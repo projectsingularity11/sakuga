@@ -333,3 +333,69 @@ html:not(.lenis) {
     transform: translateX(0);
   }
 }
+
+/* Local depth and optical edges: GPU transforms, no canvas or persistent render loop. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  [data-motion="full"] .poster-link:hover .cover {
+    transform: perspective(800px) translateY(-4px) rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg));
+  }
+  .source-links a svg,
+  .tags a,
+  .feature-pick {
+    transition:
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 180ms,
+      background 180ms;
+  }
+  .source-links a:hover svg {
+    transform: translate(2px, -2px);
+  }
+  .tags a:hover {
+    transform: translateY(-2px);
+  }
+  .feature-pick:hover {
+    transform: translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .search-menu {
+    animation: search-unfold 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: top;
+  }
+  .feature-scene .featured-backdrop {
+    animation: aperture-open 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .source-links .text-link {
+    background-image: linear-gradient(
+      90deg,
+      var(--primary),
+      var(--spectrum-cool)
+    );
+    background-size: 0 1px;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    transition: background-size 220ms;
+  }
+  .source-links .text-link:hover {
+    background-size: 100% 1px;
+  }
+}
+@keyframes search-unfold {
+  from {
+    opacity: 0.7;
+    transform: translateY(-5px) scaleY(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes aperture-open {
+  from {
+    clip-path: inset(0 3% 0 0 round 20px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+}

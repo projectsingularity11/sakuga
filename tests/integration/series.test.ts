@@ -18,6 +18,7 @@ it("groups verified season chains before pagination, includes cross-format parts
       "20261102043330_include_cross_format_sequel_parts",
       "20261102043605_index_grouped_catalog_lookups",
       "20261102043957_plan_public_catalog_projection",
+      "20261113005741_narrow_catalog_sort_projection",
     ]) {
       if (name.startsWith("202611020204"))
         await db.exec(

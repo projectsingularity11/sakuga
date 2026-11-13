@@ -7,6 +7,7 @@ import "./globals.css";
 import "./spectrum.css";
 import "lenis/dist/lenis.css";
 import "./kinetic.css";
+import { AmbientBackground } from "@/components/ambient-background";
 import { MotionExperience } from "@/components/motion-experience";
 import { viewer } from "@/lib/viewer";
 import { polishTheme, customAccentTokens } from "@/lib/appearance";
@@ -51,6 +52,7 @@ export default async function RootLayout({
       style={style as React.CSSProperties}
     >
       <body>
+        <AmbientBackground />
         <a className="skip" href="#main">
           Skip to content
         </a>
