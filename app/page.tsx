@@ -1,4 +1,3 @@
-import { BorderBeam } from "@/components/border-beam";
 import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -33,34 +32,39 @@ export default async function Home() {
     <div className="journal-home">
       <PublicNav />
       <main id="main">
-        <div className="journal-intro">
-          <BorderBeam />
-          <h1>
-            Find anime.
-            <br />
-            <span>Keep your place.</span>
-          </h1>
-          <Link href="/app/library" className="intro-list">
-            Your list <ArrowUpRight size={18} />
-          </Link>
-        </div>
-        <nav className="browse-shortcuts" aria-label="Browse genres">
-          <Link className="shortcut-all" href="/discover">
-            All anime <ArrowUpRight size={15} />
-          </Link>
-          {["Action", "Fantasy", "Romance", "Sci-Fi", "Slice of Life"].map(
-            (g) => (
-              <Link key={g} href={"/discover?genre=" + encodeURIComponent(g)}>
-                {g}
-              </Link>
-            ),
-          )}
-        </nav>
-        <div className="home-lead">
+        <section className="scroll-opening" aria-label="Sakuga collection">
+          <div className="scroll-masthead">
+            <h1>Sakuga</h1>
+            <span lang="ja" aria-hidden="true">
+              作画
+            </span>
+          </div>
           <FeaturedCarousel
             key={features.map((a) => a.id).join("-")}
             titles={features}
           />
+          <div className="scroll-index">
+            <Link href="#anime-selection">
+              Explore the collection <ArrowUpRight size={18} />
+            </Link>
+            <Link href="/app/library">
+              Your anime list <ArrowUpRight size={18} />
+            </Link>
+          </div>
+        </section>
+        <div id="anime-selection" className="scroll-selection">
+          <nav className="browse-shortcuts" aria-label="Browse genres">
+            <Link className="shortcut-all" href="/discover">
+              All anime <ArrowUpRight size={15} />
+            </Link>
+            {["Action", "Fantasy", "Romance", "Sci-Fi", "Slice of Life"].map(
+              (g) => (
+                <Link key={g} href={"/discover?genre=" + encodeURIComponent(g)}>
+                  {g}
+                </Link>
+              ),
+            )}
+          </nav>
           <Suspense fallback={<ShelfPlaceholder />}>
             <CatalogShelf
               result={popular}
@@ -103,6 +107,9 @@ export default async function Home() {
         <div>
           <Brand />
           <p>Anime discovery & personal lists.</p>
+          <a href="/licenses/paper-textures.txt" className="texture-credit">
+            Paper textures · Subtle Patterns · CC BY-SA 3.0
+          </a>
         </div>
         <nav aria-label="Footer">
           <Link href="/discover">Discover</Link>

@@ -1,0 +1,544 @@
+/* Paper scroll / sumi-e composition. The paper remains visible between unboxed artwork. */
+:root {
+  --display: "Yuji Mai", "Yu Mincho", serif;
+  --body: "Shippori Mincho", "Yu Mincho", serif;
+  --ink-display: "Yuji Mai", "Yu Mincho", serif;
+  --bg: #20231f;
+  --surface: #242722;
+  --surface-raised: #30332b;
+  --text: #eeeadd;
+  --text-muted: #c3c0b1;
+  --border: #55594b;
+  --border-strong: #8e927c;
+  --primary: #d0b596;
+  --primary-hover: #e0c6a5;
+  --on-primary: #24231d;
+  --secondary: #c9b297;
+  --spectrum-cool: #bac2af;
+  --spectrum-violet: #c0b69d;
+}
+:root[data-appearance="light"] {
+  --bg: #efede5;
+  --surface: #efede5;
+  --surface-raised: #e5e1d4;
+  --surface-hover: #e4dfd0;
+  --text: #242820;
+  --text-muted: #575b4e;
+  --border: #c4c3b3;
+  --border-strong: #7d806d;
+  --primary: #48503b;
+  --primary-hover: #343e2a;
+  --on-primary: #fffdf4;
+  --secondary: #5c624c;
+  --spectrum-cool: #66705b;
+  --spectrum-violet: #766651;
+}
+body {
+  font-size: 16px;
+  line-height: 1.7;
+}
+body,
+input,
+select,
+textarea,
+button {
+  font-family: var(--body);
+}
+h1,
+h2,
+h3,
+.brand,
+.brand-word,
+.workspace-location a {
+  font-family: var(--display);
+  font-weight: 400;
+}
+h1,
+h2,
+h3 {
+  letter-spacing: -0.035em;
+}
+.brand-word {
+  font-size: 30px;
+  letter-spacing: -0.07em;
+}
+.brand-corner,
+.border-beam,
+.reading-progress,
+.ambient-halo,
+.ambient-pool,
+.ambient-glass,
+.fluid-bloom {
+  display: none !important;
+}
+.paper-fibers {
+  opacity: 1 !important;
+  background: url("/art/ink-paper.webp") repeat;
+  background-size: 640px;
+}
+:root[data-appearance="light"] .paper-fibers {
+  background-image: url("/art/rice-paper.webp");
+}
+.paper-water {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.public-nav,
+.workspace-header {
+  background: transparent !important;
+  backdrop-filter: none;
+  border: 0;
+  box-shadow: none;
+}
+.public-nav {
+  min-height: 84px;
+  padding-inline: clamp(22px, 4vw, 72px);
+}
+.public-nav:before {
+  display: none;
+}
+.nav-links a svg {
+  display: none;
+}
+.public-nav .search-combo {
+  width: clamp(180px, 22vw, 320px);
+}
+.public-nav .search-input,
+.public-nav .nav-login,
+.appearance-toggle,
+.icon-control {
+  border-radius: 0;
+}
+.public-nav .nav-login {
+  background: none;
+  border: 0;
+  padding: 8px 0;
+}
+.appearance-toggle {
+  border: 0;
+  background: transparent;
+}
+.public-nav .search-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+}
+.journal-home main {
+  padding: 0 clamp(22px, 4vw, 72px) 64px;
+  max-width: none;
+}
+.scroll-opening {
+  position: relative;
+  min-height: calc(100svh - 84px);
+  isolation: isolate;
+}
+.scroll-masthead {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.scroll-masthead h1 {
+  font-family: var(--display);
+  font-size: clamp(100px, 20.5vw, 330px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.095em;
+  margin: 10px 0 0;
+}
+.scroll-masthead > span {
+  font-family: var(--display);
+  writing-mode: vertical-rl;
+  font-size: clamp(35px, 5vw, 78px);
+  line-height: 1.2;
+  opacity: 0.85;
+  padding: 18px 0 0 18px;
+}
+.scroll-opening .discovery-feature {
+  min-height: 480px;
+  margin-top: -65px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.scroll-opening .feature-scene {
+  display: block;
+  position: relative;
+  min-height: 510px;
+  padding: 0;
+}
+.scroll-opening .featured-backdrop {
+  position: absolute;
+  width: 78%;
+  height: 620px !important;
+  right: 0;
+  top: -120px;
+  left: auto;
+  overflow: hidden;
+  mask-image: url("/art/ink-mask.svg");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  opacity: 0.88;
+}
+.scroll-opening .featured-backdrop img,
+.scroll-opening img.featured-backdrop {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.95) contrast(1.25);
+  transition: filter 1s;
+}
+.scroll-opening .featured-backdrop:hover img {
+  filter: grayscale(0.4) contrast(1.1);
+}
+.scroll-opening .featured-content {
+  position: relative;
+  z-index: 2;
+  width: 40%;
+  padding: 155px 0 0;
+}
+.scroll-opening .featured-content h2 {
+  font-family: var(--display);
+  font-size: clamp(40px, 5vw, 78px);
+  line-height: 1.12;
+  font-weight: 400;
+  margin: 0 0 20px;
+  text-wrap: balance;
+}
+.scroll-opening .featured-synopsis {
+  display: none;
+}
+.scroll-opening .featured-meta {
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+.scroll-opening .hero-actions {
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.scroll-opening .hero-actions .button {
+  background: none;
+  color: var(--text);
+  border: 0;
+  border-bottom: 1px solid var(--text);
+  border-radius: 0;
+  padding: 8px 0;
+  min-height: 44px;
+}
+.scroll-opening .hero-actions .outline {
+  border-color: var(--border-strong);
+}
+.scroll-opening .hero-preview {
+  color: var(--text);
+}
+.scroll-opening .feature-controls {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  padding: 14px 0;
+  border: 0;
+}
+.scroll-opening .feature-pages button span {
+  background: var(--border-strong);
+}
+.scroll-index {
+  display: flex;
+  justify-content: space-between;
+  border-block: 1px solid var(--border-strong);
+  padding: 20px 0;
+  margin-top: 8px;
+  font-size: 15px;
+}
+.scroll-index a {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.scroll-selection {
+  padding-top: 70px;
+  scroll-margin-top: 30px;
+}
+.browse-shortcuts {
+  margin-bottom: 40px;
+}
+.browse-shortcuts a,
+.tags a {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  border-bottom: 1px solid var(--border);
+}
+.shelf-heading,
+.catalog-popular .shelf-heading,
+.catalog-strip,
+.catalog-strip:nth-of-type(even),
+.catalog-rows {
+  background: none;
+  border-radius: 0;
+  border: 0;
+  padding-inline: 0;
+}
+.shelf-heading h2 {
+  font-size: clamp(30px, 3.4vw, 50px);
+  font-weight: 400;
+}
+.catalog-popular .anime-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 36px;
+}
+.anime-card .cover {
+  border: 0;
+  border-radius: 1px;
+  box-shadow: 0 8px 18px #0002;
+}
+.anime-card h3 {
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+.anime-card:nth-child(even) {
+  margin-top: 55px;
+}
+.button,
+.editor,
+.billing-panel,
+.search-menu,
+.ratings article,
+.catalog-filters,
+.season-picker select {
+  border-radius: 2px;
+}
+.search-menu,
+.editor,
+.billing-panel,
+.catalog-filters {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+}
+.dossier h1,
+.featured-content h2,
+.page-heading h1 {
+  font-family: var(--display);
+  font-weight: 400;
+}
+.dossier-cover {
+  border-radius: 0;
+}
+.workspace {
+  background: none;
+}
+.sidebar {
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  border-right: 1px solid var(--border);
+}
+.texture-credit {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.cover-fallback > span {
+  font-family: var(--display);
+}
+.journal-home footer {
+  border-top: 1px solid var(--border-strong);
+  background: none;
+}
+@media (prefers-color-scheme: light) {
+  :root[data-appearance="system"] {
+    --bg: #efede5;
+    --surface: #efede5;
+    --surface-raised: #e5e1d4;
+    --text: #242820;
+    --text-muted: #575b4e;
+    --border: #c4c3b3;
+    --border-strong: #7d806d;
+    --primary: #48503b;
+    --primary-hover: #343e2a;
+    --on-primary: #fffdf4;
+    --secondary: #5c624c;
+  }
+  :root[data-appearance="system"] .paper-fibers {
+    background-image: url("/art/rice-paper.webp");
+  }
+}
+@media (max-width: 800px) {
+  .scroll-opening .featured-content {
+    width: 50%;
+  }
+  .scroll-opening .featured-backdrop {
+    width: 90%;
+    right: -3%;
+  }
+  .catalog-popular .anime-grid {
+    gap: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .public-nav {
+    min-height: 112px;
+    padding: 12px 22px;
+  }
+  .public-nav .brand {
+    width: auto;
+  }
+  .public-nav .brand-word {
+    display: block;
+  }
+  .public-nav .brand-initial {
+    display: none;
+  }
+  .public-nav .search-combo {
+    width: 100%;
+  }
+  .journal-home main {
+    padding-inline: 22px;
+  }
+  .scroll-masthead h1 {
+    font-size: 25vw;
+    margin-top: 25px;
+  }
+  .scroll-masthead > span {
+    font-size: 32px;
+  }
+  .scroll-opening {
+    min-height: auto;
+  }
+  .scroll-opening .discovery-feature {
+    margin-top: 0;
+    min-height: 510px;
+  }
+  .scroll-opening .feature-scene {
+    min-height: 440px;
+  }
+  .scroll-opening .featured-backdrop {
+    top: -20px;
+    right: -20px;
+    width: calc(100% + 35px);
+    height: 360px !important;
+  }
+  .scroll-opening .featured-content {
+    padding: 275px 0 0;
+    width: 100%;
+  }
+  .scroll-opening .featured-content h2 {
+    font-size: 40px;
+    max-width: 95%;
+  }
+  .scroll-opening .featured-meta {
+    margin-bottom: 12px;
+  }
+  .scroll-opening .hero-actions {
+    gap: 16px;
+  }
+  .scroll-index {
+    font-size: 13px;
+    gap: 20px;
+  }
+  .scroll-index a {
+    gap: 8px;
+  }
+  .scroll-selection {
+    padding-top: 35px;
+  }
+  .catalog-popular .anime-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+  .anime-card h3 {
+    font-size: 20px;
+  }
+  .anime-card:nth-child(even) {
+    margin-top: 30px;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .ambient-background {
+    display: block;
+  }
+  .paper-water {
+    display: none;
+  }
+}
+@font-face {
+  font-family: "Yuji Seal";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/yuji-4f5c.woff") format("woff");
+  unicode-range: U+4F5C;
+}
+@font-face {
+  font-family: "Yuji Seal";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/yuji-753b.woff") format("woff");
+  unicode-range: U+753B;
+}
+.scroll-masthead > span {
+  font-family: "Yuji Seal", var(--display);
+}
+/* Replace the old stacked-carousel geometry only inside the opening composition. */
+.scroll-opening .featured-backdrop {
+  position: absolute !important;
+  inset: auto !important;
+  right: 0 !important;
+  top: -105px !important;
+  width: 78% !important;
+  border-radius: 0;
+  background: transparent;
+}
+.scroll-opening .discovery-feature:before,
+.scroll-opening .discovery-feature:after {
+  display: none;
+}
+@media (max-width: 800px) {
+  .scroll-opening .featured-backdrop {
+    width: 90% !important;
+    right: -3% !important;
+  }
+}
+@media (max-width: 600px) {
+  .scroll-opening .featured-backdrop {
+    top: -20px !important;
+    right: -20px !important;
+    width: calc(100% + 35px) !important;
+  }
+}
+.scroll-opening .featured-backdrop {
+  mask-image:
+    url("/art/ink-mask.svg"), linear-gradient(90deg, transparent, #000 28%),
+    linear-gradient(180deg, transparent, #000 36%);
+  mask-composite: intersect;
+}
+:root[data-appearance="light"] .scroll-opening .discovery-feature {
+  box-shadow: none;
+}
+@media (max-width: 600px) {
+  .scroll-opening .featured-backdrop {
+    mask-image: url("/art/ink-mask.svg");
+    mask-composite: add;
+  }
+}
+.paper-water {
+  opacity: 0;
+}
+.paper-water[data-renderer="webgl"] {
+  opacity: 1;
+}
+@media (max-width: 600px) {
+  .scroll-opening .feature-scene {
+    min-height: 485px;
+  }
+  .scroll-opening .featured-content h2 {
+    min-height: 2.24em;
+  }
+}

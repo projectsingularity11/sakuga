@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
 import { MediaLinks } from "./media-links";
 import Link from "next/link";
+import { PosterLink } from "./poster-link";
 import { animeHref } from "@/lib/series";
 import type { Anime } from "@/lib/domain";
 import { trustedImage } from "@/lib/domain";
@@ -29,7 +30,7 @@ export function AnimeCard({
   const scores = anime.ratings?.filter((r) => r.score !== null) || [];
   return (
     <article className={`anime-card ${compact ? "card-compact" : ""}`}>
-      <Link href={href} className="poster-link">
+      <PosterLink href={href}>
         <div className="cover">
           <CoverImage
             key={anime.cover_url}
@@ -46,7 +47,7 @@ export function AnimeCard({
           )}
         </div>
         <h3 title={title}>{title}</h3>
-      </Link>
+      </PosterLink>
       <p>
         {anime.year || "Year unknown"} · {releaseLabel(anime.airing_status)}
       </p>

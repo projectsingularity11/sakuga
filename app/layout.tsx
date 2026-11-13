@@ -2,15 +2,16 @@ import { cookies } from "next/headers";
 import "@fontsource/shippori-mincho/latin-600.css";
 
 import type { Metadata } from "next";
-import "@fontsource/chakra-petch/latin-500.css";
-import "@fontsource/chakra-petch/latin-700.css";
-import "@fontsource/zen-kaku-gothic-new/latin-400.css";
-import "@fontsource/zen-kaku-gothic-new/latin-700.css";
+import "@fontsource/yuji-mai/latin-400.css";
+
+import "@fontsource/shippori-mincho/latin-400.css";
+
 import "./globals.css";
 import "./spectrum.css";
 import "lenis/dist/lenis.css";
 import "./kinetic.css";
 import "./ink.css";
+import "./scroll.css";
 import { AmbientBackground } from "@/components/ambient-background";
 import { MotionExperience } from "@/components/motion-experience";
 import { viewer } from "@/lib/viewer";
@@ -54,7 +55,7 @@ export default async function RootLayout({
               ? "system"
               : theme?.mode === "light"
                 ? "light"
-                : "dark"
+                : "light"
       }
       style={style as React.CSSProperties}
     >

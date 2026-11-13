@@ -146,7 +146,7 @@ export function startMotion(
     )
       return;
     const element = event.target.closest<HTMLElement>(
-      ".poster-link,.button,.anime-row",
+      ".poster-link[data-pointer-ready]",
     );
     if (!element) {
       resetTilt();

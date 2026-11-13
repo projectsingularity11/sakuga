@@ -1,0 +1,6 @@
+Ricepaper2 and Black Paper from Subtle Patterns, Toptal and the original texture authors.
+Source: https://github.com/atlemo/SubtlePatterns/tree/gh-pages
+Original author credits: https://www.toptal.com/designers/subtlepatterns/
+License: Creative Commons Attribution-ShareAlike 3.0 Unported
+https://creativecommons.org/licenses/by-sa/3.0/
+Local derivatives rice-paper.webp and ink-paper.webp: resized to 1024px and converted to WebP. These texture derivatives remain licensed CC BY-SA 3.0. This notice applies to the texture files, not unrelated application source.

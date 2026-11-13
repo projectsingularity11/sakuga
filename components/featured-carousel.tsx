@@ -98,6 +98,7 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
         {a.art?.banner ? (
           <ArtPicture
             art={a.art.banner}
+            mobile={a.art.cover}
             className="featured-backdrop"
             eager={index === 0}
           />

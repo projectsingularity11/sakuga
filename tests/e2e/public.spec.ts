@@ -1,5 +1,15 @@
 import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
+test.beforeEach(async ({ context }) => {
+  await context.addCookies([
+    {
+      name: "sakuga-appearance",
+      value: "dark",
+      domain: "127.0.0.1",
+      path: "/",
+    },
+  ]);
+});
 async function settleMotion(page: Page) {
   await expect(page.locator("html")).toHaveAttribute(
     "data-motion",
@@ -479,15 +489,15 @@ test("reduced motion retains static surfaces, requested typography and cached ar
     await page
       .locator("body")
       .evaluate((el) => getComputedStyle(el).fontFamily),
-  ).toContain("Zen Kaku Gothic New");
+  ).toContain("Shippori Mincho");
   expect(
     await page.locator("h1").evaluate((el) => getComputedStyle(el).fontFamily),
-  ).toContain("Shippori Mincho");
+  ).toContain("Yuji Mai");
   expect(surfaces).toMatchObject({
-    pink: "#ff8fb8",
-    lavender: "#d0b9ff",
-    background: "#131316",
-    blur: "blur(12px)",
+    pink: "#d0b596",
+    lavender: "#c9b297",
+    background: "#20231f",
+    blur: "none",
     animation: "none",
   });
   await page.mouse.move(100, 400);
@@ -532,9 +542,9 @@ test("smooth scrolling, pointer feedback and reduced-motion switching work witho
   await expect
     .poll(() =>
       page
-        .locator(".ambient-pool")
+        .locator(".paper-fibers")
         .first()
-        .evaluate((el) => el.style.backgroundImage),
+        .evaluate((el) => getComputedStyle(el).backgroundImage),
     )
     .toContain("url(");
   expect(
@@ -544,6 +554,9 @@ test("smooth scrolling, pointer feedback and reduced-motion switching work witho
   ).toBe("none");
   const poster = page.locator(".poster-link").first();
   await poster.hover();
+  await expect(poster).toHaveAttribute("data-pointer-ready", "true");
+  const pointerBox = (await poster.boundingBox())!;
+  await page.mouse.move(pointerBox.x + 20, pointerBox.y + 25);
   await expect
     .poll(() =>
       poster.evaluate((element) => element.style.getPropertyValue("--shine-x")),
@@ -757,7 +770,7 @@ test("paper appearance persists across routes and reloads; water yields to reduc
         .getPropertyValue("--bg")
         .trim(),
     ),
-  ).toBe("#eee6d6");
+  ).toBe("#efede5");
   await page.goto("/search");
   await expect(page).toHaveURL(/\/search$/);
   await page.reload();
@@ -772,14 +785,17 @@ test("paper appearance persists across routes and reloads; water yields to reduc
   await expect(page.locator(".water-surface")).toBeAttached();
   await page.mouse.move(80, 240);
   await page.mouse.move(270, 310);
+  await expect(page.locator(".paper-water")).toHaveAttribute(
+    "data-renderer",
+    "webgl",
+  );
   await expect
     .poll(() =>
       page
-        .locator(".fluid-bloom")
-        .first()
-        .evaluate((el) => el.style.transform),
+        .locator(".paper-water")
+        .evaluate((el: HTMLCanvasElement) => el.width),
     )
-    .not.toBe("");
+    .toBeGreaterThan(300);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator(".water-surface")).toHaveCount(0);
 });
