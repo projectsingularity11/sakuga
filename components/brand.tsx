@@ -9,7 +9,9 @@ export function Brand() {
       <span className="brand-initial" aria-hidden="true">
         s
       </span>
-      <span className="brand-corner" aria-hidden="true" />
+      <span className="brand-seal" lang="ja" aria-hidden="true">
+        作
+      </span>
     </Link>
   );
 }

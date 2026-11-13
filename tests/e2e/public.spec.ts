@@ -497,7 +497,7 @@ test("reduced motion retains static surfaces, requested typography and cached ar
     pink: "#d0b596",
     lavender: "#c9b297",
     background: "#20231f",
-    blur: "none",
+    blur: "blur(20px) saturate(1.18)",
     animation: "none",
   });
   await page.mouse.move(100, 400);
@@ -798,4 +798,69 @@ test("paper appearance persists across routes and reloads; water yields to reduc
     .toBeGreaterThan(300);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator(".water-surface")).toHaveCount(0);
+});
+
+test("framed cards align in rows and glass navigation keeps ink feedback accessible", async ({
+  page,
+}, info) => {
+  await page.goto("/");
+  await settleMotion(page);
+  const cards = page.locator(".catalog-popular .home-anime-grid .anime-card");
+  expect(await cards.count()).toBeGreaterThan(1);
+  const boxes = await cards.evaluateAll((nodes) =>
+    nodes.slice(0, 8).map((node) => {
+      const r = node.getBoundingClientRect(),
+        s = getComputedStyle(node),
+        cover = getComputedStyle(node.querySelector(".cover")!);
+      return {
+        x: r.x,
+        y: r.y,
+        h: r.height,
+        margin: s.marginTop,
+        border: s.borderTopWidth,
+        coverBorder: cover.borderTopWidth,
+      };
+    }),
+  );
+  for (const b of boxes) {
+    expect(b.margin).toBe("0px");
+    expect(b.border).toBe("1px");
+    expect(b.coverBorder).toBe("1px");
+  }
+  const row = boxes.filter((b) => Math.abs(b.y - boxes[0].y) < 2);
+  const viewportWidth = page.viewportSize()!.width;
+  expect(row.length).toBe(
+    viewportWidth <= 600 ? 2 : viewportWidth <= 800 ? 3 : 4,
+  );
+  expect(
+    Math.max(...row.map((b) => b.h)) - Math.min(...row.map((b) => b.h)),
+  ).toBeLessThan(2);
+  const firstBox = await cards.first().boundingBox();
+  const secondBox = await cards.nth(1).boundingBox();
+  expect(Math.abs(firstBox!.y - secondBox!.y)).toBeLessThan(2);
+  await cards.first().scrollIntoViewIfNeeded();
+  await page.screenshot({
+    path: `.impeccable/review/${info.project.name}-framed-cards.png`,
+  });
+  const nav = page.locator(".public-nav");
+  expect(
+    await nav.evaluate((el) => getComputedStyle(el).backdropFilter),
+  ).toContain("blur(20px)");
+  await expect(page.locator(".ink-feedback")).toHaveCount(1);
+  const theme = page.getByRole("button", { name: "Switch to light mode" });
+  await theme.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-appearance",
+    "light",
+  );
+  await expect
+    .poll(() =>
+      page
+        .locator(".ink-feedback")
+        .evaluate((el) => el.getAnimations({ subtree: true }).length),
+    )
+    .toBeGreaterThan(0);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator(".ink-feedback")).toHaveCount(0);
 });

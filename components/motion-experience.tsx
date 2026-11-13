@@ -1,8 +1,13 @@
 "use client";
+import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowUp } from "lucide-react";
 import { useReducedMotion } from "./use-reduced-motion";
+const InkFeedback = dynamic(
+  () => import("./ink-feedback").then((m) => m.InkFeedback),
+  { ssr: false },
+);
 export function MotionExperience() {
   const pathname = usePathname();
   const reducedMotion = useReducedMotion();
@@ -29,6 +34,7 @@ export function MotionExperience() {
   }, [pathname, reducedMotion]);
   return (
     <>
+      {!reducedMotion && <InkFeedback />}
       <div ref={progress} className="reading-progress" aria-hidden="true" />
       <button
         ref={top}
