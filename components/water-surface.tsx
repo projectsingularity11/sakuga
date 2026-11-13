@@ -9,8 +9,8 @@ void main(){vec2 p=vec2(gl_FragCoord.x,size.y-gl_FragCoord.y);vec2 shift=vec2(0.
 for(int i=0;i<8;i++){float age=time-drops[i].z;float d=distance(p,drops[i].xy);if(drops[i].w>0. && age>=0. && age<2.2){float envelope=exp(-age*2.)*exp(-abs(d-age*100.)*.018);float wave=sin(d*.09-age*11.)*envelope*drops[i].w;shift+=normalize(p-drops[i].xy+vec2(.01))*wave*18.;light+=wave*.032;}}
 vec2 uv=fract((p+shift)/640.);vec3 textureColor=texture2D(paper,uv).rgb;
 float fiber=dot(textureColor,vec3(.299,.587,.114));
-vec3 day=vec3(.957,.944,.906)*(fiber*.55+.48);vec3 night=vec3(.105,.112,.108)*(fiber*.9+.5);
-vec3 color=mix(day,night,dark)+light*mix(vec3(.5,.4,.25),vec3(.35,.4,.32),dark);
+vec3 day=vec3(.957,.944,.906)*(fiber*.55+.48);vec3 night=vec3(.037,.037,.037)*(fiber*.9+.5);
+vec3 color=mix(day,night,dark)+light*mix(vec3(.5,.4,.25),vec3(.4,.4,.4),dark);
 float edge=pow(abs(p.x/size.x-.5)*2.,8.);color-=edge*mix(.035,.014,dark);
 gl_FragColor=vec4(color,1.);}`;
 

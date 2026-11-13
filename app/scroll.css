@@ -799,3 +799,366 @@ textarea:focus-visible {
     gap: 22px 16px;
   }
 }
+
+/* Breathing room and rounded surfaces; the image carries the frame. */
+:root {
+  --bg: #080808;
+  --surface: #111111;
+  --surface-raised: #1b1b1b;
+  --surface-hover: #242424;
+  --border: #383838;
+  --border-strong: #76716a;
+  --text: #f1eee8;
+  --text-muted: #c2bdb5;
+  --radius: 16px;
+  --art-veil: 52%;
+}
+:root[data-appearance="light"] {
+  --bg: #efede5;
+  --surface: #f5f2e9;
+  --surface-raised: #e5e1d4;
+  --surface-hover: #e4dfd0;
+  --border: #c4c3b3;
+  --border-strong: #7d806d;
+  --text: #242820;
+  --text-muted: #575b4e;
+  --art-veil: 87%;
+}
+@media (prefers-color-scheme: light) {
+  :root[data-appearance="system"] {
+    --bg: #efede5;
+    --surface: #f5f2e9;
+    --surface-raised: #e5e1d4;
+    --surface-hover: #e4dfd0;
+    --border: #c4c3b3;
+    --border-strong: #7d806d;
+    --text: #242820;
+    --text-muted: #575b4e;
+    --art-veil: 87%;
+  }
+}
+:root:not([data-appearance="light"]) .paper-fibers {
+  filter: grayscale(1) brightness(0.42);
+}
+@media (prefers-color-scheme: light) {
+  :root[data-appearance="system"] .paper-fibers {
+    filter: none;
+  }
+}
+.anime-card,
+.anime-card:nth-child(even),
+.anime-card:hover,
+.anime-card:focus-within {
+  border: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+.anime-card .cover,
+.dossier-cover {
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px #0002;
+}
+.anime-card .poster-link {
+  border-radius: 16px;
+}
+.anime-card h3,
+.anime-card.card-compact h3 {
+  margin-top: 18px;
+  margin-bottom: 10px;
+}
+.anime-card .card-list-action {
+  padding-top: 12px;
+}
+.anime-grid,
+.home-anime-grid,
+.catalog-popular .home-anime-grid {
+  gap: 48px 32px;
+}
+.catalog-section,
+.catalog-strip,
+.catalog-rows {
+  margin-block: 72px;
+}
+.shelf-heading {
+  margin-bottom: 28px;
+  gap: 24px;
+}
+.scroll-selection {
+  padding-top: 88px;
+}
+.browse-shortcuts {
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.button,
+.icon-control,
+.nav-login,
+.nav-menu-toggle,
+.search-menu,
+.editor,
+.billing-panel,
+.catalog-filters,
+.season-picker select,
+.ratings article,
+.report,
+.theme-preview,
+.collection-card,
+.empty-state,
+.search-combo form,
+.public-nav .search-input,
+.appearance-toggle,
+.workspace-browse {
+  border-radius: 14px;
+}
+input,
+select,
+textarea,
+.tags a,
+.tags span,
+.poster-format,
+.segmented,
+.segmented button,
+.swatches button {
+  border-radius: 10px;
+}
+.public-nav .nav-login {
+  padding: 10px 14px;
+}
+.public-nav .search-input {
+  border: 1px solid var(--border);
+}
+.public-nav .nav-menu-toggle,
+.public-nav .appearance-toggle {
+  border-radius: 12px;
+}
+.editor,
+.billing-panel,
+.report,
+.catalog-filters {
+  padding: clamp(24px, 3vw, 40px);
+}
+.public-dossier {
+  padding: 56px clamp(24px, 5vw, 80px) 100px;
+}
+.public-dossier > .text-link {
+  display: inline-flex;
+  margin-bottom: 40px;
+}
+.dossier {
+  grid-template-columns: clamp(200px, 22vw, 320px) minmax(0, 1fr);
+  gap: clamp(40px, 5vw, 80px);
+  margin-bottom: 80px;
+  align-items: start;
+}
+.dossier > div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 26px;
+}
+.dossier > div:last-child > * {
+  margin: 0;
+}
+.dossier h1 {
+  font-size: clamp(36px, 4.1vw, 64px);
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+}
+.dossier .synopsis {
+  line-height: 1.95;
+  padding: 0;
+  background: none;
+}
+.dossier .season-picker {
+  margin-block: 4px;
+}
+.dossier .tags {
+  gap: 12px;
+}
+.dossier .tags a,
+.dossier .tags span {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 58%, transparent);
+}
+.dossier .ratings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 4px;
+}
+.dossier .ratings article {
+  min-width: 130px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+}
+.dossier .source-links,
+.dossier .media-links {
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.detail-lower {
+  gap: 48px;
+  margin-top: 56px;
+}
+.anime-atmosphere img {
+  filter: blur(38px) saturate(1.5);
+  opacity: 1;
+  transform: scale(1.18);
+}
+.anime-atmosphere:after {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--bg) var(--art-veil), transparent),
+    var(--bg) 100%
+  );
+}
+.poster-flow {
+  position: fixed;
+  z-index: 43;
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid var(--seal);
+  border-radius: 21px;
+  box-shadow: 0 0 26px color-mix(in srgb, var(--seal) 12%, transparent);
+}
+.feature-scene {
+  isolation: isolate;
+}
+.carousel-previous-art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  animation: artwork-dissolve 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.featured-content {
+  z-index: 2;
+}
+@keyframes artwork-dissolve {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .feature-scene > .featured-backdrop {
+    animation: artwork-materialize 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .poster-link .cover {
+    transition:
+      transform 480ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 350ms,
+      box-shadow 480ms;
+  }
+  .button,
+  .icon-control,
+  .tags a,
+  input,
+  select,
+  textarea {
+    transition:
+      transform 300ms var(--ease),
+      border-color 300ms,
+      background-color 300ms,
+      box-shadow 300ms;
+  }
+}
+@keyframes artwork-materialize {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.88;
+  }
+}
+@media (max-width: 800px) {
+  .dossier {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 32px;
+  }
+  .anime-grid,
+  .home-anime-grid,
+  .catalog-popular .home-anime-grid {
+    gap: 40px 24px;
+  }
+}
+@media (max-width: 600px) {
+  .public-dossier {
+    padding: 32px 24px 72px;
+  }
+  .public-dossier > .text-link {
+    margin-bottom: 28px;
+  }
+  .dossier {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    margin-bottom: 56px;
+  }
+  .dossier-cover {
+    max-width: 240px;
+    width: 72%;
+    justify-self: center;
+  }
+  .dossier > div:last-child {
+    gap: 24px;
+  }
+  .dossier h1 {
+    font-size: 36px;
+  }
+  .dossier .ratings {
+    gap: 16px;
+  }
+  .dossier .ratings article {
+    padding: 20px;
+  }
+  .detail-lower {
+    gap: 32px;
+  }
+  .anime-card,
+  .anime-card:nth-child(even) {
+    padding: 0;
+  }
+  .anime-grid,
+  .home-anime-grid,
+  .catalog-popular .home-anime-grid {
+    gap: 36px 20px;
+  }
+  .catalog-section,
+  .catalog-strip,
+  .catalog-rows {
+    margin-block: 48px;
+  }
+  .scroll-selection {
+    padding-top: 56px;
+  }
+  .shelf-heading {
+    margin-bottom: 24px;
+  }
+  .public-nav .nav-login {
+    padding: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel-previous-art,
+  .poster-flow {
+    display: none;
+  }
+}
+.dossier .synopsis {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.trailer-link,
+.table-wrap {
+  border-radius: 16px;
+}

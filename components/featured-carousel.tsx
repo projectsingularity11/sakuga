@@ -16,6 +16,7 @@ import type { FeatureSlide } from "@/lib/home-feature";
 import { ArtPicture } from "./art-picture";
 export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
   const [index, setIndex] = useState(0),
+    [previous, setPrevious] = useState<number | null>(null),
     [paused, setPaused] = useState(false),
     [hovered, setHovered] = useState(false),
     [focused, setFocused] = useState(false),
@@ -33,7 +34,8 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
     if (!auto) return;
     const timer = setTimeout(() => {
       setManual(false);
-      setIndex((i) => (i + 1) % titles.length);
+      setPrevious(index);
+      setIndex((index + 1) % titles.length);
     }, 7500);
     return () => clearTimeout(timer);
   }, [auto, index, titles.length]);
@@ -62,7 +64,11 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
   function choose(next: number) {
     setManual(true);
     setPaused(true);
-    setIndex((next + titles.length) % titles.length);
+    const target = (next + titles.length) % titles.length;
+    if (target !== index) {
+      setPrevious(reduce ? null : index);
+      setIndex(target);
+    }
   }
   if (!a)
     return (
@@ -74,6 +80,7 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
       </section>
     );
   const title = a.title;
+  const old = previous === null ? null : titles[previous];
   return (
     <section
       className="discovery-feature"
@@ -95,6 +102,31 @@ export function FeaturedCarousel({ titles }: { titles: FeatureSlide[] }) {
         aria-roledescription="slide"
         aria-label={`${index + 1} of ${titles.length}: ${title}`}
       >
+        {old && (
+          <div
+            className="carousel-previous-art"
+            aria-hidden="true"
+            onAnimationEnd={(e) => {
+              if (e.target === e.currentTarget) setPrevious(null);
+            }}
+          >
+            {old.art?.banner ? (
+              <ArtPicture
+                art={old.art.banner}
+                mobile={old.art.cover}
+                className="featured-backdrop"
+              />
+            ) : (
+              <Image
+                className="featured-backdrop"
+                src={old.banner || old.cover || "/art/sakuga-city.png"}
+                alt=""
+                fill
+                sizes="100vw"
+              />
+            )}
+          </div>
+        )}
         {a.art?.banner ? (
           <ArtPicture
             art={a.art.banner}

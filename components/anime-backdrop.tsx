@@ -2,12 +2,23 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { artworkFor } from "@/lib/home-artwork";
+import { useReducedMotion } from "./use-reduced-motion";
 import { ArtPicture } from "./art-picture";
 
 /** Static blur, compositor-only scroll fade. Never substitutes unrelated artwork. */
 export function AnimeBackdrop({ src, id }: { src: string | null; id: number }) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
   const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || reduced || !src || failed) return;
+    const animation = element.animate(
+      [{ filter: "opacity(0)" }, { filter: "opacity(1)" }],
+      { duration: 650, easing: "cubic-bezier(.16,1,.3,1)" },
+    );
+    return () => animation.cancel();
+  }, [src, failed, reduced]);
   useEffect(() => {
     const element = ref.current;
     if (!element) return;

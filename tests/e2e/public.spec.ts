@@ -496,7 +496,7 @@ test("reduced motion retains static surfaces, requested typography and cached ar
   expect(surfaces).toMatchObject({
     pink: "#d0b596",
     lavender: "#c9b297",
-    background: "#20231f",
+    background: "#080808",
     blur: "blur(20px) saturate(1.18)",
     animation: "none",
   });
@@ -700,7 +700,7 @@ test("anime artwork fills the background, fades on scroll and clears on navigati
   await expect(backdrop).toHaveCSS("opacity", "1");
   await expect(backdrop.locator("img")).toHaveCSS(
     "filter",
-    "blur(18px) saturate(1.3)",
+    "blur(38px) saturate(1.5)",
   );
   await page.screenshot({
     path: `.impeccable/review/${info.project.name}-artwork-detail.png`,
@@ -800,7 +800,7 @@ test("paper appearance persists across routes and reloads; water yields to reduc
   await expect(page.locator(".water-surface")).toHaveCount(0);
 });
 
-test("framed cards align in rows and glass navigation keeps ink feedback accessible", async ({
+test("rounded cover frames align in open rows and glass navigation keeps ink feedback accessible", async ({
   page,
 }, info) => {
   await page.goto("/");
@@ -824,7 +824,7 @@ test("framed cards align in rows and glass navigation keeps ink feedback accessi
   );
   for (const b of boxes) {
     expect(b.margin).toBe("0px");
-    expect(b.border).toBe("1px");
+    expect(b.border).toBe("0px");
     expect(b.coverBorder).toBe("1px");
   }
   const row = boxes.filter((b) => Math.abs(b.y - boxes[0].y) < 2);
@@ -863,4 +863,52 @@ test("framed cards align in rows and glass navigation keeps ink feedback accessi
     .toBeGreaterThan(0);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator(".ink-feedback")).toHaveCount(0);
+});
+
+test("cover focus glides between posters and detail pages leave room around content", async ({
+  page,
+}, info) => {
+  await page.goto("/");
+  await settleMotion(page);
+  const links = page.locator(".catalog-popular .poster-link");
+  await links.first().scrollIntoViewIfNeeded();
+  await expect(links.first()).toHaveAttribute("data-pointer-ready", "true");
+  const flow = page.locator(".poster-flow");
+  await expect(flow).toHaveAttribute("data-ready", "true");
+  await links.first().hover();
+  await expect
+    .poll(() => flow.evaluate((el) => Number(getComputedStyle(el).opacity)))
+    .toBeGreaterThan(0.9);
+  const start = await flow.boundingBox();
+  await expect(links.nth(1)).toHaveAttribute("data-pointer-ready", "true");
+  await links.nth(1).hover();
+  await expect
+    .poll(() => flow.evaluate((el) => el.getAnimations().length))
+    .toBeGreaterThan(0);
+  await expect
+    .poll(async () => Math.abs((await flow.boundingBox())!.x - start!.x))
+    .toBeGreaterThan(20);
+  const cover = links.first().locator(".cover");
+  expect(
+    await cover.evaluate((el) => parseFloat(getComputedStyle(el).borderRadius)),
+  ).toBeGreaterThanOrEqual(14);
+  await page.goto("/anime/154587");
+  await expect(page.locator(".anime-atmosphere img")).toBeVisible();
+  const content = page.locator(".dossier>div:last-child");
+  expect(
+    await content.evaluate((el) => parseFloat(getComputedStyle(el).rowGap)),
+  ).toBeGreaterThanOrEqual(24);
+  const image = await page.locator(".dossier-cover").boundingBox();
+  const text = await content.boundingBox();
+  expect(
+    info.project.name === "mobile"
+      ? text!.y - (image!.y + image!.height)
+      : text!.x - (image!.x + image!.width),
+  ).toBeGreaterThanOrEqual(30);
+  await page.screenshot({
+    path: `.impeccable/review/${info.project.name}-spaced-detail.png`,
+    fullPage: false,
+  });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator(".poster-flow")).toHaveCount(0);
 });
