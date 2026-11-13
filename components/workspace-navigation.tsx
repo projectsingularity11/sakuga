@@ -11,6 +11,7 @@ import {
   Settings,
   ArrowUpRight,
 } from "lucide-react";
+import { AppearanceToggle } from "./appearance-toggle";
 import { SearchBox } from "./search-box";
 const items = [
   { icon: Home, href: "/app", label: "Home" },
@@ -58,6 +59,7 @@ export function WorkspaceHeader({ language }: { language: string }) {
         <span>{label}</span>
       </div>
       <SearchBox language={language} />
+      <AppearanceToggle />
       <Link className="workspace-browse" href="/discover">
         Browse <ArrowUpRight size={15} />
       </Link>

@@ -1,0 +1,209 @@
+/* Sakuga: mineral light on charcoal; warm washi and ink in daylight. */
+:root {
+  --ink-display: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+.journal-intro h1,
+.featured-content h2,
+.dossier h1,
+.page-heading h1 {
+  font-family: var(--ink-display);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+.journal-intro h1 {
+  font-size: clamp(32px, 3.8vw, 58px);
+}
+.featured-content h2 {
+  font-size: clamp(27px, 2.8vw, 42px);
+}
+.dossier h1 {
+  font-size: clamp(34px, 4.3vw, 66px);
+}
+.journal-intro {
+  border-radius: 3px 20px 3px 20px;
+}
+.discovery-feature {
+  border-radius: 20px 3px 20px 3px;
+}
+.public-nav {
+  gap: clamp(10px, 1.6vw, 28px);
+}
+.appearance-toggle {
+  flex-shrink: 0;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.appearance-toggle:hover {
+  border-color: var(--secondary);
+}
+.appearance-toggle:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 4px;
+}
+.water-surface {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 80;
+}
+.fluid-bloom {
+  position: absolute;
+  width: clamp(300px, 45vw, 650px);
+  height: clamp(300px, 45vw, 650px);
+  border-radius: 37% 63% 56% 44% / 62% 32% 68% 38%;
+  filter: hue-rotate(var(--fluid-hue, 0deg));
+  contain: paint;
+}
+.fluid-bloom-a {
+  left: -180px;
+  top: 8%;
+  background: radial-gradient(
+    ellipse at 40% 45%,
+    #e58b6c25,
+    #c887b717 30%,
+    transparent 67%
+  );
+}
+.fluid-bloom-b {
+  right: -200px;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at 60% 55%,
+    #77c6e62b,
+    #969cc71c 35%,
+    transparent 68%
+  );
+}
+/* No full-screen live blur. Optical layering comes from small cached fields. */
+.ambient-glass {
+  backdrop-filter: none;
+  background: linear-gradient(
+    115deg,
+    transparent 36%,
+    #ffffff03 48%,
+    transparent 59%
+  );
+}
+.paper-fibers {
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  background-image: url("/art/paper-fiber.svg");
+  background-size: 180px 180px;
+}
+:root[data-appearance="light"] {
+  --bg: #eee6d6;
+  --surface: #f6efdf;
+  --surface-raised: #e7dcc8;
+  --surface-hover: #e4d7be;
+  --text: #292d30;
+  --text-muted: #5e5b56;
+  --border: #c7bda9;
+  --border-strong: #968b75;
+  --primary: #ebba9d;
+  --primary-hover: #f3cbb1;
+  --on-primary: #30271f;
+  --secondary: #725445;
+  --spectrum-cool: #3b6777;
+  --spectrum-violet: #8a6b6b;
+  --art-veil: 94%;
+}
+:root[data-appearance="light"] .paper-fibers {
+  opacity: 0.25;
+}
+:root[data-appearance="light"] .ambient-glass {
+  background:
+    linear-gradient(
+      90deg,
+      #8b6b3e10,
+      transparent 5%,
+      #fff7e812 40%,
+      transparent 92%,
+      #8b6b3e12
+    ),
+    repeating-linear-gradient(0deg, #795c3903 0 1px, transparent 1px 5px);
+  box-shadow:
+    inset 8px 0 25px #6c51200a,
+    inset -8px 0 25px #6c51200a;
+}
+:root[data-appearance="light"] .fluid-bloom-a {
+  background: radial-gradient(ellipse, #bf705929, transparent 65%);
+}
+:root[data-appearance="light"] .fluid-bloom-b {
+  background: radial-gradient(ellipse, #63867c25, transparent 65%);
+}
+:root[data-appearance="light"] .public-nav,
+:root[data-appearance="light"] .workspace-header {
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
+}
+:root[data-appearance="light"] .journal-intro,
+:root[data-appearance="light"] .discovery-feature {
+  box-shadow:
+    inset 0 1px #fff8,
+    0 8px 24px #5b452107;
+}
+@media (prefers-color-scheme: light) {
+  :root[data-appearance="system"] {
+    --bg: #eee6d6;
+    --surface: #f6efdf;
+    --surface-raised: #e7dcc8;
+    --surface-hover: #e4d7be;
+    --text: #292d30;
+    --text-muted: #5e5b56;
+    --border: #c7bda9;
+    --border-strong: #968b75;
+    --primary: #ebba9d;
+    --primary-hover: #f3cbb1;
+    --on-primary: #30271f;
+    --secondary: #725445;
+    --spectrum-cool: #3b6777;
+    --spectrum-violet: #8a6b6b;
+  }
+  :root[data-appearance="system"] .paper-fibers {
+    opacity: 0.25;
+  }
+}
+@media (max-width: 600px) {
+  .public-nav .appearance-toggle {
+    grid-column: 3;
+    grid-row: 1;
+    width: 36px;
+    height: 38px;
+  }
+  .public-nav .nav-menu-toggle {
+    grid-column: 4;
+    grid-row: 1;
+  }
+  .public-nav {
+    grid-template-columns: minmax(0, 1fr) auto auto auto;
+    gap: 10px;
+  }
+  .public-nav .search-combo {
+    grid-column: 1 / -1;
+  }
+  .fluid-bloom-a {
+    left: -200px;
+  }
+  .fluid-bloom-b {
+    right: -200px;
+  }
+  .journal-intro h1 {
+    font-size: 30px;
+  }
+}
+@media (prefers-reduced-motion: reduce),
+  (prefers-reduced-transparency: reduce) {
+  .water-surface {
+    display: none;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .fluid-bloom {
+    display: none;
+  }
+}

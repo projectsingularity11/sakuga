@@ -1,7 +1,13 @@
 "use client";
+import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useReducedMotion } from "./use-reduced-motion";
+
+const WaterSurface = dynamic(
+  () => import("./water-surface").then((m) => m.WaterSurface),
+  { ssr: false },
+);
 
 /** Reflections reuse displayed artwork. No canvas readback, extra image API or idle loop. */
 export function AmbientBackground() {
@@ -124,12 +130,18 @@ export function AmbientBackground() {
     };
   }, [pathname, reduced]);
   return (
-    <div className="ambient-background" aria-hidden="true">
-      <div className="ambient-halo ambient-halo-left" />
-      <div className="ambient-halo ambient-halo-right" />
-      <div ref={left} className="ambient-pool ambient-pool-left" />
-      <div ref={right} className="ambient-pool ambient-pool-right" />
-      <div className="ambient-glass" />
-    </div>
+    <>
+      <div className="ambient-background" aria-hidden="true">
+        <div className="fluid-bloom fluid-bloom-a" />
+        <div className="fluid-bloom fluid-bloom-b" />
+        <div className="paper-fibers" />
+        <div className="ambient-halo ambient-halo-left" />
+        <div className="ambient-halo ambient-halo-right" />
+        <div ref={left} className="ambient-pool ambient-pool-left" />
+        <div ref={right} className="ambient-pool ambient-pool-right" />
+        <div className="ambient-glass" />
+      </div>
+      {!reduced && <WaterSurface />}
+    </>
   );
 }

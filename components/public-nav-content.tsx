@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, Compass, Library, UserRound, Search } from "lucide-react";
 import { Brand } from "./brand";
+import { AppearanceToggle } from "./appearance-toggle";
 import { SearchBox } from "./search-box";
 export function PublicNavContent({
   language,
@@ -45,6 +46,7 @@ export function PublicNavContent({
         </Link>
       </nav>
       <SearchBox language={language} />
+      <AppearanceToggle />
       <Link className="nav-login" href={signedIn ? "/app" : "/login"}>
         <UserRound size={16} />
         <span>{signedIn ? "My account" : "Log in"}</span>

@@ -1,3 +1,6 @@
+import { cookies } from "next/headers";
+import "@fontsource/shippori-mincho/latin-600.css";
+
 import type { Metadata } from "next";
 import "@fontsource/chakra-petch/latin-500.css";
 import "@fontsource/chakra-petch/latin-700.css";
@@ -7,6 +10,7 @@ import "./globals.css";
 import "./spectrum.css";
 import "lenis/dist/lenis.css";
 import "./kinetic.css";
+import "./ink.css";
 import { AmbientBackground } from "@/components/ambient-background";
 import { MotionExperience } from "@/components/motion-experience";
 import { viewer } from "@/lib/viewer";
@@ -26,6 +30,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const profile = await viewer();
+  const localMode = (await cookies()).get("sakuga-appearance")?.value;
   const parsed = themeSchema.safeParse(profile?.preferences?.theme);
   const theme = parsed.success ? polishTheme(parsed.data) : undefined;
   const style = theme
@@ -41,13 +46,15 @@ export default async function RootLayout({
       lang="en"
       suppressHydrationWarning
       data-appearance={
-        theme?.mode === "dark"
-          ? "dark"
-          : theme?.mode === "system"
-            ? "system"
-            : theme?.mode === "light"
-              ? "light"
-              : "dark"
+        localMode === "dark" || localMode === "light"
+          ? localMode
+          : theme?.mode === "dark"
+            ? "dark"
+            : theme?.mode === "system"
+              ? "system"
+              : theme?.mode === "light"
+                ? "light"
+                : "dark"
       }
       style={style as React.CSSProperties}
     >

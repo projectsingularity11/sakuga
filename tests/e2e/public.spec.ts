@@ -482,7 +482,7 @@ test("reduced motion retains static surfaces, requested typography and cached ar
   ).toContain("Zen Kaku Gothic New");
   expect(
     await page.locator("h1").evaluate((el) => getComputedStyle(el).fontFamily),
-  ).toContain("Chakra Petch");
+  ).toContain("Shippori Mincho");
   expect(surfaces).toMatchObject({
     pink: "#ff8fb8",
     lavender: "#d0b9ff",
@@ -564,12 +564,13 @@ test("smooth scrolling, pointer feedback and reduced-motion switching work witho
   await page.waitForTimeout(1250);
   await page.evaluate(() => {
     const samples: number[] = [];
+    const start = scrollY;
     Object.assign(window, { scrollSamples: samples });
     window.addEventListener(
       "wheel",
       () => {
         function capture() {
-          samples.push(scrollY);
+          samples.push(scrollY - start);
           if (samples.length < 12) requestAnimationFrame(capture);
         }
         requestAnimationFrame(capture);
@@ -739,4 +740,46 @@ test("Discover browses assortments while Search owns queries and filters", async
   await expect(page.locator(".anime-card")).toHaveCount(0);
   await page.goto("/discover?genre=Action");
   await expect(page).toHaveURL(/\/search\?genre=Action/);
+});
+
+test("paper appearance persists across routes and reloads; water yields to reduced motion", async ({
+  page,
+}, info) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Switch to light mode" }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-appearance",
+    "light",
+  );
+  expect(
+    await page.evaluate(() =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--bg")
+        .trim(),
+    ),
+  ).toBe("#eee6d6");
+  await page.goto("/search");
+  await expect(page).toHaveURL(/\/search$/);
+  await page.reload();
+  await expect(
+    page.getByRole("button", { name: "Switch to dark mode" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: `.impeccable/review/${info.project.name}-paper.png`,
+    fullPage: false,
+  });
+  await page.getByRole("button", { name: "Switch to dark mode" }).click();
+  await expect(page.locator(".water-surface")).toBeAttached();
+  await page.mouse.move(80, 240);
+  await page.mouse.move(270, 310);
+  await expect
+    .poll(() =>
+      page
+        .locator(".fluid-bloom")
+        .first()
+        .evaluate((el) => el.style.transform),
+    )
+    .not.toBe("");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator(".water-surface")).toHaveCount(0);
 });

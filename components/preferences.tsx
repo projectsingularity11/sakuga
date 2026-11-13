@@ -11,7 +11,11 @@ export function ThemeApply({ theme }: { theme: unknown }) {
     const scheme = matchMedia("(prefers-color-scheme: dark)");
     const applyMode = () => {
       const dark = t.mode === "dark" || (t.mode === "system" && scheme.matches);
-      document.documentElement.dataset.appearance = dark ? "dark" : "light";
+      const local = document.cookie.match(
+        /(?:^|; )sakuga-appearance=(light|dark)(?:;|$)/,
+      )?.[1];
+      document.documentElement.dataset.appearance =
+        local || (dark ? "dark" : "light");
     };
     applyMode();
     scheme.addEventListener("change", applyMode);
@@ -128,12 +132,13 @@ export function Preferences({
             Appearance
             <select
               value={theme.mode}
-              onChange={(e) =>
+              onChange={(e) => {
+                document.cookie = `sakuga-appearance=; Path=/; Max-Age=0; SameSite=Lax`;
                 setTheme({
                   ...theme,
                   mode: e.target.value as typeof theme.mode,
-                })
-              }
+                });
+              }}
             >
               <option value="light">Light</option>
               <option value="dark">Dark</option>
