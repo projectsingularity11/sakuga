@@ -22,3 +22,5 @@ Desktop/mobile browser coverage checks image-only borders, aligned columns, roun
 22 unique selected desktop/mobile cases passed across the targeted runs. The final eight affected cases passed together, including shared hover travel, account-session continuity, smooth scrolling and theme persistence. The restored backdrop checks passed on both sizes after updating the blur contract. Detail screenshots were visually reviewed in both layouts, and the last review removed a legacy synopsis border. Lint passed; production TypeScript/build validation follows before release.
 
 Final production webpack/TypeScript build passed after correcting Motion’s easing-name type. Working tree checked for whitespace errors before release.
+
+Final client-side navigation checks passed on desktop and mobile: clicking the second poster opens the detail route, clears the shared hover frame and retains the restored backdrop and spacing. The highlight leaf resets its animation/listeners on pathname changes so an old poster frame cannot linger over the next page.

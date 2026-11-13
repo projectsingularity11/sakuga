@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { animate } from "motion/mini";
+import { usePathname } from "next/navigation";
 import { useReducedMotion } from "./use-reduced-motion";
 /** One shared cover highlight; Motion mini preserves continuity when its target changes. */
 export function PosterFlow() {
   const ref = useRef<HTMLDivElement>(null),
-    reduced = useReducedMotion();
+    reduced = useReducedMotion(),
+    pathname = usePathname();
   useEffect(() => {
     const frame = ref.current;
     if (
@@ -16,6 +18,7 @@ export function PosterFlow() {
         .connection?.saveData
     )
       return;
+    frame.style.opacity = "0";
     let owner: Element | null = null,
       scrollFrame = 0,
       timer: ReturnType<typeof setTimeout> | undefined,
@@ -111,6 +114,6 @@ export function PosterFlow() {
       document.removeEventListener("visibilitychange", hide);
       document.documentElement.removeEventListener("pointerleave", hide);
     };
-  }, [reduced]);
+  }, [reduced, pathname]);
   return <div ref={ref} className="poster-flow" aria-hidden="true" />;
 }

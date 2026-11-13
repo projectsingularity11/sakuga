@@ -892,7 +892,9 @@ test("cover focus glides between posters and detail pages leave room around cont
   expect(
     await cover.evaluate((el) => parseFloat(getComputedStyle(el).borderRadius)),
   ).toBeGreaterThanOrEqual(14);
-  await page.goto("/anime/154587");
+  await links.nth(1).click();
+  await expect(page).toHaveURL(/\/anime\/154587$/);
+  await expect(flow).toHaveCSS("opacity", "0");
   await expect(page.locator(".anime-atmosphere img")).toBeVisible();
   const content = page.locator(".dossier>div:last-child");
   expect(
